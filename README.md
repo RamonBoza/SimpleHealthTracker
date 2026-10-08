@@ -46,11 +46,11 @@ El código está preparado para Next.js en Vercel, pero no se ha publicado. Nece
 
 1. PostgreSQL persistente y su `DATABASE_URL`, con la configuración TLS del proveedor. En Vercel se exige PostgreSQL: no se usa SQLite en el sistema de archivos efímero.
 2. `APP_URL` con el dominio HTTPS del despliegue.
-3. `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` y `SMTP_FROM` para recuperar contraseñas.
+3. Opcionalmente, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` y `SMTP_FROM` para recuperar contraseñas. Sin SMTP se permite el registro y se oculta la opción de recuperación.
 4. `DATA_CONTROLLER` y `PRIVACY_CONTACT` con información real.
 5. Crear el administrador mediante el comando anterior contra esa base de datos.
 
-Las tablas se inicializan al primer acceso. El adaptador PostgreSQL está implementado; las pruebas locales usan SQLite. Verifica el proveedor PostgreSQL y la entrega SMTP antes de abrir el servicio. El registro en Vercel se bloquea si faltan responsable, contacto o servidor SMTP.
+Las tablas se inicializan al primer acceso. El adaptador PostgreSQL está implementado; las pruebas locales usan SQLite. Verifica el proveedor PostgreSQL y, si activas la recuperación, la entrega SMTP. El registro en Vercel se bloquea si faltan responsable o contacto de privacidad; SMTP es opcional.
 
 ## Privacidad y operación
 

@@ -31,7 +31,7 @@ El usuario de conexión necesita permiso para crear tablas e índices y utilizar
 
 Tras preparar la base, crea el administrador con el procedimiento del README, utilizando la misma conexión PostgreSQL. No se crea un administrador mediante el registro público.
 
-Conectar la base no basta para abrir el registro en Vercel: también deben configurarse el correo de recuperación (`SMTP_*`), `DATA_CONTROLLER` y `PRIVACY_CONTACT`. Los detalles están en el README.
+Conectar la base no basta para abrir el registro en Vercel: también deben configurarse `DATA_CONTROLLER` y `PRIVACY_CONTACT`. El correo de recuperación (`SMTP_*`) es opcional; sin SMTP se permite crear cuentas y la recuperación queda deshabilitada. Los detalles están en el README.
 
 ## Datos locales
 

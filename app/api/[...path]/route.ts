@@ -87,9 +87,7 @@ async function handle(req: NextRequest) {
     await limit("register-global", 100);
     if (
       process.env.VERCEL &&
-      (!process.env.DATA_CONTROLLER ||
-        !process.env.PRIVACY_CONTACT ||
-        !process.env.SMTP_HOST)
+      (!process.env.DATA_CONTROLLER || !process.env.PRIVACY_CONTACT)
     )
       throw new HttpError(503, "El registro no está configurado todavía.");
     const data = z

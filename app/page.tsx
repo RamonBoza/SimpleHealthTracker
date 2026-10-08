@@ -338,14 +338,16 @@ function Auth({
           <div className="auth-links">
             {mode === "login" ? (
               <>
-                <button
-                  onClick={() => {
-                    setMode("forgot");
-                    setError("");
-                  }}
-                >
-                  He olvidado mi contraseña
-                </button>
+                {privacy?.recovery && (
+                  <button
+                    onClick={() => {
+                      setMode("forgot");
+                      setError("");
+                    }}
+                  >
+                    He olvidado mi contraseña
+                  </button>
+                )}
                 <p>
                   ¿Es tu primera vez?{" "}
                   <button
