@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>SimpleHealthTracker</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 5rem);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#920029","secondary-container":"#fd8a42","on-primary-container":"#86af99","surface-container-high":"#dee8ff","surface-variant":"#d8e3fb","inverse-surface":"#263143","primary-fixed":"#c1ecd4","on-tertiary-container":"#ff7f8a","secondary":"#9b4500","background":"#f9f9ff","on-error-container":"#93000a","on-primary":"#ffffff","on-tertiary-fixed":"#40000d","surface-container-highest":"#d8e3fb","on-background":"#111c2d","surface-dim":"#cfdaf2","surface-container-lowest":"#ffffff","tertiary-fixed":"#ffdadb","error-container":"#ffdad6","surface-container":"#e7eeff","outline-variant":"#c1c8c2","inverse-primary":"#a5d0b9","on-primary-fixed-variant":"#274e3d","tertiary-fixed-dim":"#ffb2b7","on-surface":"#111c2d","error":"#ba1a1a","on-primary-fixed":"#002114","outline":"#717973","on-secondary-fixed":"#331200","primary":"#012d1d","tertiary":"#540014","on-secondary":"#ffffff","secondary-fixed":"#ffdbca","primary-fixed-dim":"#a5d0b9","inverse-on-surface":"#ecf1ff","surface-bright":"#f9f9ff","surface-tint":"#3f6653","secondary-fixed-dim":"#ffb68e","surface":"#f9f9ff","on-tertiary":"#ffffff","on-secondary-container":"#682c00","on-surface-variant":"#414844","tertiary-container":"#7d0022","surface-container-low":"#f0f3ff","primary-container":"#1b4332","on-error":"#ffffff","on-secondary-fixed-variant":"#763300"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"0.75rem","space-2xl":"3rem","gutter":"1rem","space-base":"1rem","margin-mobile":"1rem","space-xl":"2rem","space-sm":"0.5rem","space-xs":"0.25rem","space-xxs":"0.125rem","gutter-mobile":"0.75rem","margin":"1.5rem","space-lg":"1.5rem"},"fontFamily":{"display-lg-mobile":["Inter"],"label-sm":["Inter"],"body-sm":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"display-lg":["Inter"],"label-lg":["Inter"],"label-md":["Inter"],"headline-lg":["Inter"],"code-sm":["Inter"]},"fontSize":{"display-lg-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"700"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"code-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}]}}}};</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="SimpleHealthTracker Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1WoOcMIoFMM0tpgvJMsn_Wcbw4IqFJKomFEV44Cc4IlX3ftf4Xp4wbbGUBQFdRi-QD6jShjcb95Q11imjJzttpwfxyV29K7rBT5Kkl_7h7gnBjUVMOyjrTfWRvFIlAhJTk86TLhsVps6SamO75viS4J9FJik2hZOHs5Z37iJcNJFkx-jRIfawLfOmDdFa0LuVr4FendyX5hBcRVH4StT4cww-wOpadZNMitSpxX1fRL"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate">SimpleHealthTracker</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Diario</span></div></div><div class="flex items-center gap-space-sm flex-shrink-0"><div class="inline-flex items-center gap-space-xxs px-space-sm py-space-xxs rounded-full bg-surface-container-low text-on-primary-fixed-variant"><span class="material-symbols-outlined text-[16px] text-primary-container">check_circle</span><span class="font-label-sm text-label-sm">Sincronizado</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full">
+<div class="px-margin-mobile pt-space-md pb-space-2xl space-y-space-base max-w-lg mx-auto w-full">
+<!-- Top Context & Autosave Indicator -->
+<div class="flex items-start justify-between gap-space-sm pt-space-xs">
+<div class="min-w-0 flex-1">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Opciones y Configuración</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xxs">Personaliza tus metas, visibilidad de métricas y cuenta</p>
+</div>
+<div class="inline-flex items-center gap-space-xs px-space-sm py-space-xxs rounded-full bg-primary-fixed text-on-primary-fixed-variant transition-all duration-300" id="global-save-pill">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span class="font-label-sm text-label-sm">Cambios guardados</span>
+</div>
+</div>
+<!-- Bloque 1: Objetivo de Oficina -->
+<div class="bg-surface-container-lowest rounded-xl p-space-base shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Objetivo de Días de Oficina</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Presencialidad laboral mensual</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-space-xxs text-primary font-label-sm text-label-sm bg-surface-container-low px-space-sm py-0.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+          Activo
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Establece el número de días laborables presenciales que deseas cumplir al mes.
+      </p>
+<!-- Stepper Component -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Meta mensual</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-display-lg-mobile text-display-lg-mobile text-primary" id="office-count">18</span>
+<span class="font-label-md text-label-md text-on-surface-variant">días / mes</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button aria-label="Disminuir meta" class="w-11 h-11 rounded-lg bg-surface-container-lowest text-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform" id="btn-dec-office">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<button aria-label="Aumentar meta" class="w-11 h-11 rounded-lg bg-primary text-on-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform" id="btn-inc-office">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+<!-- Current Month Progress -->
+<div class="space-y-space-xs pt-space-xxs">
+<div class="flex items-center justify-between text-on-surface">
+<span class="font-label-md text-label-md text-on-surface">Mes actual (Octubre)</span>
+<span class="font-label-md text-label-md text-primary font-semibold">14 de 18 días (77%)</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500" style="width: 77%"></div>
+</div>
+</div>
+<!-- Toggle: Mostrar en Diario -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col pr-space-sm">
+<span class="font-label-lg text-label-lg text-on-surface">Mostrar contador en Diario</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Widget visible en el feed diario matutino</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer" id="toggle-office-diary" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<!-- Bloque 2: Indicadores Corporales y Rangos -->
+<div class="bg-surface-container-lowest rounded-xl p-space-base shadow-sm space-y-space-base">
+<div class="flex items-start gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<div class="min-w-0">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Indicadores Corporales</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Personaliza los rangos de referencia para tus gráficas y resúmenes. Ocultar un indicador no borrará tu historial.
+          </p>
+</div>
+</div>
+<!-- Lista de 4 Indicadores -->
+<div class="space-y-space-md pt-space-xs">
+<!-- 1. Peso Corporal -->
+<div class="bg-surface-container-low rounded-lg p-space-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[18px]">monitor_weight</span>
+<span class="font-label-lg text-label-lg text-on-surface">Peso Corporal</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer metric-toggle" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-high rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface-container-lowest after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mínimo (kg)</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" step="0.5" type="number" value="82.0"/>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Máximo (kg)</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" step="0.5" type="number" value="92.0"/>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-space-xxs">
+<span class="material-symbols-outlined text-[13px] text-primary">info</span>
+            Franja saludable en gráficas de Evolución
+          </p>
+</div>
+<!-- 2. Masa Grasa -->
+<div class="bg-surface-container-low rounded-lg p-space-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[18px]">percent</span>
+<span class="font-label-lg text-label-lg text-on-surface">Masa Grasa</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer metric-toggle" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-high rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface-container-lowest after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mínimo (%)</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" step="0.5" type="number" value="11.0"/>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Máximo (%)</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" step="0.5" type="number" value="22.0"/>
+</div>
+</div>
+</div>
+<!-- 3. Masa Muscular -->
+<div class="bg-surface-container-low rounded-lg p-space-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[18px]">fitness_center</span>
+<span class="font-label-lg text-label-lg text-on-surface">Masa Muscular</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer metric-toggle" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-high rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface-container-lowest after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mínimo (%)</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" step="0.5" type="number" value="33.0"/>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Máximo (%)</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" step="0.5" type="number" value="40.0"/>
+</div>
+</div>
+</div>
+<!-- 4. Grasa Visceral -->
+<div class="bg-surface-container-low rounded-lg p-space-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[18px]">vital_signs</span>
+<span class="font-label-lg text-label-lg text-on-surface">Grasa Visceral</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer metric-toggle" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-high rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface-container-lowest after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Nivel Mínimo</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" max="12" min="1" step="1" type="number" value="1"/>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Nivel Máximo (Ref. 9)</span>
+<input class="metric-input font-label-lg text-label-lg text-on-surface bg-transparent outline-none w-full py-0.5" max="12" min="1" step="1" type="number" value="9"/>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Rango seguro estándar: Nivel 1 a 9 (Escala clínica hasta 12)</p>
+</div>
+</div>
+</div>
+<!-- Bloque 3: Preferencias de Registro y Privacidad -->
+<div class="bg-surface-container-lowest rounded-xl p-space-base shadow-sm space-y-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">sync_saved_locally</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Registro y Privacidad</h2>
+</div>
+<!-- Recordatorio de autoguardado -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">bolt</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Autoguardado inmediato</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Las notas, comidas y pesos se guardan en tiempo real sin requerir confirmación manual.</span>
+</div>
+</div>
+<!-- Toggle Sincronización Salud -->
+<div class="flex items-center justify-between pt-space-xxs">
+<div class="flex flex-col pr-space-sm">
+<span class="font-label-lg text-label-lg text-on-surface">Sincronización de salud</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Apple Health &amp; Reloj inteligente</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-high rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Exportación de datos -->
+<div class="pt-space-xs">
+<button class="w-full h-11 px-space-base bg-surface-container rounded-lg flex items-center justify-between text-on-surface active:scale-[0.99] transition-transform" id="btn-export">
+<span class="font-label-md text-label-md flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-primary">download</span>
+            Exportar resumen de datos personales
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-lowest px-space-xs py-0.5 rounded">JSON / CSV</span>
+</button>
+</div>
+</div>
+<!-- Bloque 4: Gestión de Cuenta y Sesión -->
+<div class="bg-surface-container-lowest rounded-xl p-space-base shadow-sm space-y-space-base">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Cuenta y Sesión</h2>
+</div>
+<!-- Perfil Info -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm shrink-0">
+            J
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-on-surface truncate font-semibold">Juan Pérez</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">juan@simplehealth.local</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container px-space-sm py-0.5 rounded text-on-surface shrink-0">
+          Personal
+        </span>
+</div>
+<!-- Acciones de sesión -->
+<div class="space-y-space-sm pt-space-xs">
+<button class="w-full h-11 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs active:scale-[0.98] transition-transform" id="btn-logout">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+          Cerrar sesión
+        </button>
+<!-- Zona de Peligro -->
+<div class="pt-space-xs flex flex-col items-center">
+<button class="font-label-md text-label-md text-error flex items-center gap-space-xxs py-space-xs px-space-sm rounded hover:bg-error-container transition-colors" id="btn-delete-account">
+<span class="material-symbols-outlined text-[18px]">delete_forever</span>
+            Eliminar cuenta y datos permanentemente
+          </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      // 1. Highlight "Opciones" as active in the fixed bottom navigation bar
+      const navLinks = document.querySelectorAll('nav a[data-path]');
+      navLinks.forEach(link => {
+        const path = link.getAttribute('data-path');
+        const icon = link.querySelector('.material-symbols-outlined');
+        const label = link.querySelector('span:last-child');
+
+        if (path === 'opciones') {
+          link.classList.remove('text-on-surface-variant');
+          link.classList.add('text-primary');
+          if (icon) {
+            icon.style.fontVariationSettings = "'FILL' 1";
+          }
+          if (label) {
+            label.classList.add('font-bold');
+          }
+        } else {
+          link.classList.remove('text-primary');
+          link.classList.add('text-on-surface-variant');
+          if (icon) {
+            icon.style.fontVariationSettings = "'FILL' 0";
+          }
+          if (label) {
+            label.classList.remove('font-bold');
+          }
+        }
+      });
+
+      // 2. Office Days Stepper Micro-interaction
+      const countEl = document.getElementById('office-count');
+      const btnDec = document.getElementById('btn-dec-office');
+      const btnInc = document.getElementById('btn-inc-office');
+      let officeCount = 18;
+
+      function triggerSave() {
+        const pill = document.getElementById('global-save-pill');
+        if (!pill) return;
+        pill.innerHTML = `
+          <span class="material-symbols-outlined text-[14px] animate-spin">refresh</span>
+          <span class="font-label-sm text-label-sm">Guardando...</span>
+        `;
+        setTimeout(() => {
+          pill.innerHTML = `
+            <span class="material-symbols-outlined text-[14px]">check</span>
+            <span class="font-label-sm text-label-sm">Cambios guardados</span>
+          `;
+        }, 600);
+      }
+
+      if (btnDec && btnInc && countEl) {
+        btnDec.addEventListener('click', () => {
+          if (officeCount > 1) {
+            officeCount--;
+            countEl.textContent = officeCount;
+            triggerSave();
+          }
+        });
+        btnInc.addEventListener('click', () => {
+          if (officeCount < 31) {
+            officeCount++;
+            countEl.textContent = officeCount;
+            triggerSave();
+          }
+        });
+      }
+
+      // 3. Inputs & Toggles Autosave trigger
+      document.querySelectorAll('.metric-input, .metric-toggle, #toggle-office-diary').forEach(el => {
+        el.addEventListener('change', triggerSave);
+      });
+
+      // 4. Action triggers feedback
+      const btnExport = document.getElementById('btn-export');
+      if (btnExport) {
+        btnExport.addEventListener('click', () => {
+          const original = btnExport.innerHTML;
+          btnExport.innerHTML = `
+            <span class="font-label-md text-label-md flex items-center gap-space-xs text-primary">
+              <span class="material-symbols-outlined text-[18px]">check_circle</span>
+              Archivo descargado (export_salud.json)
+            </span>
+          `;
+          setTimeout(() => {
+            btnExport.innerHTML = original;
+          }, 2400);
+        });
+      }
+
+      const btnDelete = document.getElementById('btn-delete-account');
+      if (btnDelete) {
+        btnDelete.addEventListener('click', () => {
+          const confirmed = window.confirm("¿Estás seguro de que deseas eliminar permanentemente todos tus datos de salud y tu cuenta?");
+          if (confirmed) {
+            alert("Solicitud recibida. Tus datos serán borrados.");
+          }
+        });
+      }
+
+      const btnLogout = document.getElementById('btn-logout');
+      if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+          alert("Sesión cerrada correctamente.");
+        });
+      }
+    })();
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-label-md"><div class="flex items-center justify-around h-16 px-space-xs max-w-lg mx-auto"><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="diario" href="#"><span class="material-symbols-outlined text-[24px]">book</span><span class="font-label-sm text-label-sm mt-0.5">Diario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="calendario" href="#"><span class="material-symbols-outlined text-[24px]">calendar_month</span><span class="font-label-sm text-label-sm mt-0.5">Calendario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="evolucion" href="#"><span class="material-symbols-outlined text-[24px]">trending_up</span><span class="font-label-sm text-label-sm mt-0.5">Evolución</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="opciones" href="#"><span class="material-symbols-outlined text-[24px]">settings</span><span class="font-label-sm text-label-sm mt-0.5">Opciones</span></a></div></nav></body></html>

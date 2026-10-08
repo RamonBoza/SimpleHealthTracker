@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>SimpleHealthTracker</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 5rem);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#920029","secondary-container":"#fd8a42","on-primary-container":"#86af99","surface-container-high":"#dee8ff","surface-variant":"#d8e3fb","inverse-surface":"#263143","primary-fixed":"#c1ecd4","on-tertiary-container":"#ff7f8a","secondary":"#9b4500","background":"#f9f9ff","on-error-container":"#93000a","on-primary":"#ffffff","on-tertiary-fixed":"#40000d","surface-container-highest":"#d8e3fb","on-background":"#111c2d","surface-dim":"#cfdaf2","surface-container-lowest":"#ffffff","tertiary-fixed":"#ffdadb","error-container":"#ffdad6","surface-container":"#e7eeff","outline-variant":"#c1c8c2","inverse-primary":"#a5d0b9","on-primary-fixed-variant":"#274e3d","tertiary-fixed-dim":"#ffb2b7","on-surface":"#111c2d","error":"#ba1a1a","on-primary-fixed":"#002114","outline":"#717973","on-secondary-fixed":"#331200","primary":"#012d1d","tertiary":"#540014","on-secondary":"#ffffff","secondary-fixed":"#ffdbca","primary-fixed-dim":"#a5d0b9","inverse-on-surface":"#ecf1ff","surface-bright":"#f9f9ff","surface-tint":"#3f6653","secondary-fixed-dim":"#ffb68e","surface":"#f9f9ff","on-tertiary":"#ffffff","on-secondary-container":"#682c00","on-surface-variant":"#414844","tertiary-container":"#7d0022","surface-container-low":"#f0f3ff","primary-container":"#1b4332","on-error":"#ffffff","on-secondary-fixed-variant":"#763300"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"0.75rem","space-2xl":"3rem","gutter":"1rem","space-base":"1rem","margin-mobile":"1rem","space-xl":"2rem","space-sm":"0.5rem","space-xs":"0.25rem","space-xxs":"0.125rem","gutter-mobile":"0.75rem","margin":"1.5rem","space-lg":"1.5rem"},"fontFamily":{"display-lg-mobile":["Inter"],"label-sm":["Inter"],"body-sm":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"display-lg":["Inter"],"label-lg":["Inter"],"label-md":["Inter"],"headline-lg":["Inter"],"code-sm":["Inter"]},"fontSize":{"display-lg-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"700"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"code-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}]}}}};</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="SimpleHealthTracker Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1WoOcMIoFMM0tpgvJMsn_Wcbw4IqFJKomFEV44Cc4IlX3ftf4Xp4wbbGUBQFdRi-QD6jShjcb95Q11imjJzttpwfxyV29K7rBT5Kkl_7h7gnBjUVMOyjrTfWRvFIlAhJTk86TLhsVps6SamO75viS4J9FJik2hZOHs5Z37iJcNJFkx-jRIfawLfOmDdFa0LuVr4FendyX5hBcRVH4StT4cww-wOpadZNMitSpxX1fRL"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate">SimpleHealthTracker</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Diario</span></div></div><div class="flex items-center gap-space-sm flex-shrink-0"><div class="inline-flex items-center gap-space-xxs px-space-sm py-space-xxs rounded-full bg-surface-container-low text-on-primary-fixed-variant"><span class="material-symbols-outlined text-[16px] text-primary-container">check_circle</span><span class="font-label-sm text-label-sm">Sincronizado</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full px-margin-mobile py-space-sm space-y-space-base">
+<!-- Security & Role Header Banner -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container p-space-base shadow-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary-fixed text-[22px]">admin_panel_settings</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Panel de Control</span>
+<span class="px-space-xs py-space-xxs rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">SuperAdmin</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sesión activa · ID #ADM-8842</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xxs px-space-sm py-space-xxs rounded-full bg-surface-container-high text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm">Auditoría RGPD</span>
+</div>
+</div>
+<!-- Legal Compliance Callout -->
+<div class="mt-space-md p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px] flex-shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col text-on-surface-variant">
+<span class="font-label-md text-label-md text-on-surface">Trazabilidad estricta activa (RGPD / LOPD-GDD)</span>
+<p class="font-body-sm text-body-sm mt-0.5">
+          Toda consulta o modificación sobre historiales médicos queda registrada con hash inmutable y timestamp legal. El acceso indebido conlleva responsabilidad legal.
+        </p>
+</div>
+</div>
+</div>
+<!-- Quick Stats Bento Strip -->
+<div class="grid grid-cols-3 gap-space-sm">
+<div class="rounded-xl bg-surface-container-low p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Usuarios</span>
+<span class="material-symbols-outlined text-primary text-[18px]">group</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary mt-space-xs">1,248</span>
+<span class="font-label-sm text-label-sm text-on-primary-fixed-variant">+14 este mes</span>
+</div>
+<div class="rounded-xl bg-surface-container-low p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Auditorías</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">history_edu</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface mt-space-xs">84</span>
+<span class="font-label-sm text-label-sm text-secondary">3 hoy</span>
+</div>
+<div class="rounded-xl bg-surface-container-low p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Backups</span>
+<span class="material-symbols-outlined text-primary-container text-[18px]">cloud_done</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface mt-space-xs">100%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hace 2h</span>
+</div>
+</div>
+<!-- Search & Filter Controls -->
+<div class="rounded-xl bg-surface-container-lowest p-space-base shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">manage_search</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Directorio de Cuentas</h2>
+</div>
+<button class="px-space-sm py-space-xs rounded-lg bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center gap-space-xxs" type="button">
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+        Invitar
+      </button>
+</div>
+<!-- Search Input -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest" id="user-search-input" placeholder="Buscar por nombre, email o ID de expediente..." type="search"/>
+</div>
+<!-- Category Filter Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-space-xxs">
+<button class="px-space-sm py-1 rounded-full bg-primary text-on-primary font-label-sm text-label-sm whitespace-nowrap shadow-sm" type="button">
+        Todos (1,248)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-container-high" type="button">
+        Activos (1,190)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-container-high" type="button">
+        Invitados (42)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-container-high" type="button">
+        Bloqueados (16)
+      </button>
+</div>
+<!-- User List -->
+<div class="space-y-space-sm pt-space-xs">
+<!-- User Card 1: Juan Pérez (Creator/Admin) -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-space-xs transition-colors">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-md text-label-md flex-shrink-0">
+              JP
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface truncate">Juan Pérez</span>
+<span class="px-space-xxs py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">Admin</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">juan.perez@healthtracker.internal</span>
+</div>
+</div>
+<span class="px-space-xs py-space-xxs rounded-full bg-surface-container-highest text-on-primary-fixed-variant font-label-sm text-label-sm flex-shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> Activo
+          </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span>Sync: Hoy, 09:15</span>
+<span>31 días reg. / mes</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs">
+<button class="py-1.5 px-space-xs rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center" onclick="selectUserForAudit('Juan Pérez', 'USR-001', 'Admin')" type="button">
+            Ver Justificación
+          </button>
+<button class="py-1.5 px-space-xs rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center" type="button">
+            Gestionar Rol
+          </button>
+</div>
+</div>
+<!-- User Card 2: Dra. Marta Gómez (Nutricionista) -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-space-xs transition-colors">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-primary flex items-center justify-center font-label-md text-label-md flex-shrink-0">
+              MG
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface truncate">Dra. Marta Gómez</span>
+<span class="px-space-xxs py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">Nutricionista</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">marta.gomez@clinicasalud.es</span>
+</div>
+</div>
+<span class="px-space-xs py-space-xxs rounded-full bg-surface-container-highest text-on-primary-fixed-variant font-label-sm text-label-sm flex-shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> Activo
+          </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span>Sync: Ayer, 18:42</span>
+<span>28 días reg. / mes</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs">
+<button class="py-1.5 px-space-xs rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center" onclick="selectUserForAudit('Dra. Marta Gómez', 'USR-042', 'Nutricionista')" type="button">
+            Ver Justificación
+          </button>
+<button class="py-1.5 px-space-xs rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center" type="button">
+            Historial Clínico
+          </button>
+</div>
+</div>
+<!-- User Card 3: Carlos R. (Usuario) -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-space-xs transition-colors">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-label-md text-label-md flex-shrink-0">
+              CR
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface truncate">Carlos R.</span>
+<span class="px-space-xxs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Paciente</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">carlos.ramirez@correo.com</span>
+</div>
+</div>
+<span class="px-space-xs py-space-xxs rounded-full bg-surface-container-highest text-on-primary-fixed-variant font-label-sm text-label-sm flex-shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> Activo
+          </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span>Sync: Hace 3 horas</span>
+<span>19 días reg. / mes</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs">
+<button class="py-1.5 px-space-xs rounded bg-primary text-on-primary font-label-sm text-label-sm text-center" onclick="selectUserForAudit('Carlos R.', 'USR-512', 'Paciente')" type="button">
+            Solicitar Acceso
+          </button>
+<button class="py-1.5 px-space-xs rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center" type="button">
+            Auditoría
+          </button>
+</div>
+</div>
+<!-- User Card 4: Laura M. (Usuario - Incidencia / Bloqueada) -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-space-xs transition-colors">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-dim text-outline flex items-center justify-center font-label-md text-label-md flex-shrink-0">
+              LM
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface truncate">Laura M.</span>
+<span class="px-space-xxs py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm">En pausa</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">laura.martinez@ejemplo.es</span>
+</div>
+</div>
+<span class="px-space-xs py-space-xxs rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm flex-shrink-0">
+            Pendiente
+          </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span>Sync: Hace 14 días</span>
+<span>4 días reg. / mes</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs">
+<button class="py-1.5 px-space-xs rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center" onclick="selectUserForAudit('Laura M.', 'USR-789', 'Paciente')" type="button">
+            Ver Justificación
+          </button>
+<button class="py-1.5 px-space-xs rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center" type="button">
+            Reactivar
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Critical Section: Regulated Justified Access to Health Records -->
+<div class="rounded-xl bg-surface-container-lowest p-space-base shadow-md space-y-space-base">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">health_and_safety</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Acceso Justificado a Salud</h2>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">Crítico</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+          Desbloqueo temporal de expedientes dietéticos y biométricos bajo requerimiento formal.
+        </span>
+</div>
+</div>
+<!-- Active User Target Selection indicator -->
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between" id="target-user-display">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">person_pin</span>
+<span class="font-label-md text-label-md text-on-surface">Objetivo: <strong id="selected-user-name">Carlos R. (USR-512)</strong></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rol: Paciente</span>
+</div>
+<form class="space-y-space-md" id="justified-access-form" onsubmit="event.preventDefault(); handleGrantAccess();">
+<!-- Legal Justification Reason -->
+<div class="space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between" for="legal-reason">
+<span>Motivo Reglamentario</span>
+<span class="text-secondary font-label-sm text-label-sm">* Requerido por ley</span>
+</label>
+<div class="relative">
+<select class="w-full py-2.5 px-3 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm appearance-none focus:outline-none focus:bg-surface-container-lowest" id="legal-reason" required="">
+<option value="support">Soporte técnico a petición expresa del usuario</option>
+<option value="sync_debug">Inspección técnica por fallo crítico de sincronización</option>
+<option value="export_req">Petición legal formal de exportación de datos (Portabilidad)</option>
+<option value="clinical_supervision">Supervisión clínica delegada por el profesional asignado</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-on-surface-variant pointer-events-none text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Ticket ID / Justification Documentation -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface" for="ticket-id">Nº de Ticket / Solicitud</label>
+<input class="w-full py-2 px-3 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest" id="ticket-id" placeholder="ej. TCK-99410" required="" type="text" value="TCK-88219"/>
+</div>
+<div class="space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface" for="duration-select">Duración de Sesión</label>
+<select class="w-full py-2 px-3 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm appearance-none focus:outline-none focus:bg-surface-container-lowest" id="duration-select">
+<option value="15">15 minutos</option>
+<option value="30">30 minutos</option>
+<option value="60">1 hora (Máx.)</option>
+</select>
+</div>
+</div>
+<!-- Detailed Justification Text -->
+<div class="space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface" for="justification-text">Detalle de Justificación Técnica</label>
+<textarea class="w-full p-3 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest" id="justification-text" placeholder="Describa el alcance de la inspección, logs relacionados y el consentimiento explícito recogido..." required="" rows="3">Usuario reporta desajuste en el recuento calórico de almuerzos del 12/04. Consentimiento formal confirmado por ticket de soporte.</textarea>
+</div>
+<!-- Consent Checkbox -->
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low cursor-pointer">
+<input class="mt-1 w-4 h-4 rounded text-primary bg-surface-container-lowest focus:ring-0" required="" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+          Certifico bajo declaración responsable que este acceso es estrictamente profesional y se ajusta al consentimiento y la normativa de protección de datos personales de salud.
+        </span>
+</label>
+<!-- Action Button -->
+<button class="w-full py-3 px-space-base rounded-lg bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-space-sm shadow-md active:scale-95 transition-transform" type="submit">
+<span class="material-symbols-outlined text-[20px]">lock_open</span>
+        Desbloquear Expediente Médico Auditado
+      </button>
+</form>
+<!-- Confirmation Toast (Hidden by default, triggered on submit) -->
+<div class="hidden p-space-sm rounded-lg bg-primary-fixed text-on-primary-fixed-variant flex items-center gap-space-sm" id="access-success-toast">
+<span class="material-symbols-outlined text-primary-container text-[20px]">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md">Acceso Temporal Concedido</span>
+<span class="font-body-sm text-body-sm">Sesión auditada iniciada. Token de sesión: #AUD-TK-44109</span>
+</div>
+</div>
+</div>
+<!-- Recent Audit Log / Access History -->
+<div class="rounded-xl bg-surface-container-lowest p-space-base shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">manage_history</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Registro Reciente de Auditoría</h2>
+</div>
+<button class="text-primary font-label-sm text-label-sm flex items-center gap-space-xxs" type="button">
+<span>Exportar Log</span>
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+</button>
+</div>
+<!-- Audit Timeline / Cards -->
+<div class="space-y-space-sm">
+<!-- Log Entry 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-space-xs">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-label-md text-on-surface">Juan Pérez (SuperAdmin)</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hoy, 10:14</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Acceso a expediente: <strong class="text-on-surface">Carlos R. (USR-512)</strong> · Duración: 12 min
+        </p>
+<div class="flex items-center justify-between pt-space-xxs text-on-surface-variant font-label-sm text-label-sm">
+<span>Motivo: Soporte sincronización (TCK-88102)</span>
+<span class="px-space-xs py-space-xxs rounded bg-surface-container-high text-on-surface font-code-sm text-code-sm">hash: 9a7b...4e</span>
+</div>
+</div>
+<!-- Log Entry 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-space-xs">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-on-surface">Dra. Marta Gómez (Nutricionista)</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ayer, 17:30</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Revisión pauta nutricional: <strong class="text-on-surface">Laura M. (USR-789)</strong> · Duración: 25 min
+        </p>
+<div class="flex items-center justify-between pt-space-xxs text-on-surface-variant font-label-sm text-label-sm">
+<span>Motivo: Consulta clínica periódica consentida</span>
+<span class="px-space-xs py-space-xxs rounded bg-surface-container-high text-on-surface font-code-sm text-code-sm">hash: 1c3f...9b</span>
+</div>
+</div>
+<!-- Log Entry 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-space-xs">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="font-label-md text-label-md text-on-surface">Sistema Automático (Backup Daemon)</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">12 Abr, 03:00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Cifrado y réplica incremental de base de datos cifrada (1,248 cuentas)
+        </p>
+<div class="flex items-center justify-between pt-space-xxs text-on-surface-variant font-label-sm text-label-sm">
+<span>Motivo: Política de seguridad R-04</span>
+<span class="px-space-xs py-space-xxs rounded bg-surface-container-high text-on-surface font-code-sm text-code-sm">hash: d81a...33</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Administration & Infrastructure Settings -->
+<div class="rounded-xl bg-surface-container-lowest p-space-base shadow-sm space-y-space-base">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Configuración Global</h2>
+</div>
+<div class="space-y-space-md">
+<!-- Setting: User Registration Mode -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Modo de Registro</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Limitar altas solo mediante invitación médica</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" id="toggle-invite-only" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-dim peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:border-surface-dim after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Setting: Storage Quotas & Backup status -->
+<div class="p-space-sm rounded-lg bg-surface-container-low space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">hard_drive</span>
+<span class="font-label-lg text-label-lg text-on-surface">Cuota de Almacenamiento Cifrado</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2.4 GB / 10 GB (24%)</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
+<div class="bg-primary-container h-2 rounded-full w-[24%]"></div>
+</div>
+<div class="flex items-center justify-between pt-space-xxs text-on-surface-variant font-label-sm text-label-sm">
+<span>Copias de seguridad: Cada 24h</span>
+<span class="text-primary font-label-sm text-label-sm cursor-pointer hover:underline">Ejecutar copia ahora</span>
+</div>
+</div>
+<!-- Safety Notice Footer -->
+<div class="flex items-center justify-center gap-space-xs text-on-surface-variant py-space-xs">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="font-label-sm text-label-sm">Cifrado de extremo a extremo AES-256 GCM</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function selectUserForAudit(name, id, role) {
+    const displayName = document.getElementById('selected-user-name');
+    const userDisplayContainer = document.getElementById('target-user-display');
+    if (displayName) {
+      displayName.textContent = `${name} (${id})`;
+    }
+    if (userDisplayContainer) {
+      userDisplayContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      userDisplayContainer.classList.add('bg-primary-fixed');
+      setTimeout(() => {
+        userDisplayContainer.classList.remove('bg-primary-fixed');
+      }, 1500);
+    }
+  }
+
+  function handleGrantAccess() {
+    const toast = document.getElementById('access-success-toast');
+    if (toast) {
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4000);
+    }
+  }
+
+  // Live filter simulation
+  const searchInput = document.getElementById('user-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const userCards = document.querySelectorAll('#user-search-input ~ div .p-space-sm, .space-y-space-sm > .p-space-sm');
+      userCards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(term) || term === '') {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-label-md"><div class="flex items-center justify-around h-16 px-space-xs max-w-lg mx-auto"><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="diario" href="#"><span class="material-symbols-outlined text-[24px]">book</span><span class="font-label-sm text-label-sm mt-0.5">Diario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="calendario" href="#"><span class="material-symbols-outlined text-[24px]">calendar_month</span><span class="font-label-sm text-label-sm mt-0.5">Calendario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="evolucion" href="#"><span class="material-symbols-outlined text-[24px]">trending_up</span><span class="font-label-sm text-label-sm mt-0.5">Evolución</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="opciones" href="#"><span class="material-symbols-outlined text-[24px]">settings</span><span class="font-label-sm text-label-sm mt-0.5">Opciones</span></a></div></nav></body></html>

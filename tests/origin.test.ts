@@ -1,0 +1,63 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { allowedOrigin } from "../lib/origin";
+test("localhost y 127.0.0.1 son equivalentes solo en desarrollo y en el mismo puerto", () => {
+  assert.equal(
+    allowedOrigin(
+      "http://127.0.0.1:3000",
+      "http://localhost:3000",
+      undefined,
+      true,
+    ),
+    true,
+  );
+  assert.equal(
+    allowedOrigin(
+      "http://localhost:3000",
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
+      true,
+    ),
+    true,
+  );
+  assert.equal(
+    allowedOrigin(
+      "http://127.0.0.1:3001",
+      "http://localhost:3000",
+      undefined,
+      true,
+    ),
+    false,
+  );
+  assert.equal(
+    allowedOrigin(
+      "https://evil.example",
+      "http://localhost:3000",
+      undefined,
+      true,
+    ),
+    false,
+  );
+  assert.equal(
+    allowedOrigin(null, "http://localhost:3000", undefined, true),
+    false,
+  );
+  assert.equal(
+    allowedOrigin(
+      "http://127.0.0.1:3000",
+      "http://localhost:3000",
+      undefined,
+      false,
+    ),
+    false,
+  );
+  assert.equal(
+    allowedOrigin(
+      "https://health.example",
+      "http://localhost:3000",
+      "https://health.example",
+      false,
+    ),
+    true,
+  );
+});

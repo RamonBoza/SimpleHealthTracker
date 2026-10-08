@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>SimpleHealthTracker</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 5rem);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#920029","secondary-container":"#fd8a42","on-primary-container":"#86af99","surface-container-high":"#dee8ff","surface-variant":"#d8e3fb","inverse-surface":"#263143","primary-fixed":"#c1ecd4","on-tertiary-container":"#ff7f8a","secondary":"#9b4500","background":"#f9f9ff","on-error-container":"#93000a","on-primary":"#ffffff","on-tertiary-fixed":"#40000d","surface-container-highest":"#d8e3fb","on-background":"#111c2d","surface-dim":"#cfdaf2","surface-container-lowest":"#ffffff","tertiary-fixed":"#ffdadb","error-container":"#ffdad6","surface-container":"#e7eeff","outline-variant":"#c1c8c2","inverse-primary":"#a5d0b9","on-primary-fixed-variant":"#274e3d","tertiary-fixed-dim":"#ffb2b7","on-surface":"#111c2d","error":"#ba1a1a","on-primary-fixed":"#002114","outline":"#717973","on-secondary-fixed":"#331200","primary":"#012d1d","tertiary":"#540014","on-secondary":"#ffffff","secondary-fixed":"#ffdbca","primary-fixed-dim":"#a5d0b9","inverse-on-surface":"#ecf1ff","surface-bright":"#f9f9ff","surface-tint":"#3f6653","secondary-fixed-dim":"#ffb68e","surface":"#f9f9ff","on-tertiary":"#ffffff","on-secondary-container":"#682c00","on-surface-variant":"#414844","tertiary-container":"#7d0022","surface-container-low":"#f0f3ff","primary-container":"#1b4332","on-error":"#ffffff","on-secondary-fixed-variant":"#763300"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"0.75rem","space-2xl":"3rem","gutter":"1rem","space-base":"1rem","margin-mobile":"1rem","space-xl":"2rem","space-sm":"0.5rem","space-xs":"0.25rem","space-xxs":"0.125rem","gutter-mobile":"0.75rem","margin":"1.5rem","space-lg":"1.5rem"},"fontFamily":{"display-lg-mobile":["Inter"],"label-sm":["Inter"],"body-sm":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"display-lg":["Inter"],"label-lg":["Inter"],"label-md":["Inter"],"headline-lg":["Inter"],"code-sm":["Inter"]},"fontSize":{"display-lg-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"700"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"code-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}]}}}};</script></head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="SimpleHealthTracker Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1WoOcMIoFMM0tpgvJMsn_Wcbw4IqFJKomFEV44Cc4IlX3ftf4Xp4wbbGUBQFdRi-QD6jShjcb95Q11imjJzttpwfxyV29K7rBT5Kkl_7h7gnBjUVMOyjrTfWRvFIlAhJTk86TLhsVps6SamO75viS4J9FJik2hZOHs5Z37iJcNJFkx-jRIfawLfOmDdFa0LuVr4FendyX5hBcRVH4StT4cww-wOpadZNMitSpxX1fRL"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate">SimpleHealthTracker</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Diario</span></div></div><div class="flex items-center gap-space-sm flex-shrink-0"><div class="inline-flex items-center gap-space-xxs px-space-sm py-space-xxs rounded-full bg-surface-container-low text-on-primary-fixed-variant"><span class="material-symbols-outlined text-[16px] text-primary-container">check_circle</span><span class="font-label-sm text-label-sm">Sincronizado</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-8">
+<!-- 1. DATE SELECTOR & STATUS STRIP -->
+<section class="w-full bg-surface-container-lowest px-margin-mobile pt-3 pb-3 shadow-[0_2px_8px_rgba(1,45,29,0.03)]">
+<!-- Header row: Navigator + Month display -->
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-space-xs">
+<button aria-label="Día anterior" class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-primary active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight">Octubre 2024</span>
+<button aria-label="Día siguiente" class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-primary active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<button aria-label="Abrir calendario" class="flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant text-label-md font-label-md active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">calendar_today</span>
+<span>Mes</span>
+</button>
+</div>
+<!-- 7-day horizontal strip -->
+<div class="grid grid-cols-7 gap-1 text-center">
+<!-- Mon 21 -->
+<button class="flex flex-col items-center py-2 px-1 rounded-xl bg-surface-container-low/60 text-on-surface-variant hover:bg-surface-container-low" type="button">
+<span class="font-label-sm text-label-sm uppercase opacity-75">Lun</span>
+<span class="font-headline-sm text-headline-sm mt-0.5">21</span>
+</button>
+<!-- Tue 22 -->
+<button class="flex flex-col items-center py-2 px-1 rounded-xl bg-surface-container-low/60 text-on-surface-variant hover:bg-surface-container-low" type="button">
+<span class="font-label-sm text-label-sm uppercase opacity-75">Mar</span>
+<span class="font-headline-sm text-headline-sm mt-0.5">22</span>
+</button>
+<!-- Wed 23 -->
+<button class="flex flex-col items-center py-2 px-1 rounded-xl bg-surface-container-low/60 text-on-surface-variant hover:bg-surface-container-low" type="button">
+<span class="font-label-sm text-label-sm uppercase opacity-75">Mié</span>
+<span class="font-headline-sm text-headline-sm mt-0.5">23</span>
+</button>
+<!-- Thu 24 (Active / Selected - Today) -->
+<button class="flex flex-col items-center py-2 px-1 rounded-xl bg-primary text-on-primary shadow-sm scale-[1.03] transition-transform" type="button">
+<span class="font-label-sm text-label-sm uppercase text-primary-fixed">Jue</span>
+<span class="font-headline-sm text-headline-sm font-bold mt-0.5">24</span>
+</button>
+<!-- Fri 25 -->
+<button class="flex flex-col items-center py-2 px-1 rounded-xl bg-surface-container-low/60 text-on-surface-variant hover:bg-surface-container-low" type="button">
+<span class="font-label-sm text-label-sm uppercase opacity-75">Vie</span>
+<span class="font-headline-sm text-headline-sm mt-0.5">25</span>
+</button>
+<!-- Sat 26 -->
+<button class="flex flex-col items-center py-2 px-1 rounded-xl bg-surface-container-low/60 text-on-surface-variant hover:bg-surface-container-low" type="button">
+<span class="font-label-sm text-label-sm uppercase opacity-75">Sáb</span>
+<span class="font-headline-sm text-headline-sm mt-0.5">26</span>
+</button>
+<!-- Sun 27 -->
+<button class="flex flex-col items-center py-2 px-1 rounded-xl bg-surface-container-low/60 text-on-surface-variant hover:bg-surface-container-low" type="button">
+<span class="font-label-sm text-label-sm uppercase opacity-75">Dom</span>
+<span class="font-headline-sm text-headline-sm mt-0.5">27</span>
+</button>
+</div>
+<!-- Status Sub-bar: Day text & Pulse Autosave Indicator -->
+<div class="flex items-center justify-between mt-3 pt-2.5 bg-surface-container-low/40 rounded-lg px-2.5">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-primary font-semibold">Hoy, 24 de octubre</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Día 298</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-fixed-dim opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary-container"></span>
+</span>
+<span class="font-label-sm text-label-sm text-on-primary-fixed-variant">Autoguardado activo</span>
+</div>
+</div>
+</section>
+<!-- 2. QUICK SHORTCUTS HORIZONTAL CHIPS -->
+<div class="w-full px-margin-mobile mt-3 overflow-x-auto no-scrollbar">
+<div class="flex items-center gap-2 min-w-max pb-1">
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary text-on-primary text-label-md font-label-md shadow-sm active:scale-95 transition-transform" href="#modulo-comida">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+<span>+ Comida</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-primary text-label-md font-label-md shadow-sm active:scale-95 transition-transform" href="#modulo-mediciones">
+<span class="material-symbols-outlined text-[16px] text-primary">scale</span>
+<span>+ Peso (84.2 kg)</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-primary text-label-md font-label-md shadow-sm active:scale-95 transition-transform" href="#modulo-sueno">
+<span class="material-symbols-outlined text-[16px] text-primary">bedtime</span>
+<span>+ Sueño (7h 20m)</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-primary text-label-md font-label-md shadow-sm active:scale-95 transition-transform" href="#modulo-actividad">
+<span class="material-symbols-outlined text-[16px] text-primary">fitness_center</span>
+<span>+ Actividad</span>
+</a>
+</div>
+</div>
+<!-- MAIN SCROLLABLE STREAM OF MODULES -->
+<div class="px-margin-mobile flex flex-col gap-3.5 mt-3">
+<!-- MODULE A: ALIMENTACIÓN -->
+<article class="w-full rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_4px_rgba(15,23,42,0.05)] flex flex-col gap-3" id="modulo-comida">
+<!-- Header -->
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">restaurant_menu</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight">Alimentación</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Control del plan nutricional</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+          3 de 4 registradas
+        </span>
+</div>
+<!-- Meal Slot 1: Desayuno -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">wb_twilight</span>
+<span class="font-label-lg text-label-lg text-primary font-semibold">Desayuno</span>
+</div>
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span>08:30</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface">Tortilla de 2 huevos con espinacas y café solo</p>
+<!-- Accessible 3-segment pill control -->
+<div class="grid grid-cols-3 gap-1.5 pt-0.5">
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-primary-container text-on-primary text-label-sm font-label-sm shadow-xs" type="button">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span class="truncate">Sigue dieta</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-surface-container text-on-surface-variant text-label-sm font-label-sm opacity-60" type="button">
+<span class="material-symbols-outlined text-[15px]">adjust</span>
+<span class="truncate">Parcial</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-surface-container text-on-surface-variant text-label-sm font-label-sm opacity-60" type="button">
+<span class="material-symbols-outlined text-[15px]">cancel</span>
+<span class="truncate">Fuera</span>
+</button>
+</div>
+</div>
+<!-- Meal Slot 2: Comida -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">sunny</span>
+<span class="font-label-lg text-label-lg text-primary font-semibold">Comida</span>
+</div>
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span>14:15</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface">Salmón a la plancha con arroz integral y ensalada verde</p>
+<div class="grid grid-cols-3 gap-1.5 pt-0.5">
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-primary-container text-on-primary text-label-sm font-label-sm shadow-xs" type="button">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span class="truncate">Sigue dieta</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-surface-container text-on-surface-variant text-label-sm font-label-sm opacity-60" type="button">
+<span class="material-symbols-outlined text-[15px]">adjust</span>
+<span class="truncate">Parcial</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-surface-container text-on-surface-variant text-label-sm font-label-sm opacity-60" type="button">
+<span class="material-symbols-outlined text-[15px]">cancel</span>
+<span class="truncate">Fuera</span>
+</button>
+</div>
+</div>
+<!-- Meal Slot 3: Merienda -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">local_cafe</span>
+<span class="font-label-lg text-label-lg text-primary font-semibold">Merienda</span>
+</div>
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span>18:00</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface">Yogur griego natural con nueces y una manzana</p>
+<div class="grid grid-cols-3 gap-1.5 pt-0.5">
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-primary-container text-on-primary text-label-sm font-label-sm shadow-xs" type="button">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span class="truncate">Sigue dieta</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-surface-container text-on-surface-variant text-label-sm font-label-sm opacity-60" type="button">
+<span class="material-symbols-outlined text-[15px]">adjust</span>
+<span class="truncate">Parcial</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-1.5 px-1 rounded-lg bg-surface-container text-on-surface-variant text-label-sm font-label-sm opacity-60" type="button">
+<span class="material-symbols-outlined text-[15px]">cancel</span>
+<span class="truncate">Fuera</span>
+</button>
+</div>
+</div>
+<!-- Meal Slot 4: Cena (Pendiente / Input activo) -->
+<div class="rounded-xl bg-surface-container p-3 flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">dark_mode</span>
+<span class="font-label-lg text-label-lg text-primary font-semibold">Cena</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+            Pendiente
+          </span>
+</div>
+<!-- Inline input -->
+<input class="w-full bg-surface-container-lowest rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface placeholder:text-outline outline-none shadow-xs focus:ring-0" placeholder="¿Qué has cenado hoy? Ej. Pechuga con verduras..." type="text"/>
+<!-- 3 options ready to tap -->
+<div class="grid grid-cols-3 gap-1.5">
+<button class="flex items-center justify-center gap-1 py-2 px-1 rounded-lg bg-surface-container-lowest text-primary hover:bg-primary-fixed text-label-sm font-label-sm shadow-xs active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[15px] text-primary-container">check_circle</span>
+<span class="truncate">Sigue dieta</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-2 px-1 rounded-lg bg-surface-container-lowest text-secondary-container hover:bg-secondary-fixed text-label-sm font-label-sm shadow-xs active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[15px]">adjust</span>
+<span class="truncate">Parcial</span>
+</button>
+<button class="flex items-center justify-center gap-1 py-2 px-1 rounded-lg bg-surface-container-lowest text-error hover:bg-error-container text-label-sm font-label-sm shadow-xs active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[15px]">cancel</span>
+<span class="truncate">Fuera</span>
+</button>
+</div>
+</div>
+<!-- Add Extra Meal Option -->
+<button class="w-full py-2.5 rounded-xl bg-surface-container-low text-primary font-label-md text-label-md flex items-center justify-center gap-1.5 active:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Añadir otra comida o snack</span>
+</button>
+</article>
+<!-- MODULE B: ACTIVIDAD FÍSICA & MOVIMIENTO -->
+<article class="w-full rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_4px_rgba(15,23,42,0.05)] flex flex-col gap-3" id="modulo-actividad">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight">Actividad Física</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fuerza, cardio y movimiento diario</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span>Guardado</span>
+</div>
+</div>
+<!-- Sub-block: Fuerza (1 por día) -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary font-semibold">Rutina de Fuerza</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1 sesión / día</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5">
+<button class="py-2 px-1 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm text-center shadow-xs" type="button">
+            Push A
+          </button>
+<button class="py-2 px-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-sm text-label-sm text-center shadow-xs hover:bg-surface-container" type="button">
+            Pull A
+          </button>
+<button class="py-2 px-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-sm text-label-sm text-center shadow-xs hover:bg-surface-container" type="button">
+            Piernas
+          </button>
+<button class="py-2 px-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-sm text-label-sm text-center shadow-xs hover:bg-surface-container" type="button">
+            Full Body
+          </button>
+</div>
+</div>
+<!-- Sub-block: Otras actividades -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-2">
+<span class="font-label-md text-label-md text-primary font-semibold">Otras Actividades</span>
+<!-- Added items -->
+<div class="flex flex-wrap items-center gap-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-primary text-label-sm font-label-sm shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">directions_walk</span>
+<span>Caminata 45 min</span>
+<button aria-label="Eliminar caminata" class="ml-1 text-outline hover:text-error" type="button">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+</div>
+<!-- Quick suggestions -->
+<div class="flex items-center gap-1.5 pt-1 overflow-x-auto no-scrollbar">
+<span class="font-label-sm text-label-sm text-on-surface-variant pr-1">Sugerencias:</span>
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm active:bg-primary active:text-on-primary" type="button">
+            + Bici
+          </button>
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm active:bg-primary active:text-on-primary" type="button">
+            + Pádel
+          </button>
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm active:bg-primary active:text-on-primary" type="button">
+            + Yoga
+          </button>
+</div>
+</div>
+<!-- Sub-block: Pasos del día -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs">
+<span class="material-symbols-outlined text-[22px]">footprint</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Pasos diarios</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">8,420</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center bg-surface-container-lowest rounded-lg p-0.5 shadow-xs">
+<button aria-label="Restar 500 pasos" class="w-8 h-8 rounded-md flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95" type="button">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<button aria-label="Sumar 500 pasos" class="w-8 h-8 rounded-md flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span>
+</div>
+</div>
+</article>
+<!-- MODULE C: DESCANSO (SUEÑO) -->
+<article class="w-full rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_4px_rgba(15,23,42,0.05)] flex flex-col gap-3" id="modulo-sueno">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">bedtime</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight">Descanso &amp; Sueño</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Asignado a la noche previa al despertar</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+<span>Apple Health</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Sleep Hours Input -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tiempo dormido</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">7</span>
+<span class="font-label-md text-label-md text-on-surface-variant">h</span>
+<span class="font-headline-lg text-headline-lg text-primary font-bold ml-1">35</span>
+<span class="font-label-md text-label-md text-on-surface-variant">m</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container mt-1">✓ Óptimo (+7h)</span>
+</div>
+<!-- Sleep Quality Metric -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Calidad de sueño</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">82</span>
+<span class="font-label-md text-label-md text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<!-- Stylized progress bar -->
+<div class="w-full bg-surface-container rounded-full h-2 mt-2 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 82%;"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- MODULE D: OFICINA (DÍA LABORAL) -->
+<article class="w-full rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_4px_rgba(15,23,42,0.05)] flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight">Día de Oficina</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Objetivo: 18 días presenciales/mes</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold">14 / 18 días</span>
+</div>
+<!-- Segmented choice control -->
+<div class="grid grid-cols-3 gap-1.5 bg-surface-container-low p-1 rounded-xl">
+<button class="py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-xs flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Sí (Presencial)</span>
+</button>
+<button class="py-2 rounded-lg text-on-surface font-label-md text-label-md hover:bg-surface-container-lowest flex items-center justify-center" type="button">
+          No (Remoto)
+        </button>
+<button class="py-2 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-lowest flex items-center justify-center" type="button">
+          Libre / Festivo
+        </button>
+</div>
+</article>
+<!-- MODULE E: MEDICIONES CORPORALES -->
+<article class="w-full rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_4px_rgba(15,23,42,0.05)] flex flex-col gap-3" id="modulo-mediciones">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">monitor_weight</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight">Mediciones Corporales</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Valores opcionales de bioimpedancia</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">done_all</span>
+<span>Actualizado</span>
+</div>
+</div>
+<!-- 2x2 Grid -->
+<div class="grid grid-cols-2 gap-2.5">
+<!-- 1. Peso -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Peso corporal</span>
+<span class="material-symbols-outlined text-[14px] text-outline">edit</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">84.2</span>
+<span class="font-label-md text-label-md text-on-surface-variant">kg</span>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm text-center">
+            En rango (82–92 kg)
+          </span>
+</div>
+<!-- 2. Grasa Corporal -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Masa grasa</span>
+<span class="material-symbols-outlined text-[14px] text-outline">edit</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">18.4</span>
+<span class="font-label-md text-label-md text-on-surface-variant">%</span>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm text-center">
+            Saludable (11–22%)
+          </span>
+</div>
+<!-- 3. Masa Muscular -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Masa muscular</span>
+<span class="material-symbols-outlined text-[14px] text-outline">edit</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">36.8</span>
+<span class="font-label-md text-label-md text-on-surface-variant">%</span>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm text-center">
+            Rango normal (33–40%)
+          </span>
+</div>
+<!-- 4. Grasa Visceral -->
+<div class="rounded-xl bg-surface-container-low/50 p-3 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Grasa visceral</span>
+<span class="material-symbols-outlined text-[14px] text-outline">edit</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">5</span>
+<span class="font-label-md text-label-md text-on-surface-variant">nivel</span>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm text-center">
+            Excelente (1–9)
+          </span>
+</div>
+</div>
+</article>
+<!-- MODULE F: NOTAS GENERALES -->
+<article class="w-full rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_4px_rgba(15,23,42,0.05)] flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">stylus_note</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-tight">Notas del Día</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline-variant">Autoguardado</span>
+</div>
+<textarea class="w-full bg-surface-container-low/60 rounded-xl p-3 text-body-md font-body-md text-on-surface placeholder:text-outline outline-none resize-none focus:bg-surface-container-lowest transition-colors" placeholder="Apunta sensaciones sobre digestión, niveles de energía, estrés o cualquier síntoma notable..." rows="3"></textarea>
+</article>
+<!-- BOTTOM DELIGHT CUE: ZERO FRICTION CONFIRMATION (REPLACES 'GUARDAR DÍA') -->
+<div class="w-full flex items-center justify-center py-4">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-fixed/80 backdrop-blur-md shadow-xs">
+<span class="material-symbols-outlined text-primary text-[16px]">bolt</span>
+<span class="font-label-md text-label-md text-on-primary-fixed-variant">Todos los cambios se guardan automáticamente al instante</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interactions for interactive feedback on tapping pills
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Gentle haptic-style visual reaction if not already primary active
+      if (!this.classList.contains('bg-primary') && this.closest('.grid')) {
+        const siblings = this.parentElement.querySelectorAll('button');
+        siblings.forEach(s => {
+          s.classList.remove('bg-primary', 'text-on-primary', 'bg-primary-container', 'shadow-xs');
+          s.classList.add('opacity-60');
+        });
+        this.classList.remove('opacity-60');
+        this.classList.add('bg-primary-container', 'text-on-primary', 'shadow-xs');
+      }
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-label-md"><div class="flex items-center justify-around h-16 px-space-xs max-w-lg mx-auto"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs transition-colors text-primary font-label-md" data-path="diario" href="#"><span class="material-symbols-outlined text-[24px]">book</span><span class="font-label-sm text-label-sm mt-0.5">Diario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="calendario" href="#"><span class="material-symbols-outlined text-[24px]">calendar_month</span><span class="font-label-sm text-label-sm mt-0.5">Calendario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="evolucion" href="#"><span class="material-symbols-outlined text-[24px]">trending_up</span><span class="font-label-sm text-label-sm mt-0.5">Evolución</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="opciones" href="#"><span class="material-symbols-outlined text-[24px]">settings</span><span class="font-label-sm text-label-sm mt-0.5">Opciones</span></a></div></nav></body></html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>SimpleHealthTracker</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 5rem);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#920029","secondary-container":"#fd8a42","on-primary-container":"#86af99","surface-container-high":"#dee8ff","surface-variant":"#d8e3fb","inverse-surface":"#263143","primary-fixed":"#c1ecd4","on-tertiary-container":"#ff7f8a","secondary":"#9b4500","background":"#f9f9ff","on-error-container":"#93000a","on-primary":"#ffffff","on-tertiary-fixed":"#40000d","surface-container-highest":"#d8e3fb","on-background":"#111c2d","surface-dim":"#cfdaf2","surface-container-lowest":"#ffffff","tertiary-fixed":"#ffdadb","error-container":"#ffdad6","surface-container":"#e7eeff","outline-variant":"#c1c8c2","inverse-primary":"#a5d0b9","on-primary-fixed-variant":"#274e3d","tertiary-fixed-dim":"#ffb2b7","on-surface":"#111c2d","error":"#ba1a1a","on-primary-fixed":"#002114","outline":"#717973","on-secondary-fixed":"#331200","primary":"#012d1d","tertiary":"#540014","on-secondary":"#ffffff","secondary-fixed":"#ffdbca","primary-fixed-dim":"#a5d0b9","inverse-on-surface":"#ecf1ff","surface-bright":"#f9f9ff","surface-tint":"#3f6653","secondary-fixed-dim":"#ffb68e","surface":"#f9f9ff","on-tertiary":"#ffffff","on-secondary-container":"#682c00","on-surface-variant":"#414844","tertiary-container":"#7d0022","surface-container-low":"#f0f3ff","primary-container":"#1b4332","on-error":"#ffffff","on-secondary-fixed-variant":"#763300"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"0.75rem","space-2xl":"3rem","gutter":"1rem","space-base":"1rem","margin-mobile":"1rem","space-xl":"2rem","space-sm":"0.5rem","space-xs":"0.25rem","space-xxs":"0.125rem","gutter-mobile":"0.75rem","margin":"1.5rem","space-lg":"1.5rem"},"fontFamily":{"display-lg-mobile":["Inter"],"label-sm":["Inter"],"body-sm":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"display-lg":["Inter"],"label-lg":["Inter"],"label-md":["Inter"],"headline-lg":["Inter"],"code-sm":["Inter"]},"fontSize":{"display-lg-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"700"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"code-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}]}}}};</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="SimpleHealthTracker Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1WoOcMIoFMM0tpgvJMsn_Wcbw4IqFJKomFEV44Cc4IlX3ftf4Xp4wbbGUBQFdRi-QD6jShjcb95Q11imjJzttpwfxyV29K7rBT5Kkl_7h7gnBjUVMOyjrTfWRvFIlAhJTk86TLhsVps6SamO75viS4J9FJik2hZOHs5Z37iJcNJFkx-jRIfawLfOmDdFa0LuVr4FendyX5hBcRVH4StT4cww-wOpadZNMitSpxX1fRL"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate">SimpleHealthTracker</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Diario</span></div></div><div class="flex items-center gap-space-sm flex-shrink-0"><div class="inline-flex items-center gap-space-xxs px-space-sm py-space-xxs rounded-full bg-surface-container-low text-on-primary-fixed-variant"><span class="material-symbols-outlined text-[16px] text-primary-container">check_circle</span><span class="font-label-sm text-label-sm">Sincronizado</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-6">
+<!-- Interactive script to highlight navigation tab in shell -->
+<script>
+    (function() {
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-path') === 'calendario') {
+          link.classList.add('text-primary');
+          link.classList.remove('text-on-surface-variant');
+          const icon = link.querySelector('.material-symbols-outlined');
+          if (icon) icon.style.fontVariationSettings = "'FILL' 1";
+        } else {
+          link.classList.remove('text-primary');
+          link.classList.add('text-on-surface-variant');
+        }
+      });
+    })();
+  </script>
+<!-- Month Navigation Header & Mode Pill -->
+<div class="px-gutter-mobile pt-space-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<button aria-label="Mes anterior" class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface transition-transform active:scale-95 hover:bg-surface-container" id="prev-month-btn">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<div class="flex items-baseline gap-space-xs">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Octubre</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">2024</span>
+</div>
+<button aria-label="Mes siguiente" class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface transition-transform active:scale-95 hover:bg-surface-container" id="next-month-btn">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+<!-- Quick Consultation Mode Indicator -->
+<div class="flex items-center gap-space-xxs bg-primary-fixed text-on-primary-fixed-variant px-space-sm py-space-xxs rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<span class="font-label-sm text-label-sm">Modo Consulta</span>
+</div>
+</div>
+<!-- Motivational & Supportive Micro-Copy -->
+<p class="font-body-sm text-body-sm text-on-surface-variant px-space-xxs">
+      Vista global para revisión clínica. Basado en la comida con menor adherencia registrada cada día.
+    </p>
+</div>
+<!-- Monthly Adherence Stats Chips (Nutritional Quick Audit) -->
+<div class="px-gutter-mobile pt-space-sm">
+<div class="grid grid-cols-4 gap-space-xs bg-surface-container-low p-space-xs rounded-xl shadow-sm">
+<!-- Sigue Dieta (Verde) -->
+<div class="flex flex-col items-center justify-center py-space-xs px-space-xxs bg-surface-container-lowest rounded-lg text-center">
+<div class="flex items-center gap-1 mb-0.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container inline-block"></span>
+<span class="font-headline-sm text-headline-sm text-primary">18</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">En dieta</span>
+<span class="font-code-sm text-[10px] text-primary-container font-semibold mt-0.5">75%</span>
+</div>
+<!-- Parcial (Amarillo) -->
+<div class="flex flex-col items-center justify-center py-space-xs px-space-xxs bg-surface-container-lowest rounded-lg text-center">
+<div class="flex items-center gap-1 mb-0.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container inline-block"></span>
+<span class="font-headline-sm text-headline-sm text-secondary">4</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Parcial</span>
+<span class="font-code-sm text-[10px] text-secondary font-semibold mt-0.5">17%</span>
+</div>
+<!-- Fuera de Dieta (Rojo) -->
+<div class="flex flex-col items-center justify-center py-space-xs px-space-xxs bg-surface-container-lowest rounded-lg text-center">
+<div class="flex items-center gap-1 mb-0.5">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-container inline-block"></span>
+<span class="font-headline-sm text-headline-sm text-tertiary">2</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Fuera</span>
+<span class="font-code-sm text-[10px] text-tertiary font-semibold mt-0.5">8%</span>
+</div>
+<!-- Sin Registro (Neutro) -->
+<div class="flex flex-col items-center justify-center py-space-xs px-space-xxs bg-surface-container-lowest rounded-lg text-center">
+<div class="flex items-center gap-1 mb-0.5">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-variant inline-block"></span>
+<span class="font-headline-sm text-headline-sm text-outline">7</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Vacío</span>
+<span class="font-code-sm text-[10px] text-outline font-semibold mt-0.5">--</span>
+</div>
+</div>
+</div>
+<!-- Legend with Accessibility Shapes & Clarity Labels -->
+<div class="px-gutter-mobile pt-space-xs">
+<div class="flex items-center justify-between px-space-xs py-space-xxs overflow-x-auto text-on-surface-variant">
+<div class="flex items-center gap-1 flex-shrink-0">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-[10px]">Sigue dieta</span>
+</div>
+<div class="flex items-center gap-1 flex-shrink-0">
+<span class="material-symbols-outlined text-[13px] text-secondary" style="font-variation-settings: 'FILL' 1;">change_history</span>
+<span class="font-label-sm text-[10px]">Parcial</span>
+</div>
+<div class="flex items-center gap-1 flex-shrink-0">
+<span class="material-symbols-outlined text-[13px] text-tertiary" style="font-variation-settings: 'FILL' 1;">cancel</span>
+<span class="font-label-sm text-[10px]">Fuera</span>
+</div>
+<div class="flex items-center gap-1 flex-shrink-0">
+<span class="material-symbols-outlined text-[13px] text-outline">radio_button_unchecked</span>
+<span class="font-label-sm text-[10px]">Sin registro</span>
+</div>
+</div>
+</div>
+<!-- Calendar Interactive Grid -->
+<div class="px-gutter-mobile pt-space-xs">
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm">
+<!-- Weekday Headers -->
+<div class="grid grid-cols-7 gap-1 mb-space-xs text-center">
+<span class="font-label-md text-label-md text-outline">L</span>
+<span class="font-label-md text-label-md text-outline">M</span>
+<span class="font-label-md text-label-md text-outline">X</span>
+<span class="font-label-md text-label-md text-outline">J</span>
+<span class="font-label-md text-label-md text-outline">V</span>
+<span class="font-label-md text-label-md text-outline">S</span>
+<span class="font-label-md text-label-md text-outline">D</span>
+</div>
+<!-- Calendar Days Grid (October starts Tuesday = 1 leading offset) -->
+<div class="grid grid-cols-7 gap-1" id="calendar-grid">
+<!-- Leading empty day from previous month (Sep 30) -->
+<div class="aspect-square flex flex-col items-center justify-center p-1 rounded-lg bg-surface-container-low/40 opacity-40">
+<span class="font-label-sm text-[11px] text-outline">30</span>
+</div>
+<!-- 1: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="1" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">1</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 2: Verde (3 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="2" data-meals="3/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">2</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">3/4</span>
+</button>
+<!-- 3: Parcial (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-secondary-fixed/50 transition-transform active:scale-95" data-day="3" data-meals="4/4" data-status="yellow">
+<span class="font-label-md text-[12px] text-secondary">3</span>
+<span class="material-symbols-outlined text-[12px] text-secondary" style="font-variation-settings: 'FILL' 1;">change_history</span>
+<span class="font-code-sm text-[9px] text-secondary leading-none">4/4</span>
+</button>
+<!-- 4: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="4" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">4</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 5: Fuera (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-tertiary-fixed/60 transition-transform active:scale-95" data-day="5" data-meals="4/4" data-status="red">
+<span class="font-label-md text-[12px] text-tertiary">5</span>
+<span class="material-symbols-outlined text-[12px] text-tertiary" style="font-variation-settings: 'FILL' 1;">cancel</span>
+<span class="font-code-sm text-[9px] text-tertiary leading-none">4/4</span>
+</button>
+<!-- 6: Verde (1 com - single breakfast MVP rule) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="6" data-meals="1/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">6</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">1/4</span>
+</button>
+<!-- 7: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="7" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">7</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 8: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="8" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">8</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 9: Verde (3 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="9" data-meals="3/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">9</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">3/4</span>
+</button>
+<!-- 10: Parcial (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-secondary-fixed/50 transition-transform active:scale-95" data-day="10" data-meals="4/4" data-status="yellow">
+<span class="font-label-md text-[12px] text-secondary">10</span>
+<span class="material-symbols-outlined text-[12px] text-secondary" style="font-variation-settings: 'FILL' 1;">change_history</span>
+<span class="font-code-sm text-[9px] text-secondary leading-none">4/4</span>
+</button>
+<!-- 11: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="11" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">11</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 12: Sin Registro -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-surface-container-low transition-transform active:scale-95" data-day="12" data-meals="0" data-status="none">
+<span class="font-label-md text-[12px] text-outline">12</span>
+<span class="material-symbols-outlined text-[11px] text-outline-variant">remove</span>
+<span class="font-code-sm text-[9px] text-outline leading-none">-</span>
+</button>
+<!-- 13: Verde (2 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="13" data-meals="2/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">13</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">2/4</span>
+</button>
+<!-- 14: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="14" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">14</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 15: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="15" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">15</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 16: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="16" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">16</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 17: Parcial (3 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-secondary-fixed/50 transition-transform active:scale-95" data-day="17" data-meals="3/4" data-status="yellow">
+<span class="font-label-md text-[12px] text-secondary">17</span>
+<span class="material-symbols-outlined text-[12px] text-secondary" style="font-variation-settings: 'FILL' 1;">change_history</span>
+<span class="font-code-sm text-[9px] text-secondary leading-none">3/4</span>
+</button>
+<!-- 18: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="18" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">18</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 19: Fuera (3 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-tertiary-fixed/60 transition-transform active:scale-95" data-day="19" data-meals="3/4" data-status="red">
+<span class="font-label-md text-[12px] text-tertiary">19</span>
+<span class="material-symbols-outlined text-[12px] text-tertiary" style="font-variation-settings: 'FILL' 1;">cancel</span>
+<span class="font-code-sm text-[9px] text-tertiary leading-none">3/4</span>
+</button>
+<!-- 20: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="20" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">20</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 21: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="21" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">21</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 22: Parcial (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-secondary-fixed/50 transition-transform active:scale-95" data-day="22" data-meals="4/4" data-status="yellow">
+<span class="font-label-md text-[12px] text-secondary">22</span>
+<span class="material-symbols-outlined text-[12px] text-secondary" style="font-variation-settings: 'FILL' 1;">change_history</span>
+<span class="font-code-sm text-[9px] text-secondary leading-none">4/4</span>
+</button>
+<!-- 23: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="23" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">23</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 24: ACTIVO / SELECCIONADO (Jueves 24 - Verde 4/4) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary text-on-primary shadow-md scale-105 z-10 transition-transform" data-day="24" data-meals="4/4" data-status="green" id="active-day-cell">
+<span class="font-label-md text-[12px] text-on-primary font-bold">24</span>
+<span class="material-symbols-outlined text-[12px] text-primary-fixed" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary-fixed leading-none font-bold">4/4</span>
+</button>
+<!-- 25: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="25" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">25</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 26: Verde (3 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="26" data-meals="3/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">26</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">3/4</span>
+</button>
+<!-- 27: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="27" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">27</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-reference: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 28: Sin Registro -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-surface-container-low transition-transform active:scale-95" data-day="28" data-meals="0" data-status="none">
+<span class="font-label-md text-[12px] text-outline">28</span>
+<span class="material-symbols-outlined text-[11px] text-outline-variant">remove</span>
+<span class="font-code-sm text-[9px] text-outline leading-none">-</span>
+</button>
+<!-- 29: Verde (2 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="29" data-meals="2/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">29</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">2/4</span>
+</button>
+<!-- 30: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="30" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">30</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- 31: Verde (4 com) -->
+<button class="cal-day aspect-square flex flex-col items-center justify-between p-1 rounded-lg bg-primary-fixed/40 transition-transform active:scale-95" data-day="31" data-meals="4/4" data-status="green">
+<span class="font-label-md text-[12px] text-primary">31</span>
+<span class="material-symbols-outlined text-[12px] text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-code-sm text-[9px] text-primary leading-none">4/4</span>
+</button>
+<!-- Trailing days from next month (Nov 1, 2, 3) -->
+<div class="aspect-square flex flex-col items-center justify-center p-1 rounded-lg bg-surface-container-low/40 opacity-40">
+<span class="font-label-sm text-[11px] text-outline">1</span>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 rounded-lg bg-surface-container-low/40 opacity-40">
+<span class="font-label-sm text-[11px] text-outline">2</span>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 rounded-lg bg-surface-container-low/40 opacity-40">
+<span class="font-label-sm text-[11px] text-outline">3</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Consultation Filters Toolbar (Quick filters for Dietitian) -->
+<div class="px-gutter-mobile pt-space-sm">
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1">
+<button class="flex items-center gap-1 px-space-sm py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-[15px]">calendar_view_month</span>
+<span>Todo el mes</span>
+</button>
+<button class="flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container flex-shrink-0">
+<span class="material-symbols-outlined text-[15px] text-tertiary">cancel</span>
+<span>Solo fuera de dieta (2)</span>
+</button>
+<button class="flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container flex-shrink-0">
+<span class="material-symbols-outlined text-[15px] text-secondary">change_history</span>
+<span>Parciales (4)</span>
+</button>
+</div>
+</div>
+<!-- Selected Day Detail View Card (Tailored for Clinical Review) -->
+<div class="px-gutter-mobile pt-space-sm">
+<div class="bg-surface-container-lowest rounded-xl p-space-base shadow-sm flex flex-col gap-space-base">
+<!-- Detail Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight" id="selected-day-title">Jueves, 24 de octubre</h3>
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+              Sigue dieta
+            </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5" id="selected-day-subtitle">
+            Registro completo • 4 de 4 comidas registradas adherentes
+          </span>
+</div>
+<a class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-surface-container transition-colors" href="#" title="Ver en Diario">
+<span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</a>
+</div>
+<!-- Meal Timeline of the Day -->
+<div class="flex flex-col gap-space-sm">
+<!-- Desayuno -->
+<div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">free_breakfast</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface">Desayuno</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-[10px]">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check</span>
+                Sigue dieta
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-snug">
+              Tortilla de 2 huevos con espinacas y café solo sin azúcar.
+            </p>
+</div>
+</div>
+<!-- Almuerzo / Comida -->
+<div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">lunch_dining</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface">Comida</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-[10px]">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check</span>
+                Sigue dieta
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-snug">
+              Salmón a la plancha con arroz integral (60g) y ensalada verde abundante con aceite de oliva.
+            </p>
+</div>
+</div>
+<!-- Merienda -->
+<div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">local_cafe</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface">Merienda</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-[10px]">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check</span>
+                Sigue dieta
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-snug">
+              Yogur griego natural sin azúcar con 20g de nueces tostadas y una manzana reineta.
+            </p>
+</div>
+</div>
+<!-- Cena -->
+<div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">dinner_dining</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface">Cena</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-[10px]">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check</span>
+                Sigue dieta
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-snug">
+              Pechuga de pollo al limón con verduras al vapor (brócoli, calabacín y zanahoria).
+            </p>
+</div>
+</div>
+</div>
+<!-- Quick Action: Edit / Open directly in Diario -->
+<a class="w-full h-11 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-space-xs shadow-sm hover:opacity-95 active:scale-[0.98] transition-all" href="#">
+<span>Ver y editar en Diario</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Clinical Notes & Observation Card for Nutri Consultation -->
+<div class="px-gutter-mobile pt-space-sm">
+<div class="bg-surface-container-low rounded-xl p-space-base flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-primary">clinical_notes</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Apuntes de Consulta</h4>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Octubre</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Tu adherencia del 75% es excelente. Los 2 días marcados en rojo correspondieron a eventos sociales de fin de semana (sábado 5 y 19). La pauta acordada de compensación con hidratación y fibra se cumplió al día siguiente.
+      </p>
+<div class="flex items-center justify-between pt-space-xs text-primary font-label-md text-label-md">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">share</span>
+          Exportar reporte PDF para nutricionista
+        </span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Interactive Day Selector Client Script -->
+<script>
+    (function() {
+      const dayButtons = document.querySelectorAll('.cal-day');
+      const titleEl = document.getElementById('selected-day-title');
+      const subtitleEl = document.getElementById('selected-day-subtitle');
+
+      dayButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          dayButtons.forEach(b => {
+            b.classList.remove('bg-primary', 'text-on-primary', 'shadow-md', 'scale-105', 'z-10');
+            const dayNum = b.querySelector('.font-label-md');
+            const status = b.getAttribute('data-status');
+
+            if (status === 'green') {
+              b.classList.add('bg-primary-fixed/40');
+              if (dayNum) dayNum.className = 'font-label-md text-[12px] text-primary';
+            } else if (status === 'yellow') {
+              b.classList.add('bg-secondary-fixed/50');
+              if (dayNum) dayNum.className = 'font-label-md text-[12px] text-secondary';
+            } else if (status === 'red') {
+              b.classList.add('bg-tertiary-fixed/60');
+              if (dayNum) dayNum.className = 'font-label-md text-[12px] text-tertiary';
+            } else {
+              b.classList.add('bg-surface-container-low');
+              if (dayNum) dayNum.className = 'font-label-md text-[12px] text-outline';
+            }
+          });
+
+          // Highlight clicked day
+          this.classList.remove('bg-primary-fixed/40', 'bg-secondary-fixed/50', 'bg-tertiary-fixed/60', 'bg-surface-container-low');
+          this.classList.add('bg-primary', 'text-on-primary', 'shadow-md', 'scale-105', 'z-10');
+          const numSpan = this.querySelector('.font-label-md');
+          if (numSpan) {
+            numSpan.className = 'font-label-md text-[12px] text-on-primary font-bold';
+          }
+
+          const day = this.getAttribute('data-day');
+          const meals = this.getAttribute('data-meals');
+          const status = this.getAttribute('data-status');
+
+          if (titleEl) {
+            titleEl.textContent = `Día ${day} de octubre`;
+          }
+          if (subtitleEl) {
+            if (status === 'none') {
+              subtitleEl.textContent = 'Sin comidas registradas este día';
+            } else {
+              subtitleEl.textContent = `${meals} comidas registradas en este día`;
+            }
+          }
+        });
+      });
+    })();
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-label-md"><div class="flex items-center justify-around h-16 px-space-xs max-w-lg mx-auto"><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="diario" href="#"><span class="material-symbols-outlined text-[24px]">book</span><span class="font-label-sm text-label-sm mt-0.5">Diario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="calendario" href="#"><span class="material-symbols-outlined text-[24px]">calendar_month</span><span class="font-label-sm text-label-sm mt-0.5">Calendario</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="evolucion" href="#"><span class="material-symbols-outlined text-[24px]">trending_up</span><span class="font-label-sm text-label-sm mt-0.5">Evolución</span></a><a class="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] px-space-xs py-space-xxs text-on-surface-variant transition-colors hover:text-on-surface" data-path="opciones" href="#"><span class="material-symbols-outlined text-[24px]">settings</span><span class="font-label-sm text-label-sm mt-0.5">Opciones</span></a></div></nav></body></html>
