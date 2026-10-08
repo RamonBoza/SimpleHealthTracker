@@ -4,6 +4,8 @@ La aplicación utiliza PostgreSQL al configurar `DATABASE_URL` o `POSTGRES_URL`.
 
 ## Configurar
 
+El repositorio incluye `vercel.json` con el framework Next.js, el comando `npm run build` y la salida `.next`. Esta configuración sustituye los ajustes de compilación del panel. La raíz del proyecto en Vercel debe ser la raíz del repositorio, donde están `package.json` y `vercel.json`. No configures `public` como directorio de salida. Si aparece el error «No Output Directory named public», despliega el último commit que incluye esta configuración.
+
 1. En el proyecto de Vercel, conecta una integración **PostgreSQL** de Storage/Marketplace. No sirve una base Redis o un almacén de archivos para este adaptador.
 2. Copia o vincula la cadena de conexión del proveedor a `DATABASE_URL`, o conserva `POSTGRES_URL` si la integración ya la ha creado. Usa la conexión con pooling cuando el proveedor la ofrezca. Debe tener formato `postgresql://usuario:contraseña@host/base`.
 3. Asigna la variable al entorno que corresponda. Usa bases o ramas independientes para Production y Preview para que las pruebas de despliegue no modifiquen datos reales.
