@@ -24,10 +24,23 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
   ).toBeVisible();
   await page.getByLabel("Qué has comido").fill("Café y tostada");
   await page.getByRole("button", { name: "Añadir comida" }).click();
+  await page
+    .getByLabel("Tipo de comida", { exact: true })
+    .selectOption("Desayuno");
+  await expect(page.getByLabel("Qué has comido")).toHaveValue("Café y tostada");
+  await page.getByLabel("Qué has comido").fill("Café y tostada actualizados");
+  await page.getByRole("button", { name: "Actualizar", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Eliminar Desayuno" }),
+  ).toHaveCount(1);
   await page.getByLabel("Nombre de la rutina").fill("pushA");
   await page.getByLabel("Natación, caminar, correr…").fill("Natación");
   await page.getByRole("button", { name: "Añadir actividad" }).click();
-  await page.getByLabel("Horas dormidas", { exact: true }).fill("7.5");
+  await page.getByLabel("Horas dormidas", { exact: true }).fill("6");
+  await expect(
+    page.getByLabel("Minutos dormidos", { exact: true }),
+  ).toHaveValue("0");
+  await page.getByLabel("Minutos dormidos", { exact: true }).fill("41");
   await page.getByLabel("Calidad del sueño", { exact: true }).fill("88");
   await page.getByLabel("Peso", { exact: true }).fill("103.2");
   await page.getByLabel("Masa grasa", { exact: true }).fill("25.6");
@@ -38,6 +51,12 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
   ).toHaveText("Guardado");
   await page.reload();
   await expect(page.getByLabel("Peso", { exact: true })).toHaveValue("103.2");
+  await expect(page.getByLabel("Horas dormidas", { exact: true })).toHaveValue(
+    "6",
+  );
+  await expect(
+    page.getByLabel("Minutos dormidos", { exact: true }),
+  ).toHaveValue("41");
   const currentDate = await page.getByLabel("Fecha del diario").inputValue();
   await page.getByRole("button", { name: "Calendario", exact: true }).click();
   await expect(

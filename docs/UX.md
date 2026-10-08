@@ -18,6 +18,6 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 
 El prototipo contiene datos ilustrativos y funciones que no están dentro del alcance acordado. No se incorporan integraciones Apple Health, exportación, notas de consulta, cuotas, invitaciones, roles de nutricionista/paciente ni afirmaciones de cumplimiento/cifrado/backups sin soporte operativo.
 
-Los datos se introducen manualmente. La grasa visceral sigue en porcentaje según lo acordado, aunque el prototipo usa un índice. Se conservan las reglas de colores del calendario, comidas opcionales, nombres libres y un único historial de peso. No se cambia la regla sobre comidas repetidas sin una decisión del usuario. Las gráficas no incluyen interpretaciones ni proyecciones.
+Los datos se introducen manualmente. La grasa visceral sigue en porcentaje según lo acordado, aunque el prototipo usa un índice. Se conservan las reglas de colores del calendario, comidas opcionales, nombres libres y un único historial de peso. Por decisión del usuario, cada tipo de comida tiene una única entrada por día: seleccionarlo de nuevo permite editarla. El sueño se introduce en horas y minutos separados. Las gráficas no incluyen interpretaciones ni proyecciones.
 
 Las opciones y las operaciones administrativas conservan confirmación explícita, especialmente los cambios destructivos. El autoguardado se aplica al diario.

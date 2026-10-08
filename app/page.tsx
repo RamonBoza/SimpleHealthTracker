@@ -524,15 +524,25 @@ function Diary({
   const latestSave = useRef(onSave);
   latestSave.current = onSave;
   const [saved, setSaved] = useState(!!days[date]);
-  const [editing, setEditing] = useState<string | null>(null);
+  const [editing, setEditing] = useState<string | null>(
+    () => days[date]?.meals.find((m) => m.type === "Desayuno")?.id ?? null,
+  );
   const [meal, setMeal] = useState<Omit<Day["meals"][number], "id">>({
     type: "Desayuno",
-    text: "",
-    color: "green",
+    text: days[date]?.meals.find((m) => m.type === "Desayuno")?.text ?? "",
+    color:
+      days[date]?.meals.find((m) => m.type === "Desayuno")?.color ?? "green",
   });
+  const originalMeal = draft.meals.find((m) => m.id === editing);
+  const pendingMeal =
+    !!meal.text.trim() &&
+    (!originalMeal ||
+      originalMeal.text !== meal.text ||
+      originalMeal.color !== meal.color ||
+      originalMeal.type !== meal.type);
   useEffect(() => {
-    onDirty(dirty || !!meal.text.trim() || !!activity.trim());
-  }, [dirty, meal.text, activity, onDirty]);
+    onDirty(dirty || pendingMeal || !!activity.trim());
+  }, [dirty, meal, editing, draft.meals, activity, onDirty]);
   useEffect(() => {
     onSaving(busy);
   }, [busy, onSaving]);
@@ -551,7 +561,15 @@ function Diary({
   async function save(e?: React.FormEvent, automatic = false) {
     e?.preventDefault();
     if (saving.current) return;
-    if (!automatic && (meal.text.trim() || activity.trim())) {
+    const original = draft.meals.find((m) => m.id === editing);
+    if (
+      !automatic &&
+      ((meal.text.trim() &&
+        (!original ||
+          original.text !== meal.text ||
+          original.color !== meal.color)) ||
+        activity.trim())
+    ) {
       setError("Añade la comida o actividad pendiente antes de guardar.");
       return;
     }
@@ -584,16 +602,55 @@ function Diary({
       setError("Describe la comida antes de añadirla.");
       return;
     }
-    const item = { ...meal, id: editing || crypto.randomUUID() };
+    const existing = draft.meals.find((m) => m.type === meal.type);
+    const item = {
+      ...meal,
+      id: existing?.id || editing || crypto.randomUUID(),
+    };
     update(
       "meals",
-      editing
-        ? draft.meals.map((m) => (m.id === editing ? item : m))
+      existing || editing
+        ? [
+            ...draft.meals.filter(
+              (m) => m.type !== meal.type && m.id !== editing,
+            ),
+            item,
+          ]
         : [...draft.meals, item],
     );
-    setMeal({ type: "Comida", text: "", color: "green" });
-    setEditing(null);
+    const nextType = meals.find(
+      (type) => type !== meal.type && !draft.meals.some((m) => m.type === type),
+    ) as Day["meals"][number]["type"] | undefined;
+    setMeal(nextType ? { type: nextType, text: "", color: "green" } : meal);
+    setEditing(nextType ? null : item.id);
     setError("");
+  }
+  function selectMeal(type: Day["meals"][number]["type"]) {
+    const existing = draft.meals.find((m) => m.type === type);
+    setEditing(existing?.id ?? null);
+    setMeal({
+      type,
+      text: existing?.text ?? "",
+      color: existing?.color ?? "green",
+    });
+  }
+  const sleepMinutes =
+    draft.sleep === null ? null : Math.round(draft.sleep * 60);
+  function updateSleep(hours: number | null, minutes: number | null) {
+    if (
+      (hours !== null &&
+        (!Number.isInteger(hours) || hours < 0 || hours > 24)) ||
+      (minutes !== null &&
+        (!Number.isInteger(minutes) || minutes < 0 || minutes > 59)) ||
+      (hours === 24 && (minutes ?? 0) > 0)
+    )
+      return;
+    update(
+      "sleep",
+      hours === null && minutes === null
+        ? null
+        : ((hours ?? 0) * 60 + (minutes ?? 0)) / 60,
+    );
   }
   const count = officeCount({ ...days, [date]: draft }, date.slice(0, 7));
   return (
@@ -662,12 +719,10 @@ function Diary({
             <label>
               Comida
               <select
+                aria-label="Tipo de comida"
                 value={meal.type}
                 onChange={(e) =>
-                  setMeal({
-                    ...meal,
-                    type: e.target.value as Day["meals"][number]["type"],
-                  })
+                  selectMeal(e.target.value as Day["meals"][number]["type"])
                 }
               >
                 {meals.map((m) => (
@@ -708,7 +763,9 @@ function Diary({
             </div>
             <button className="secondary" type="button" onClick={addMeal}>
               <Plus size={16} />
-              {editing ? "Actualizar" : "Añadir comida"}
+              {editing || draft.meals.some((m) => m.type === meal.type)
+                ? "Actualizar"
+                : "Añadir comida"}
             </button>
             {editing && (
               <button
@@ -811,10 +868,31 @@ function Diary({
         <div className="field-row">
           <NumberField
             label="Horas dormidas"
-            value={draft.sleep}
-            onChange={(v) => update("sleep", v)}
+            value={sleepMinutes === null ? null : Math.floor(sleepMinutes / 60)}
+            onChange={(v) =>
+              updateSleep(
+                v,
+                v === null && (sleepMinutes ?? 0) % 60 === 0
+                  ? null
+                  : (sleepMinutes ?? 0) % 60,
+              )
+            }
             max={24}
+            step={1}
             suffix="h"
+          />
+          <NumberField
+            label="Minutos dormidos"
+            value={sleepMinutes === null ? null : sleepMinutes % 60}
+            onChange={(v) =>
+              updateSleep(
+                sleepMinutes === null ? null : Math.floor(sleepMinutes / 60),
+                v,
+              )
+            }
+            max={59}
+            step={1}
+            suffix="min"
           />
           <NumberField
             label="Calidad del sueño"
@@ -905,14 +983,14 @@ function Diary({
               ? "Guardando…"
               : error && dirty
                 ? "No se pudo guardar"
-                : dirty || !!meal.text.trim() || !!activity.trim()
+                : dirty || pendingMeal || !!activity.trim()
                   ? "Cambios pendientes"
                   : saved
                     ? "Guardado"
                     : "Autoguardado activo"}
           </strong>
           <small>
-            {meal.text.trim() || activity.trim()
+            {pendingMeal || activity.trim()
               ? "Pulsa Añadir para registrar la entrada pendiente."
               : error && dirty
                 ? "Tus cambios siguen en esta pantalla. Reintenta."
@@ -1807,7 +1885,10 @@ function Admin() {
                       </dd>
                       <dt>Sueño</dt>
                       <dd>
-                        {day.sleep ?? "—"} h · {day.quality ?? "—"}/100
+                        {day.sleep === null
+                          ? "—"
+                          : `${Math.floor(Math.round(day.sleep * 60) / 60)} h ${Math.round(day.sleep * 60) % 60} min`}{" "}
+                        · {day.quality ?? "—"}/100
                       </dd>
                       {indicators.map((i) => (
                         <div key={i.key}>

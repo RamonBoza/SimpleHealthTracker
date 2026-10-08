@@ -15,6 +15,7 @@ Todos los datos de salud son opcionales y tienen frecuencias independientes. Se 
 ### Alimentación
 
 - Comidas con descripción libre y tipo (desayuno, media mañana, comida, merienda, cena u otra).
+- Una entrada por tipo de comida y día. Seleccionar un tipo ya registrado carga su descripción y color para actualizarlo sin duplicarlo.
 - Valoración manual: verde (sigue la dieta), amarillo (parcialmente) y rojo (se sale de ella).
 - Color diario calculado: verde si todas las comidas registradas son verdes; amarillo si hay alguna amarilla y ninguna roja; rojo si hay alguna roja; sin color cuando no hay registros.
 - Un único desayuno verde basta para mostrar el día verde. No se exige registrar todas las comidas ni un número concreto.
@@ -36,6 +37,8 @@ Todos los datos de salud son opcionales y tienen frecuencias independientes. Se 
 Horas dormidas y calidad introducidas manualmente. La calidad es la puntuación calculada por el Apple Watch del usuario, de 0 a 100; la web no la calcula ni importa automáticamente.
 
 El sueño se asigna a la fecha del despertar: el 8 de octubre contiene la noche del 7 al 8, aunque se empiece a dormir después de medianoche. Sin siestas en el MVP.
+
+La duración se introduce en horas y minutos separados (0–59 minutos). Introducir solo horas equivale a cero minutos. El almacenamiento conserva horas decimales para mantener la compatibilidad con los registros existentes.
 
 ### Indicadores y evolución
 
