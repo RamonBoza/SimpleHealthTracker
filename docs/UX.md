@@ -15,6 +15,7 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 - Resumen del mes completo con días verdes, parciales, fuera de dieta y sin comidas registradas; los días futuros del mes cuentan como sin registro. El detalle reutiliza los iconos propios de cada comida.
 - Peso destacado en evolución, acceso a registrar un peso y enlace a personalizar rangos.
 - Periodos de evolución seleccionables mediante una barra de botones (1, 3 y 6 meses, 1 año y todo el historial).
+- Gráficas de pasos, duración y calidad del sueño, visibles por defecto y configurables desde Opciones sin borrar registros. Duración presentada en horas/minutos; rangos reservados a los indicadores corporales.
 - Opciones con agrupación de indicadores y campos visualmente diferenciados.
 - Administración con búsqueda de cuenta y presentación adaptable al móvil; se mantienen el motivo y la auditoría reales.
 

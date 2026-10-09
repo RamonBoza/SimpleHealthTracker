@@ -1,6 +1,6 @@
 # SimpleHealthTracker — alcance del MVP
 
-Estado: borrador actualizado tras la entrevista del 7 de octubre de 2026. No inicia la implementación. Las decisiones posteriores quedan conservadas para definir las fases.
+Estado: MVP implementado, en revisión UX y estabilización a 9 de octubre de 2026. Las decisiones posteriores quedan conservadas para definir las fases. Estado y próximos pasos en [ROADMAP.md](ROADMAP.md).
 
 ## Objetivo
 
@@ -58,11 +58,12 @@ Las unidades de composición corporal son las confirmadas por el usuario según 
 - Se pueden mostrar u ocultar los indicadores del panel. Ocultar conserva el histórico y permite seguir registrando.
 - No hay textos interpretando acercamiento al rango: la tendencia se observa visualmente.
 - Las gráficas usan valores reales y sus fechas; no se inventan datos para los huecos.
+- Actualización del 9 de octubre: todos los datos numéricos registrados en el diario aparecen en Evolución. Se añaden pasos, horas dormidas y calidad del sueño a los cuatro indicadores corporales. Todas las gráficas están visibles por defecto y se pueden ocultar desde Opciones sin eliminar registros. Las preferencias existentes de los indicadores corporales se conservan. Los nuevos datos no incorporan umbrales ni rangos automáticos.
 
 ### Cuentas y administración
 
 - Registro abierto a quien acceda a la URL, con usuario, correo y contraseña.
-- Recuperación de contraseña mediante el correo asociado.
+- Recuperación de contraseña mediante el correo asociado cuando se configura SMTP. Por decisión posterior del usuario, SMTP es opcional y sin él se deshabilita la recuperación sin bloquear el registro.
 - Datos privados y separados por usuario, persistentes y accesibles desde sus dispositivos.
 - Cuenta administradora específica para consultar contenido en casos justificados de soporte o moderación, con motivo y registro de acceso, y borrar o banear usuarios. Ban temporal o indefinido; borrado de cuenta y registros asociados.
 - Identidad interna estable, independiente del método de acceso, para vincular Google u otros proveedores en el futuro sin duplicar cuentas ni perder el historial.

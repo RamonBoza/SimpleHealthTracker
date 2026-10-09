@@ -70,3 +70,18 @@ test("rangos propios editables y conteo mensual de oficina", () => {
   };
   assert.equal(officeCount(days, "2026-10"), 1);
 });
+test("cuentas existentes reciben gráficas nuevas sin perder preferencias", () => {
+  const previous = defaultSettings(true);
+  previous.ranges.weight.visible = false;
+  const { chartVisibility, ...legacy } = previous;
+  const loaded = settingsSchema.parse(legacy);
+  assert.deepEqual(loaded.chartVisibility, {
+    steps: true,
+    sleep: true,
+    quality: true,
+  });
+  assert.equal(loaded.officeGoal, 8);
+  assert.equal(loaded.ranges.weight.visible, false);
+  loaded.chartVisibility.sleep = false;
+  assert.equal(settingsSchema.parse(loaded).chartVisibility.sleep, false);
+});

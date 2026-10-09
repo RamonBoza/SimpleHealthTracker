@@ -54,6 +54,7 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
     .getByRole("button", { name: "Añadir comida", exact: true })
     .click();
   await page.getByLabel("Nombre de la rutina").fill("pushA");
+  await page.getByLabel("Pasos", { exact: true }).fill("8420");
   await page
     .getByRole("group", { name: "Sugerencias de rutina de fuerza" })
     .getByRole("button", { name: "Full body" })
@@ -126,6 +127,42 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
     path: "test-results/mobile-evolution.png",
     fullPage: true,
   });
+  await expect(
+    page.getByRole("region", { name: "Evolución de Pasos", exact: true }),
+  ).toContainText("8420 pasos");
+  await expect(
+    page.getByRole("region", {
+      name: "Evolución de Horas dormidas",
+      exact: true,
+    }),
+  ).toContainText("6 h 41 min");
+  await expect(
+    page.getByRole("region", {
+      name: "Evolución de Calidad del sueño",
+      exact: true,
+    }),
+  ).toContainText("88");
+  await page.getByRole("button", { name: "Opciones", exact: true }).click();
+  await page
+    .getByLabel("Mostrar Pasos en evolución", { exact: true })
+    .uncheck();
+  await page
+    .getByRole("button", { name: "Guardar opciones", exact: true })
+    .click();
+  await expect
+    .poll(
+      async () =>
+        (await (await page.request.get("/api/me")).json()).settings
+          .chartVisibility.steps,
+    )
+    .toBe(false);
+  await page.reload();
+  await page.getByRole("button", { name: "Evolución", exact: true }).click();
+  await expect(
+    page.getByRole("region", { name: "Evolución de Pasos", exact: true }),
+  ).toHaveCount(0);
+  const afterHide = await (await page.request.get("/api/days")).json();
+  expect(afterHide[currentDate].steps).toBe(8420);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "Diario", exact: true }).click();
   await expect(

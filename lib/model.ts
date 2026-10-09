@@ -20,6 +20,12 @@ export const indicators = [
   },
 ] as const;
 export type IndicatorKey = (typeof indicators)[number]["key"];
+export const extraMetrics = [
+  { key: "steps", name: "Pasos", unit: "pasos", limit: 200000 },
+  { key: "sleep", name: "Horas dormidas", unit: "h", limit: 24 },
+  { key: "quality", name: "Calidad del sueño", unit: "/100", limit: 100 },
+] as const;
+export const evolutionMetrics = [...indicators, ...extraMetrics];
 export const colors = ["green", "yellow", "red"] as const;
 export const meals = [
   "Desayuno",
@@ -103,6 +109,13 @@ const rangeSchema = z
 export const settingsSchema = z
   .object({
     officeGoal: z.number().int().min(0).max(31),
+    chartVisibility: z
+      .object({
+        steps: z.boolean().default(true),
+        sleep: z.boolean().default(true),
+        quality: z.boolean().default(true),
+      })
+      .default({ steps: true, sleep: true, quality: true }),
     ranges: z.object({
       weight: rangeSchema,
       muscle: rangeSchema,
@@ -122,6 +135,7 @@ export const settingsSchema = z
 export type Settings = z.infer<typeof settingsSchema>;
 export const defaultSettings = (boza = false): Settings => ({
   officeGoal: boza ? 8 : 0,
+  chartVisibility: { steps: true, sleep: true, quality: true },
   ranges: Object.fromEntries(
     indicators.map((i) => [i.key, { min: i.min, max: i.max, visible: true }]),
   ) as Settings["ranges"],

@@ -45,7 +45,7 @@ const publicUser = (u: Record<string, any>) => ({
   username: u.username,
   email: u.email,
   admin: isAdmin(u),
-  settings: JSON.parse(u.settings),
+  settings: settingsSchema.parse(JSON.parse(u.settings)),
 });
 async function removeUser(id: string) {
   await query("UPDATE audit SET target=NULL WHERE target=?", [id]);

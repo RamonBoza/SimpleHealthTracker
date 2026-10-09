@@ -51,6 +51,8 @@ import {
   localDate,
   officeCount,
   indicators,
+  extraMetrics,
+  evolutionMetrics,
   meals,
 } from "@/lib/model";
 type User = {
@@ -1475,10 +1477,14 @@ function Evolution({
         </div>
       </div>
       <div className="charts-grid">
-        {indicators
-          .filter((i) => settings.ranges[i.key].visible)
+        {evolutionMetrics
+          .filter((i) =>
+            "min" in i
+              ? settings.ranges[i.key].visible
+              : settings.chartVisibility[i.key],
+          )
           .map((i) => {
-            const range = settings.ranges[i.key];
+            const range = "min" in i ? settings.ranges[i.key] : null;
             const values = all
               .filter(
                 ([d, v]) =>
@@ -1492,12 +1498,26 @@ function Evolution({
               }));
             const latest = values.at(-1);
             const within =
-              latest && latest.value >= range.min && latest.value <= range.max;
-            const low = Math.min(range.min, ...values.map((v) => v.value));
-            const high = Math.max(range.max, ...values.map((v) => v.value));
+              latest &&
+              range &&
+              latest.value >= range.min &&
+              latest.value <= range.max;
+            const low = Math.min(
+              range?.min ?? values[0]?.value ?? 0,
+              ...values.map((v) => v.value),
+            );
+            const high = Math.max(
+              range?.max ?? values[0]?.value ?? 0,
+              ...values.map((v) => v.value),
+            );
             const margin = Math.max((high - low) * 0.2, 1);
+            const formatValue = (value: number) =>
+              i.key === "sleep"
+                ? `${Math.floor(Math.round(value * 60) / 60)} h ${Math.round(value * 60) % 60} min`
+                : value.toLocaleString("es-ES", { maximumFractionDigits: 2 });
             return (
               <section
+                aria-label={`Evolución de ${i.name}`}
                 className={
                   "card chart-card " +
                   (i.key === "weight" ? "featured-chart" : "")
@@ -1508,8 +1528,8 @@ function Evolution({
                   <div>
                     <span className="eyebrow">{i.name}</span>
                     <h2>
-                      {latest ? latest.value.toLocaleString("es-ES") : "—"}{" "}
-                      <small>{i.unit}</small>
+                      {latest ? formatValue(latest.value) : "—"}{" "}
+                      <small>{i.key === "sleep" ? "" : i.unit}</small>
                     </h2>
                     <small>
                       {latest
@@ -1520,19 +1540,27 @@ function Evolution({
                   <span
                     className={
                       "badge " +
-                      (latest ? (within ? "green" : "yellow") : "neutral")
+                      (latest && range
+                        ? within
+                          ? "green"
+                          : "yellow"
+                        : "neutral")
                     }
                   >
-                    {latest
+                    {latest && range
                       ? within
                         ? "En rango"
                         : "Fuera de rango"
-                      : "Sin datos"}
+                      : latest
+                        ? "Último registro"
+                        : "Sin datos"}
                   </span>
                 </div>
-                <p className="range-label">
-                  Rango de referencia: {range.min}–{range.max} {i.unit}
-                </p>
+                {range && (
+                  <p className="range-label">
+                    Rango de referencia: {range.min}–{range.max} {i.unit}
+                  </p>
+                )}
                 {values.length ? (
                   <div className="chart-container">
                     <ResponsiveContainer width="100%" height="100%">
@@ -1556,15 +1584,18 @@ function Evolution({
                           minTickGap={35}
                         />
                         <YAxis
+                          allowDecimals={i.key !== "steps" && i.key !== "quality"}
                           domain={[
                             Math.max(0, low - margin),
                             Math.min(i.limit, high + margin),
                           ]}
                           width={38}
                           tickFormatter={(v) =>
-                            Number(v).toLocaleString("es-ES", {
-                              maximumFractionDigits: 1,
-                            })
+                            i.key === "sleep"
+                              ? `${Math.floor(Math.round(Number(v) * 60) / 60)}:${String(Math.round(Number(v) * 60) % 60).padStart(2, "0")}`
+                              : Number(v).toLocaleString("es-ES", {
+                                  maximumFractionDigits: 1,
+                                })
                           }
                           tick={{ fontSize: 11 }}
                         />
@@ -1574,37 +1605,44 @@ function Evolution({
                               new Date(Number(v)).toISOString().slice(0, 10),
                             )
                           }
-                          formatter={(v) => [`${v} ${i.unit}`, i.name]}
+                          formatter={(v) => [
+                            `${formatValue(Number(v))}${i.key === "sleep" ? "" : " " + i.unit}`,
+                            i.name,
+                          ]}
                         />
-                        <ReferenceArea
-                          y1={range.min}
-                          y2={range.max}
-                          fill="#cbe8d8"
-                          fillOpacity={0.5}
-                          strokeOpacity={0}
-                        />
-                        <ReferenceLine
-                          y={range.min}
-                          stroke="#a5d0b9"
-                          strokeDasharray="3 4"
-                          label={{
-                            value: `Mín. ${range.min} ${i.unit}`,
-                            position: "insideTopLeft",
-                            fill: "#1b4332",
-                            fontSize: 10,
-                          }}
-                        />
-                        <ReferenceLine
-                          y={range.max}
-                          stroke="#a5d0b9"
-                          strokeDasharray="3 4"
-                          label={{
-                            value: `Máx. ${range.max} ${i.unit}`,
-                            position: "insideBottomLeft",
-                            fill: "#1b4332",
-                            fontSize: 10,
-                          }}
-                        />
+                        {range && (
+                          <>
+                            <ReferenceArea
+                              y1={range.min}
+                              y2={range.max}
+                              fill="#cbe8d8"
+                              fillOpacity={0.5}
+                              strokeOpacity={0}
+                            />
+                            <ReferenceLine
+                              y={range.min}
+                              stroke="#a5d0b9"
+                              strokeDasharray="3 4"
+                              label={{
+                                value: `Mín. ${range.min} ${i.unit}`,
+                                position: "insideTopLeft",
+                                fill: "#1b4332",
+                                fontSize: 10,
+                              }}
+                            />
+                            <ReferenceLine
+                              y={range.max}
+                              stroke="#a5d0b9"
+                              strokeDasharray="3 4"
+                              label={{
+                                value: `Máx. ${range.max} ${i.unit}`,
+                                position: "insideBottomLeft",
+                                fill: "#1b4332",
+                                fontSize: 10,
+                              }}
+                            />
+                          </>
+                        )}
                         <Line
                           dataKey="value"
                           type="linear"
@@ -1654,7 +1692,11 @@ function Evolution({
           </button>
         </div>
       </section>
-      {!indicators.some((i) => settings.ranges[i.key].visible) && (
+      {!evolutionMetrics.some((i) =>
+        "min" in i
+          ? settings.ranges[i.key].visible
+          : settings.chartVisibility[i.key],
+      ) && (
         <section className="card empty-small">
           <p>
             No tienes indicadores visibles. Puedes mostrarlos desde Opciones.
@@ -1790,6 +1832,32 @@ function Options({
             </label>
           </fieldset>
         ))}
+        <fieldset>
+          <legend>Actividad y sueño</legend>
+          <p className="hint">
+            Elige las gráficas que quieres ver. Ocultarlas conserva tus
+            registros.
+          </p>
+          {extraMetrics.map((i) => (
+            <label className="checkbox-label" key={i.key}>
+              <input
+                type="checkbox"
+                aria-label={`Mostrar ${i.name} en evolución`}
+                checked={settings.chartVisibility[i.key]}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    chartVisibility: {
+                      ...settings.chartVisibility,
+                      [i.key]: e.target.checked,
+                    },
+                  })
+                }
+              />
+              {i.name}
+            </label>
+          ))}
+        </fieldset>
         <ErrorText message={error} />
         <button className="primary" disabled={busy}>
           <Check size={17} />
