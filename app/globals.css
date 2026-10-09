@@ -2542,3 +2542,134 @@ progress::-webkit-progress-value {
 .admin-view td {
   overflow-wrap: anywhere;
 }
+/* Optional meal slots, activity shortcuts and period controls. */
+.meal-type-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #fff;
+  color: #15372e;
+}
+.meal-type-icon.green {
+  background: #c9efdd;
+}
+.meal-type-icon.yellow {
+  background: #fff0d7;
+}
+.meal-type-icon.red {
+  background: #ffe3e0;
+}
+.meal-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  text-align: left;
+  border: 1px dashed #dbe1ec;
+  border-radius: 14px;
+  background: #f6f7ff;
+  color: #183047;
+}
+.meal-placeholder > span:nth-child(2) {
+  flex: 1;
+}
+.meal-placeholder strong,
+.meal-placeholder small {
+  display: block;
+}
+.meal-placeholder small {
+  margin-top: 4px;
+  color: #627184;
+}
+.meal-placeholder:hover {
+  border-color: #357963;
+}
+.extra-meal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+.preset-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  margin: 10px 0 18px;
+  border-radius: 12px;
+  background: #f0f3ff;
+}
+.preset-bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 9px;
+  padding: 9px 12px;
+  background: #fff;
+  color: #173347;
+  font-size: 0.85rem;
+}
+.preset-bar button[aria-pressed="true"] {
+  background: #003f2e;
+  color: #fff;
+}
+.evolution-periods {
+  margin: 0;
+}
+.evolution-periods button {
+  flex: 1;
+  white-space: nowrap;
+}
+.month-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+.month-summary > div {
+  text-align: center;
+  padding: 14px 8px;
+  border-radius: 14px;
+  background: #f1f4ff;
+  min-width: 0;
+}
+.month-summary strong {
+  font-size: 1.5rem;
+  margin-left: 6px;
+}
+.month-summary > div > span:not(.dot),
+.month-summary small {
+  display: block;
+  margin-top: 5px;
+}
+.month-summary small {
+  color: #627184;
+}
+.month-summary .green strong {
+  color: #176a50;
+}
+.month-summary .yellow strong {
+  color: #92521c;
+}
+.month-summary .red strong {
+  color: #a3303d;
+}
+@media (max-width: 600px) {
+  .month-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .view-toolbar:has(.evolution-periods) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .evolution-periods button {
+    padding: 9px 6px;
+  }
+}

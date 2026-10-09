@@ -28,7 +28,7 @@ export const meals = [
   "Merienda",
   "Cena",
   "Otra",
-];
+] as const;
 const optionalNumber = (max: number) =>
   z.number().finite().min(0).max(max).nullable();
 export const dateSchema = z

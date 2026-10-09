@@ -22,6 +22,14 @@ import {
   ArrowRight,
   X,
   LoaderCircle,
+  Coffee,
+  Sandwich,
+  Soup,
+  Apple,
+  Cookie,
+  Waves,
+  Bike,
+  Mountain,
 } from "lucide-react";
 import {
   LineChart,
@@ -58,6 +66,32 @@ type Privacy = {
   recovery: boolean;
   ready: boolean;
 };
+function MealIcon({ type }: { type: string }) {
+  const Icon =
+    (
+      {
+        Desayuno: Coffee,
+        "Media mañana": Apple,
+        Comida: Sandwich,
+        Merienda: Cookie,
+        Cena: Soup,
+      } as Record<string, typeof Coffee>
+    )[type] ?? Utensils;
+  return <Icon size={21} aria-hidden="true" />;
+}
+function ActivityIcon({ name }: { name: string }) {
+  const text = name.toLowerCase();
+  const Icon = /nata|nadar/.test(text)
+    ? Waves
+    : /bici|cicl/.test(text)
+      ? Bike
+      : /escala/.test(text)
+        ? Mountain
+        : /camina|walk|corr/.test(text)
+          ? Footprints
+          : Activity;
+  return <Icon size={18} aria-hidden="true" />;
+}
 async function api(path: string, method = "GET", body?: unknown) {
   const res = await fetch("/api/" + path, {
     method,
@@ -682,38 +716,116 @@ function Diary({
           </div>
         )}
         <div className="meal-list">
-          {draft.meals.map((m) => (
-            <article key={m.id}>
-              <span className={"dot " + m.color} />
+          {draft.meals
+            .filter((m) => m.type !== "Otra")
+            .map((m) => (
+              <article key={m.id} style={{ order: meals.indexOf(m.type) }}>
+                <span className={"meal-type-icon " + m.color}>
+                  <MealIcon type={m.type} />
+                </span>
+                <button
+                  type="button"
+                  className="meal-detail"
+                  onClick={() => {
+                    setEditing(m.id);
+                    setMeal({ type: m.type, text: m.text, color: m.color });
+                  }}
+                >
+                  <strong>{m.type}</strong>
+                  <span>{m.text}</span>
+                  <small>{colorName[m.color]} · Editar</small>
+                </button>
+                <button
+                  type="button"
+                  className="icon-button"
+                  aria-label={"Eliminar " + m.type}
+                  onClick={() => {
+                    update(
+                      "meals",
+                      draft.meals.filter((x) => x.id !== m.id),
+                    );
+                    if (editing === m.id) setEditing(null);
+                  }}
+                >
+                  <Trash2 size={16} />
+                </button>
+              </article>
+            ))}
+          {meals
+            .filter(
+              (type) =>
+                type !== "Otra" && !draft.meals.some((m) => m.type === type),
+            )
+            .map((type) => (
               <button
+                key={type}
                 type="button"
-                className="meal-detail"
+                className="meal-placeholder"
+                style={{ order: meals.indexOf(type) }}
                 onClick={() => {
-                  setEditing(m.id);
-                  setMeal({ type: m.type, text: m.text, color: m.color });
+                  selectMeal(type);
+                  document.getElementById("meal-description")?.focus();
                 }}
               >
-                <strong>{m.type}</strong>
-                <span>{m.text}</span>
-                <small>{colorName[m.color]} · Editar</small>
+                <span className="meal-type-icon">
+                  <MealIcon type={type} />
+                </span>
+                <span>
+                  <strong>{type}</strong>
+                  <small>Sin registrar · Opcional</small>
+                </span>
+                <Plus size={18} aria-hidden="true" />
               </button>
-              <button
-                type="button"
-                className="icon-button"
-                aria-label={"Eliminar " + m.type}
-                onClick={() => {
-                  update(
-                    "meals",
-                    draft.meals.filter((x) => x.id !== m.id),
-                  );
-                  if (editing === m.id) setEditing(null);
-                }}
-              >
-                <Trash2 size={16} />
-              </button>
-            </article>
-          ))}
+            ))}
+          {draft.meals
+            .filter((m) => m.type === "Otra")
+            .map((m) => (
+              <article key={m.id} style={{ order: meals.indexOf(m.type) }}>
+                <span className={"meal-type-icon " + m.color}>
+                  <MealIcon type={m.type} />
+                </span>
+                <button
+                  type="button"
+                  className="meal-detail"
+                  onClick={() => selectMeal(m.type)}
+                >
+                  <strong>{m.type}</strong>
+                  <span>{m.text}</span>
+                  <small>{colorName[m.color]} · Editar</small>
+                </button>
+                <button
+                  type="button"
+                  className="icon-button"
+                  aria-label="Eliminar Otra"
+                  onClick={() => {
+                    update(
+                      "meals",
+                      draft.meals.filter((x) => x.id !== m.id),
+                    );
+                    if (editing === m.id) {
+                      setEditing(null);
+                      setMeal({ type: "Otra", text: "", color: "green" });
+                    }
+                  }}
+                >
+                  <Trash2 size={16} />
+                </button>
+              </article>
+            ))}
         </div>
+        <button
+          type="button"
+          className="text-button extra-meal"
+          onClick={() => {
+            selectMeal("Otra");
+            document.getElementById("meal-description")?.focus();
+          }}
+        >
+          <Plus size={16} />{" "}
+          {draft.meals.some((m) => m.type === "Otra")
+            ? "Editar otra comida o snack"
+            : "Añadir otra comida o snack"}
+        </button>
         <div className="meal-entry">
           <div className="field-row">
             <label>
@@ -733,6 +845,7 @@ function Diary({
             <label>
               Qué has comido
               <input
+                id="meal-description"
                 value={meal.text}
                 maxLength={1500}
                 onChange={(e) => setMeal({ ...meal, text: e.target.value })}
@@ -788,7 +901,7 @@ function Diary({
             <Dumbbell size={20} />
           </span>
           <div>
-            <h2>Movimiento</h2>
+            <h2>Actividad física</h2>
             <p>A tu ritmo, sin rellenar de más.</p>
           </div>
         </div>
@@ -802,6 +915,35 @@ function Diary({
           />
           <small>Una rutina al día. Déjalo vacío si no has hecho.</small>
         </label>
+        <div
+          className="preset-bar"
+          role="group"
+          aria-label="Sugerencias de rutina de fuerza"
+        >
+          {[
+            ...new Set([
+              "Push A",
+              "Pull A",
+              "Piernas",
+              "Full body",
+              ...strengthOptions,
+            ]),
+          ]
+            .slice(0, 8)
+            .map((name) => (
+              <button
+                type="button"
+                key={name}
+                aria-pressed={draft.strength === name}
+                onClick={() =>
+                  update("strength", draft.strength === name ? "" : name)
+                }
+              >
+                <Dumbbell size={15} />
+                {name}
+              </button>
+            ))}
+        </div>
         <label>Otras actividades físicas</label>
         <div className="activity-entry">
           <Suggest
@@ -830,6 +972,7 @@ function Diary({
         <div className="chips">
           {draft.activities.map((a, index) => (
             <span key={index}>
+              <ActivityIcon name={a} />
               {a}
               <button
                 type="button"
@@ -844,6 +987,30 @@ function Diary({
                 <X size={13} />
               </button>
             </span>
+          ))}
+        </div>
+        <div
+          className="preset-bar"
+          role="group"
+          aria-label="Sugerencias de actividades físicas"
+        >
+          {["Natación", "Caminar", "Correr", "Bicicleta"].map((name) => (
+            <button
+              type="button"
+              key={name}
+              aria-pressed={draft.activities.includes(name)}
+              onClick={() =>
+                update(
+                  "activities",
+                  draft.activities.includes(name)
+                    ? draft.activities.filter((a) => a !== name)
+                    : [...draft.activities, name],
+                )
+              }
+            >
+              <ActivityIcon name={name} />
+              {name}
+            </button>
           ))}
         </div>
         <NumberField
@@ -1094,6 +1261,11 @@ function Calendar({
   const base = new Date(month + "-01T12:00:00");
   const offset = (base.getDay() + 6) % 7;
   const total = new Date(base.getFullYear(), base.getMonth() + 1, 0).getDate();
+  const summary = { green: 0, yellow: 0, red: 0, unrecorded: 0 };
+  for (let i = 1; i <= total; i++) {
+    const day = days[month + "-" + String(i).padStart(2, "0")];
+    summary[day ? (dailyColor(day) ?? "unrecorded") : "unrecorded"]++;
+  }
   const change = (n: number) => {
     const d = new Date(base);
     d.setMonth(d.getMonth() + n);
@@ -1140,6 +1312,33 @@ function Calendar({
           </button>
         </div>
       </div>
+      <div
+        className="month-summary"
+        role="region"
+        aria-label="Resumen de alimentación del mes"
+      >
+        {(
+          [
+            ["green", "Sigue la dieta"],
+            ["yellow", "Parcial"],
+            ["red", "Fuera de la dieta"],
+            ["unrecorded", "Sin comidas registradas"],
+          ] as const
+        ).map(([key, label]) => (
+          <div key={key} className={key}>
+            <span className={"dot " + key} />
+            <strong>{summary[key]}</strong>
+            <span>{label}</span>
+            <small>
+              {summary[key] === 1 ? "1 día" : `${summary[key]} días`}
+            </small>
+          </div>
+        ))}
+      </div>
+      <p className="hint">
+        Resumen del mes completo según las comidas registradas; los días futuros
+        sin comidas también cuentan como sin registro.
+      </p>
       <div className="calendar-grid">
         {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((d) => (
           <span className="weekday" key={d}>
@@ -1213,7 +1412,7 @@ function Calendar({
         <p className="muted">{selectedDay.meals.length} comidas registradas</p>
         {selectedDay.meals.map((m) => (
           <article className="calendar-meal" key={m.id}>
-            <Utensils size={19} />
+            <MealIcon type={m.type} />
             <div>
               <strong>{m.type}</strong>
               <p>{m.text}</p>
@@ -1252,17 +1451,28 @@ function Evolution({
     <>
       <div className="view-toolbar">
         <p className="muted">Observa el camino, no solo el último número.</p>
-        <select
+        <div
+          className="preset-bar evolution-periods"
+          role="group"
           aria-label="Periodo de evolución"
-          value={period}
-          onChange={(e) => setPeriod(e.target.value)}
         >
-          <option value="all">Todo el historial</option>
-          <option value="1">Último mes</option>
-          <option value="3">Últimos 3 meses</option>
-          <option value="6">Últimos 6 meses</option>
-          <option value="12">Último año</option>
-        </select>
+          {[
+            ["1", "1 mes"],
+            ["3", "3 meses"],
+            ["6", "6 meses"],
+            ["12", "1 año"],
+            ["all", "Todo"],
+          ].map(([value, label]) => (
+            <button
+              type="button"
+              key={value}
+              aria-pressed={period === value}
+              onClick={() => setPeriod(value)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="charts-grid">
         {indicators

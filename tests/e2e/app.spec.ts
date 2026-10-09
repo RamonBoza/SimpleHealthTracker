@@ -22,6 +22,16 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
   await expect(
     page.getByRole("heading", { name: "Tu día, de un vistazo" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Cena Sin registrar · Opcional" }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Cena Sin registrar · Opcional" })
+    .click();
+  await expect(page.getByLabel("Tipo de comida")).toHaveValue("Cena");
+  await page
+    .getByRole("button", { name: "Desayuno Sin registrar · Opcional" })
+    .click();
   await page.getByLabel("Qué has comido").fill("Café y tostada");
   await page.getByRole("button", { name: "Añadir comida" }).click();
   await page
@@ -33,6 +43,22 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
   await expect(
     page.getByRole("button", { name: "Eliminar Desayuno" }),
   ).toHaveCount(1);
+  await page
+    .getByRole("button", {
+      name: "Comida Sin registrar · Opcional",
+      exact: true,
+    })
+    .click();
+  await page.getByLabel("Qué has comido").fill("Arroz con verduras");
+  await page
+    .getByRole("button", { name: "Añadir comida", exact: true })
+    .click();
+  await page.getByLabel("Nombre de la rutina").fill("pushA");
+  await page
+    .getByRole("group", { name: "Sugerencias de rutina de fuerza" })
+    .getByRole("button", { name: "Full body" })
+    .click();
+  await expect(page.getByLabel("Nombre de la rutina")).toHaveValue("Full body");
   await page.getByLabel("Nombre de la rutina").fill("pushA");
   await page.getByLabel("Natación, caminar, correr…").fill("Natación");
   await page.getByRole("button", { name: "Añadir actividad" }).click();
@@ -59,6 +85,11 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
   ).toHaveValue("41");
   const currentDate = await page.getByLabel("Fecha del diario").inputValue();
   await page.getByRole("button", { name: "Calendario", exact: true }).click();
+  const summary = page.getByRole("region", {
+    name: "Resumen de alimentación del mes",
+  });
+  await expect(summary).toContainText("1 día");
+  await expect(summary).toContainText("Sin comidas registradas");
   await expect(
     page.getByRole("button", { name: new RegExp("Sigue la dieta") }),
   ).toBeVisible();
@@ -79,6 +110,12 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
     fullPage: true,
   });
   await page.getByRole("button", { name: "Evolución", exact: true }).click();
+  const periods = page.getByRole("group", { name: "Periodo de evolución" });
+  await periods.getByRole("button", { name: "1 mes", exact: true }).click();
+  await expect(
+    periods.getByRole("button", { name: "1 mes", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await periods.getByRole("button", { name: "Todo", exact: true }).click();
   await expect(page.getByText("Rango de referencia: 82–92 kg")).toBeVisible();
   expect(
     await page.evaluate(

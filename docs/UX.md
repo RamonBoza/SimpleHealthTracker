@@ -8,9 +8,13 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 - Cabecera compacta con acceso a cuenta y estado real de cambios/guardado; navegación inferior en móvil y lateral en ordenador.
 - Navegación semanal del diario y accesos rápidos a alimentación, peso y sueño.
 - Comidas presentadas en tarjetas y selectores con el contexto completo de seguimiento de la dieta.
+- Cinco accesos de comidas opcionales, con iconos distintos y edición directa; acceso adicional a otra comida o snack. El estado de dieta sigue expresado en texto y color.
+- Actividad física con sugerencias clicables de fuerza y actividades, iconos según el tipo y nombres libres conservados.
 - Autoguardado online tras una pausa, confirmado por el servidor. Cambios durante una petición se guardan después sin descartarlos. Error visible, conservación en la pantalla y reintento; sin prometer persistencia offline.
 - Calendario con símbolos además del color, detalle de las comidas del día seleccionado y acceso explícito a editarlo.
+- Resumen del mes completo con días verdes, parciales, fuera de dieta y sin comidas registradas; los días futuros del mes cuentan como sin registro. El detalle reutiliza los iconos propios de cada comida.
 - Peso destacado en evolución, acceso a registrar un peso y enlace a personalizar rangos.
+- Periodos de evolución seleccionables mediante una barra de botones (1, 3 y 6 meses, 1 año y todo el historial).
 - Opciones con agrupación de indicadores y campos visualmente diferenciados.
 - Administración con búsqueda de cuenta y presentación adaptable al móvil; se mantienen el motivo y la auditoría reales.
 
