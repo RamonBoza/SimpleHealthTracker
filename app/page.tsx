@@ -1497,6 +1497,9 @@ function Evolution({
                 value: d[i.key] as number,
               }));
             const latest = values.at(-1);
+            const showYear =
+              values.length > 1 &&
+              values[0].date.slice(0, 4) !== latest?.date.slice(0, 4);
             const within =
               latest &&
               range &&
@@ -1577,14 +1580,28 @@ function Evolution({
                           dataKey="time"
                           type="number"
                           domain={["dataMin", "dataMax"]}
+                          ticks={[
+                            ...new Set(values.map((value) => value.time)),
+                          ]}
                           tickFormatter={(v) =>
-                            shortDate(new Date(v).toISOString().slice(0, 10))
+                            showYear
+                              ? new Date(v).toLocaleDateString("es-ES", {
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                  timeZone: "UTC",
+                                })
+                              : shortDate(
+                                  new Date(v).toISOString().slice(0, 10),
+                                )
                           }
                           tick={{ fontSize: 11 }}
                           minTickGap={35}
                         />
                         <YAxis
-                          allowDecimals={i.key !== "steps" && i.key !== "quality"}
+                          allowDecimals={
+                            i.key !== "steps" && i.key !== "quality"
+                          }
                           domain={[
                             Math.max(0, low - margin),
                             Math.min(i.limit, high + margin),
