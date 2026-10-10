@@ -6,6 +6,8 @@ Estado: MVP implementado, en revisión UX y estabilización a 9 de octubre de 20
 
 Registrar datos de salud fácilmente y consultarlos de forma visual, por ejemplo para mostrar a la nutricionista la alimentación del mes. Web con conexión a internet, adaptable al móvil y al ordenador, incluidas pantallas alargadas. El diario de hoy será la pantalla inicial y el panel de evolución será accesible mediante un botón.
 
+Actualización del 10 de octubre: se incluye instalación como PWA en móvil, con icono y ventana propia, manteniendo el requisito de internet. Pasos en [PWA.md](PWA.md).
+
 ## Decisiones confirmadas para el MVP
 
 ### Diario

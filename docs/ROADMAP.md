@@ -14,6 +14,7 @@ Objetivo y alcance acordados: registro personal sencillo desde móvil y ordenado
 - Evolución de los siete datos numéricos del diario: cuatro indicadores corporales, pasos, horas dormidas y calidad del sueño. Visibilidad configurable; las gráficas nuevas se activan también para cuentas existentes.
 - Cuentas separadas, administración, bans, auditoría y borrado de cuentas.
 - PostgreSQL y configuración de Next.js para Vercel.
+- Instalación móvil como PWA incorporada al MVP el 10 de octubre, con iconos y modo independiente. Requiere conexión; prueba de instalación en móvil pendiente. Instrucciones en [PWA.md](PWA.md).
 - Recuperación por correo implementada pero opcional; deshabilitada sin SMTP por decisión del usuario.
 
 Compilación y pruebas locales pasan. El usuario ha mostrado la aplicación desplegada; no se ha verificado desde esta sesión el recorrido completo contra la base de producción.
