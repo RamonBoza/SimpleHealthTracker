@@ -2673,3 +2673,11 @@ progress::-webkit-progress-value {
     padding: 9px 6px;
   }
 }
+/* Keep focused form controls readable without iPhone's automatic zoom. */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  html body input:not([type="checkbox"]):not([type="radio"]),
+  html body select,
+  html body textarea {
+    font-size: 16px;
+  }
+}

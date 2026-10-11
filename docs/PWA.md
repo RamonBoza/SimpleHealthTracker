@@ -2,6 +2,8 @@
 
 Incluido en el MVP: manifest de instalación, iconos para Android/iOS y apertura en modo independiente. Se utiliza el mismo servidor y la misma cuenta. Requiere internet; no incorpora almacenamiento offline ni notificaciones.
 
+Confirmado por el usuario el 11 de octubre: instalación y uso en móvil correctos. Se ajusta el texto de los campos a 16 px en móvil para evitar el zoom automático al enfocarlos; se conserva el zoom manual. Comprobación de esta corrección en el dispositivo pendiente.
+
 Tras desplegar el último commit en Vercel, abre la URL HTTPS de producción (no localhost ni una vista previa protegida).
 
 ## iPhone
