@@ -2774,22 +2774,105 @@ progress::-webkit-progress-value {
 }
 /* Fit the monthly overview comfortably on a phone. */
 @media (max-width: 600px) {
-  .calendar-card .calendar-heading { margin-bottom: 8px; gap: 5px; }
-  .calendar-card .calendar-heading h2 { font-size: 20px; }
-  .calendar-card .calendar-heading p { display: none; }
-  .calendar-card .date-controls { gap: 5px; }
-  .calendar-card .date-controls input { padding: 7px 10px; min-height: 40px; }
-  .calendar-card .calendar-views, .calendar-card .calendar-filters { margin: 6px 0; padding: 4px; gap: 4px; }
-  .calendar-card .preset-bar button { min-height: 36px; padding: 7px 6px; }
-  .calendar-card .month-summary { margin-top: 8px; }
-  .calendar-card .month-summary > div { padding: 7px 3px; }
-  .calendar-card .month-summary strong { font-size: 20px; }
-  .calendar-card .month-summary > div > span:not(.dot) { line-height: 1.2; margin-top: 3px; }
-  .calendar-card .month-summary small:first-of-type { display: none; }
-  .calendar-card > .hint { font-size: 10px; line-height: 1.4; margin: 6px 0; }
-  .calendar-card .calendar-grid { gap: 4px; }
-  .calendar-card .calendar-day { min-height: 62px; padding: 5px 2px; gap: 2px; }
-  .calendar-card .calendar-day small { white-space: nowrap; font-size: 8px; }
-  .calendar-card .day-data-icons { gap: 1px; }
-  .calendar-card .day-data-icons svg { width: 9px; height: 9px; }
+  .calendar-card .calendar-heading {
+    margin-bottom: 8px;
+    gap: 5px;
+  }
+  .calendar-card .calendar-heading h2 {
+    font-size: 20px;
+  }
+  .calendar-card .calendar-heading p {
+    display: none;
+  }
+  .calendar-card .date-controls {
+    gap: 5px;
+  }
+  .calendar-card .date-controls input {
+    padding: 7px 10px;
+    min-height: 40px;
+  }
+  .calendar-card .calendar-views,
+  .calendar-card .calendar-filters {
+    margin: 6px 0;
+    padding: 4px;
+    gap: 4px;
+  }
+  .calendar-card .preset-bar button {
+    min-height: 36px;
+    padding: 7px 6px;
+  }
+  .calendar-card .month-summary {
+    margin-top: 8px;
+  }
+  .calendar-card .month-summary > div {
+    padding: 7px 3px;
+  }
+  .calendar-card .month-summary strong {
+    font-size: 20px;
+  }
+  .calendar-card .month-summary > div > span:not(.dot) {
+    line-height: 1.2;
+    margin-top: 3px;
+  }
+  .calendar-card .month-summary small:first-of-type {
+    display: none;
+  }
+  .calendar-card > .hint {
+    font-size: 10px;
+    line-height: 1.4;
+    margin: 6px 0;
+  }
+  .calendar-card .calendar-grid {
+    gap: 4px;
+  }
+  .calendar-card .calendar-day {
+    min-height: 62px;
+    padding: 5px 2px;
+    gap: 2px;
+  }
+  .calendar-card .calendar-day small {
+    white-space: nowrap;
+    font-size: 8px;
+  }
+  .calendar-card .day-data-icons {
+    gap: 1px;
+  }
+  .calendar-card .day-data-icons svg {
+    width: 9px;
+    height: 9px;
+  }
+}
+@media (max-width: 600px) {
+  .calendar-card .calendar-day {
+    aspect-ratio: 1;
+    min-height: 0;
+    height: auto;
+    padding: 3px 1px;
+    flex-wrap: nowrap;
+    gap: 1px;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .calendar-card .calendar-day small {
+    display: none;
+  }
+  .calendar-card .calendar-day > span:first-child {
+    line-height: 14px;
+  }
+  .calendar-card .calendar-symbol,
+  .calendar-card .no-data {
+    font-size: 12px;
+    line-height: 13px;
+  }
+  .calendar-card .day-data-icons {
+    min-height: 8px;
+    flex-wrap: nowrap;
+  }
+  .calendar-card .day-data-icons:empty {
+    display: none;
+  }
+  .calendar-card .day-data-icons svg {
+    width: 8px;
+    height: 8px;
+  }
 }
