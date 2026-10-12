@@ -1400,9 +1400,7 @@ function Calendar({
         ))}
       </div>
       <p className="hint">
-        Resumen del mes completo según las comidas registradas; los días futuros
-        sin comidas también cuentan como sin registro. Los porcentajes se
-        calculan sobre los días con comidas.
+        Mes completo, incluidos días futuros. Porcentajes sobre días con comidas.
       </p>
       <div className="calendar-grid">
         {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((d) => (
