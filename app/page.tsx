@@ -1258,6 +1258,8 @@ function Calendar({
 }) {
   const [month, setMonth] = useState(date.slice(0, 7));
   const [selected, setSelected] = useState(date);
+  const [calendarView, setCalendarView] = useState("general");
+  const [dietFilter, setDietFilter] = useState("all");
   const selectedDay = days[selected] || emptyDay();
   const selectedColor = dailyColor(selectedDay);
   const base = new Date(month + "-01T12:00:00");
@@ -1315,6 +1317,26 @@ function Calendar({
         </div>
       </div>
       <div
+        className="preset-bar calendar-views"
+        role="group"
+        aria-label="Vista del calendario"
+      >
+        {[
+          ["general", "Vista general"],
+          ["nutrition", "Solo nutrición"],
+          ["health", "Datos de salud"],
+        ].map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={calendarView === value}
+            onClick={() => setCalendarView(value)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div
         className="month-summary"
         role="region"
         aria-label="Resumen de alimentación del mes"
@@ -1334,12 +1356,53 @@ function Calendar({
             <small>
               {summary[key] === 1 ? "1 día" : `${summary[key]} días`}
             </small>
+            {key !== "unrecorded" && (
+              <small>
+                {summary.green + summary.yellow + summary.red
+                  ? Math.round(
+                      (100 * summary[key]) /
+                        (summary.green + summary.yellow + summary.red),
+                    ) + "%"
+                  : "—"}
+              </small>
+            )}
           </div>
+        ))}
+      </div>
+      <div
+        className="preset-bar calendar-filters"
+        role="group"
+        aria-label="Filtrar días por alimentación"
+      >
+        {[
+          ["all", "Todo el mes"],
+          ["red", `Fuera de dieta (${summary.red})`],
+          ["yellow", `Parciales (${summary.yellow})`],
+        ].map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={dietFilter === value}
+            onClick={() => {
+              setDietFilter(value);
+              if (value !== "all") {
+                const match = Object.keys(days)
+                  .sort()
+                  .find(
+                    (d) => d.startsWith(month) && dailyColor(days[d]) === value,
+                  );
+                if (match) setSelected(match);
+              }
+            }}
+          >
+            {label}
+          </button>
         ))}
       </div>
       <p className="hint">
         Resumen del mes completo según las comidas registradas; los días futuros
-        sin comidas también cuentan como sin registro.
+        sin comidas también cuentan como sin registro. Los porcentajes se
+        calculan sobre los días con comidas.
       </p>
       <div className="calendar-grid">
         {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((d) => (
@@ -1364,6 +1427,7 @@ function Calendar({
               }
               aria-label={`${dateLabel(d)}: ${color ? colorName[color] : "Sin comidas registradas"}`}
               aria-pressed={selected === d}
+              disabled={dietFilter !== "all" && color !== dietFilter}
               onClick={() => setSelected(d)}
             >
               <span>{i + 1}</span>
@@ -1374,11 +1438,23 @@ function Calendar({
               ) : (
                 <span className="no-data">—</span>
               )}
-              <small>
-                {day?.meals.length
-                  ? `${day.meals.length} comida${day.meals.length > 1 ? "s" : ""}`
-                  : "Sin registro"}
-              </small>
+              {calendarView !== "health" && (
+                <small>
+                  {day?.meals.length
+                    ? `${day.meals.length} comida${day.meals.length > 1 ? "s" : ""}`
+                    : "Sin registro"}
+                </small>
+              )}
+              {calendarView !== "nutrition" && (
+                <div className="day-data-icons" aria-hidden="true">
+                  {day?.sleep != null && <Moon size={11} />}
+                  {day?.steps != null && <Footprints size={11} />}
+                  {day?.strength || day?.activities.length ? (
+                    <Dumbbell size={11} />
+                  ) : null}
+                  {day?.weight != null && <Activity size={11} />}
+                </div>
+              )}
             </button>
           );
         })}
@@ -1401,6 +1477,7 @@ function Calendar({
       </p>
       <section
         className="calendar-detail"
+        hidden={dietFilter !== "all" && selectedColor !== dietFilter}
         aria-label="Detalle del día seleccionado"
       >
         <div className="calendar-detail-heading">
@@ -1412,17 +1489,76 @@ function Calendar({
           </span>
         </div>
         <p className="muted">{selectedDay.meals.length} comidas registradas</p>
-        {selectedDay.meals.map((m) => (
-          <article className="calendar-meal" key={m.id}>
-            <MealIcon type={m.type} />
-            <div>
-              <strong>{m.type}</strong>
-              <p>{m.text}</p>
-            </div>
-            <span className={"badge " + m.color}>{colorName[m.color]}</span>
-          </article>
-        ))}
-        {!selectedDay.meals.length && (
+        {calendarView !== "nutrition" && (
+          <div
+            className="calendar-health"
+            role="region"
+            aria-label="Datos de salud del día"
+          >
+            {[
+              {
+                name: "Sueño",
+                Icon: Moon,
+                value:
+                  selectedDay.sleep === null
+                    ? "Sin registrar"
+                    : `${Math.floor(Math.round(selectedDay.sleep * 60) / 60)} h ${Math.round(selectedDay.sleep * 60) % 60} min`,
+              },
+              {
+                name: "Calidad del sueño",
+                Icon: Moon,
+                value:
+                  selectedDay.quality === null
+                    ? "Sin registrar"
+                    : `${selectedDay.quality}/100`,
+              },
+              {
+                name: "Pasos",
+                Icon: Footprints,
+                value:
+                  selectedDay.steps === null
+                    ? "Sin registrar"
+                    : selectedDay.steps.toLocaleString("es-ES"),
+              },
+              {
+                name: "Actividad",
+                Icon: Dumbbell,
+                value:
+                  [selectedDay.strength, ...selectedDay.activities]
+                    .filter(Boolean)
+                    .join(" · ") || "Sin registrar",
+              },
+              {
+                name: "Peso",
+                Icon: Activity,
+                value:
+                  selectedDay.weight === null
+                    ? "Sin registrar"
+                    : `${selectedDay.weight.toLocaleString("es-ES")} kg`,
+              },
+            ].map(({ name, Icon, value }) => (
+              <article key={name}>
+                <Icon size={20} aria-hidden="true" />
+                <div>
+                  <small>{name}</small>
+                  <strong>{value}</strong>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+        {calendarView !== "health" &&
+          selectedDay.meals.map((m) => (
+            <article className="calendar-meal" key={m.id}>
+              <MealIcon type={m.type} />
+              <div>
+                <strong>{m.type}</strong>
+                <p>{m.text}</p>
+              </div>
+              <span className={"badge " + m.color}>{colorName[m.color]}</span>
+            </article>
+          ))}
+        {calendarView !== "health" && !selectedDay.meals.length && (
           <p className="empty-small">
             No hay comidas registradas en esta fecha.
           </p>
@@ -1431,6 +1567,11 @@ function Calendar({
           Ver y editar en Diario <ArrowRight size={18} />
         </button>
       </section>
+      {dietFilter !== "all" && selectedColor !== dietFilter && (
+        <p className="empty-small">
+          No hay un día seleccionado que coincida con este filtro.
+        </p>
+      )}
     </section>
   );
 }

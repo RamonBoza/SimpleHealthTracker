@@ -21,6 +21,8 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 
 ## Diferencias respecto al prototipo
 
+Actualización del 12 de octubre: referencia adicional en `design/ux-reference/calendar-2026-10-12/code.html`. Se incorporan vistas general/nutrición/salud, filtros de días por valoración nutricional, resumen compacto con porcentajes sobre días con comidas y datos reales del día seleccionado (sueño, calidad, pasos, actividad y peso). El usuario confirma que todos los datos siguen opcionales: no hay puntuación de completitud ni datos pendientes obligatorios. Se omiten textos clínicos generados, correlaciones y exportación PDF, que no están implementados. Se mantiene el zoom manual y el tamaño de campos corregido para móvil.
+
 El prototipo contiene datos ilustrativos y funciones que no están dentro del alcance acordado. No se incorporan integraciones Apple Health, exportación, notas de consulta, cuotas, invitaciones, roles de nutricionista/paciente ni afirmaciones de cumplimiento/cifrado/backups sin soporte operativo.
 
 Los datos se introducen manualmente. La grasa visceral sigue en porcentaje según lo acordado, aunque el prototipo usa un índice. Se conservan las reglas de colores del calendario, comidas opcionales, nombres libres y un único historial de peso. Por decisión del usuario, cada tipo de comida tiene una única entrada por día: seleccionarlo de nuevo permite editarla. El sueño se introduce en horas y minutos separados. Las gráficas no incluyen interpretaciones ni proyecciones.

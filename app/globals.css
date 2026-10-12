@@ -2681,3 +2681,94 @@ progress::-webkit-progress-value {
     font-size: 16px;
   }
 }
+/* Calendar consultation view: optional data, compact monthly audit. */
+.calendar-card .month-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 6px;
+  background: #f0f3ff;
+  border-radius: 14px;
+  gap: 5px;
+}
+.calendar-card .date-controls input {
+  min-width: 160px;
+}
+.calendar-detail[hidden] {
+  display: none;
+}
+.calendar-card .month-summary > div {
+  background: white;
+  padding: 10px 5px;
+}
+.calendar-card .month-summary > div > span:not(.dot) {
+  font-size: 11px;
+}
+.calendar-card .month-summary small {
+  font-size: 10px;
+}
+.calendar-views,
+.calendar-filters {
+  margin-bottom: 10px;
+}
+.calendar-day[aria-pressed="true"] {
+  outline: 2px solid #003f2e;
+  outline-offset: 2px;
+}
+.calendar-day:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.day-data-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  flex-wrap: wrap;
+  min-height: 11px;
+}
+.calendar-health {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+  padding: 10px;
+  background: #f0f3ff;
+  border-radius: 14px;
+}
+.calendar-health article {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 0;
+}
+.calendar-health svg {
+  flex-shrink: 0;
+  color: #1b4332;
+}
+.calendar-health small,
+.calendar-health strong {
+  display: block;
+}
+.calendar-health small {
+  color: #627184;
+  margin-bottom: 4px;
+}
+.calendar-health strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .calendar-views button,
+  .calendar-filters button {
+    font-size: 11px;
+    padding: 9px 7px;
+  }
+  .calendar-health article {
+    padding: 10px 7px;
+    gap: 6px;
+  }
+  .calendar-card .calendar-day {
+    min-height: 84px;
+  }
+}

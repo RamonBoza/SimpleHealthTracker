@@ -91,6 +91,44 @@ test("diario, privacidad entre cuentas, recuperación, moderación y borrado", a
   });
   await expect(summary).toContainText("1 día");
   await expect(summary).toContainText("Sin comidas registradas");
+  const calendarViews = page.getByRole("group", {
+    name: "Vista del calendario",
+  });
+  await expect(
+    page.getByRole("region", { name: "Datos de salud del día" }),
+  ).toContainText("6 h 41 min");
+  await calendarViews
+    .getByRole("button", { name: "Solo nutrición", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Datos de salud del día" }),
+  ).toHaveCount(0);
+  await calendarViews
+    .getByRole("button", { name: "Datos de salud", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Datos de salud del día" }),
+  ).toContainText("8420");
+  await expect(
+    page
+      .getByRole("region", { name: "Detalle del día seleccionado" })
+      .getByText("Arroz con verduras"),
+  ).toHaveCount(0);
+  await calendarViews
+    .getByRole("button", { name: "Vista general", exact: true })
+    .click();
+  const filters = page.getByRole("group", {
+    name: "Filtrar días por alimentación",
+  });
+  await filters
+    .getByRole("button", { name: "Fuera de dieta (0)", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: new RegExp("Sigue la dieta") }),
+  ).toBeDisabled();
+  await filters
+    .getByRole("button", { name: "Todo el mes", exact: true })
+    .click();
   await expect(
     page.getByRole("button", { name: new RegExp("Sigue la dieta") }),
   ).toBeVisible();
