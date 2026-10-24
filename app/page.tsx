@@ -1399,16 +1399,17 @@ function Calendar({
   days,
   date,
   onDate,
+  annual = false,
 }: {
   days: Record<string, Day>;
   date: string;
   onDate: (d: string) => void;
+  annual?: boolean;
 }) {
   const [month, setMonth] = useState(date.slice(0, 7));
   const [selected, setSelected] = useState(date);
   const [calendarView, setCalendarView] = useState("general");
   const [dietFilter, setDietFilter] = useState("all");
-  const [calendarPeriod, setCalendarPeriod] = useState("month");
   const selectedDay = days[selected] || emptyDay();
   const selectedColor = dailyColor(selectedDay);
   const base = new Date(month + "-01T12:00:00");
@@ -1426,30 +1427,8 @@ function Calendar({
     setSelected(localDate(d).slice(0, 7) + "-01");
   };
   return (
-    <section className="card calendar-card">
-      <div
-        className="preset-bar"
-        role="group"
-        aria-label="Periodo del calendario"
-      >
-        {[
-          ["month", "Mes"],
-          ["year", "Año"],
-        ].map(([value, label]) => (
-          <button
-            type="button"
-            key={value}
-            aria-pressed={calendarPeriod === value}
-            onClick={() => {
-              setCalendarPeriod(value);
-              setDietFilter("all");
-            }}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-      {calendarPeriod === "year" && (
+    <section className={"card calendar-card" + (annual ? " annual-card" : "")}>
+      {annual && (
         <FoodYear
           days={days}
           date={month + "-01"}
@@ -1466,7 +1445,7 @@ function Calendar({
           }}
         />
       )}
-      <div hidden={calendarPeriod !== "month"} className="monthly-calendar">
+      <div hidden={annual} className="monthly-calendar">
         <div className="calendar-heading">
           <div>
             <h2>
@@ -2672,6 +2651,7 @@ export default function Home() {
   const tabs = [
     { id: "diary", label: "Diario", icon: BookOpen },
     { id: "calendar", label: "Calendario", icon: CalendarDays },
+    { id: "year", label: "Tu año", icon: Heart },
     { id: "evolution", label: "Evolución", icon: ChartNoAxesCombined },
     { id: "options", label: "Opciones", icon: Settings2 },
     ...(user.admin
@@ -2783,6 +2763,7 @@ export default function Home() {
                 {
                   diary: "Tu día, de un vistazo",
                   calendar: "Un mes de hábitos",
+                  year: "Tu año",
                   evolution: "Tu evolución",
                   options: "A tu manera",
                   admin: "Administración",
@@ -2792,13 +2773,15 @@ export default function Home() {
             <p>
               {view === "diary"
                 ? `Hola, ${user.username}. Registra lo que importa hoy.`
-                : view === "calendar"
-                  ? "Revisa tus comidas y vuelve a cualquier día."
-                  : view === "evolution"
-                    ? "Tus mediciones y los rangos que quieres alcanzar."
-                    : view === "options"
-                      ? "Tu cuenta, tus objetivos y tus referencias."
-                      : "Gestiona las cuentas con cuidado."}
+                : view === "year"
+                  ? "Tu alimentación de todo el año, de un vistazo."
+                  : view === "calendar"
+                    ? "Revisa tus comidas y vuelve a cualquier día."
+                    : view === "evolution"
+                      ? "Tus mediciones y los rangos que quieres alcanzar."
+                      : view === "options"
+                        ? "Tu cuenta, tus objetivos y tus referencias."
+                        : "Gestiona las cuentas con cuidado."}
             </p>
           </div>
           <span className="header-pill">
@@ -2916,6 +2899,15 @@ export default function Home() {
           <Calendar
             days={days}
             date={date}
+            onDate={(d) => navigate("diary", d)}
+          />
+        )}
+        {view === "year" && (
+          <Calendar
+            key="year"
+            days={days}
+            date={date}
+            annual
             onDate={(d) => navigate("diary", d)}
           />
         )}

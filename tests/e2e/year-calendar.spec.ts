@@ -37,11 +37,7 @@ test("mapa anual: semanas, año bisiesto, colores y consulta de días", async ({
     ).toBeTruthy();
   }
   await page.goto("/");
-  await page.getByRole("button", { name: "Calendario", exact: true }).click();
-  await page
-    .getByRole("group", { name: "Periodo del calendario" })
-    .getByRole("button", { name: "Año", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Tu año", exact: true }).click();
   await page.getByLabel("Año del calendario").fill("2024");
   const map = page.getByLabel("Alimentación de 2024", { exact: true });
   await expect(map.getByRole("button")).toHaveCount(366);
@@ -60,6 +56,8 @@ test("mapa anual: semanas, año bisiesto, colores y consulta de días", async ({
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBeTruthy();
+  const bounds = await map.boundingBox();
+  expect(bounds!.height).toBeLessThan(480);
   await page.screenshot({
     path: "test-results/mobile-year-calendar.png",
     fullPage: true,
@@ -68,15 +66,10 @@ test("mapa anual: semanas, año bisiesto, colores y consulta de días", async ({
   await expect(
     page.getByRole("region", { name: "Detalle del día seleccionado" }),
   ).toContainText("Comida del día bisiesto");
-  await page
-    .getByRole("group", { name: "Periodo del calendario" })
-    .getByRole("button", { name: "Mes", exact: true })
-    .click();
-  await expect(page.getByLabel("Mes del calendario")).toHaveValue("2024-02");
-  await page
-    .getByRole("group", { name: "Periodo del calendario" })
-    .getByRole("button", { name: "Año", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Calendario", exact: true }).click();
+  await expect(page.getByLabel("Mes del calendario")).toBeVisible();
+  await expect(page.getByLabel("Año del calendario")).toHaveCount(0);
+  await page.getByRole("button", { name: "Tu año", exact: true }).click();
   await page.getByLabel("Año del calendario").fill("2025");
   await expect(
     page

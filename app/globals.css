@@ -2982,3 +2982,63 @@ progress::-webkit-progress-value {
     margin: 6px 0;
   }
 }
+/* A full vertical contribution map fits in one phone overview. */
+.annual-card .year-heatmap {
+  --bit-size: clamp(3px, calc((100svh - 430px) / 54 - 2px), 9px);
+  max-width: none;
+  width: max-content;
+  margin: 10px auto;
+}
+.annual-card .year-week {
+  grid-template-columns: 26px repeat(7, var(--bit-size));
+  gap: 2px;
+  margin-bottom: 2px;
+}
+.annual-card .year-bit {
+  width: var(--bit-size);
+  height: var(--bit-size);
+  border-radius: 2px;
+}
+.annual-card .year-bit span {
+  display: none;
+}
+.annual-card .year-week-heading {
+  font-size: 7px;
+}
+.annual-card .year-month {
+  font-size: 7px;
+  line-height: var(--bit-size);
+  height: var(--bit-size);
+}
+.annual-card .year-week-heading > span:not(:first-child) {
+  overflow: hidden;
+  font-size: 0;
+}
+.annual-card .year-week-heading > span:not(:first-child)::first-letter {
+  font-size: 7px;
+}
+.annual-card .year-totals {
+  margin: 8px 0;
+  gap: 5px 12px;
+  font-size: 11px;
+}
+.annual-card .food-year > .hint {
+  font-size: 10px;
+  line-height: 1.3;
+  margin: 5px 0;
+}
+.annual-card .food-year .calendar-heading {
+  margin-bottom: 6px;
+}
+.annual-card .food-year .calendar-heading h2 {
+  display: none;
+}
+.annual-card .food-year .calendar-heading p {
+  display: none;
+}
+@media (max-width: 600px) {
+  .sidebar nav button {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
