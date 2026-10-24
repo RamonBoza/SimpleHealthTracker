@@ -37,6 +37,8 @@ SMTP no bloquea este cierre; activar recuperación será una decisión posterior
 
 ## 4. Comodidad y reutilización — propuesta posterior
 
+Entregado el 24 de octubre: mapa anual vertical de alimentación, con selector Mes/Año y acceso al detalle diario. Mapas anuales para otras métricas siguen pendientes.
+
 Comidas predefinidas con descripción/color, reutilización avanzada, edición de varios días, pantalla inicial configurable, exportación y acceso vinculado con Google. Importación de histórico solo si aporta valor sin comprometer el modelo.
 
 ## 5. Hábitos y seguimiento ampliado — propuesta posterior

@@ -4,6 +4,8 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 
 ## Cambios incorporados
 
+- Vista anual de alimentación (24 de octubre): selector Mes/Año, siete columnas de lunes a domingo y semanas continuas en vertical, etiquetas de meses, colores de dieta y detalle al seleccionar un día. Los futuros sin comidas tienen borde discontinuo; los registros existentes conservan su color. Incluye selector de año y años bisiestos. Solo alimentación en esta primera versión, sin objetivos nuevos.
+
 - Paleta de fondos claros azulados, verde profundo, tarjetas suaves y controles con mayor contraste y zonas táctiles.
 - Cabecera compacta con acceso a cuenta y estado real de cambios/guardado; navegación inferior en móvil y lateral en ordenador.
 - Navegación semanal del diario y accesos rápidos a alimentación, peso y sueño.

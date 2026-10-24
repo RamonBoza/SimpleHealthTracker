@@ -2876,3 +2876,109 @@ progress::-webkit-progress-value {
     height: 8px;
   }
 }
+/* Vertical year map: Monday–Sunday columns and continuous calendar weeks. */
+.monthly-calendar[hidden] {
+  display: none;
+}
+.food-year .calendar-heading {
+  flex-wrap: wrap;
+}
+.year-picker {
+  font-size: 11px;
+  margin: 0;
+}
+.calendar-card .date-controls .year-picker input {
+  min-width: 0;
+  width: 90px;
+  padding: 8px;
+}
+.year-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin: 14px 0;
+  font-size: 12px;
+}
+.year-totals > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.year-heatmap {
+  max-width: 390px;
+  margin: 20px auto;
+}
+.year-week {
+  display: grid;
+  grid-template-columns: 32px repeat(7, minmax(0, 1fr));
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.year-week-heading {
+  text-align: center;
+  font-size: 10px;
+  color: #627184;
+  margin-bottom: 10px;
+}
+.year-month {
+  font-size: 11px;
+  text-transform: capitalize;
+  color: #627184;
+}
+.year-bit {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 1;
+}
+.year-bit.green {
+  background: #c1ecd4;
+  color: #174e38;
+}
+.year-bit.yellow {
+  background: #ffdbb8;
+  color: #763300;
+}
+.year-bit.red {
+  background: #ffdadb;
+  color: #920029;
+}
+.year-bit.unrecorded {
+  background: #edf0f8;
+  border-color: #dae0ee;
+}
+.year-bit.future {
+  background: transparent;
+  border: 1px dashed #c7cedc;
+}
+.year-bit[aria-pressed="true"] {
+  outline: 2px solid #003f2e;
+  outline-offset: 1px;
+}
+.year-bit:focus-visible {
+  outline: 3px solid #003f2e;
+  outline-offset: 1px;
+}
+#calendar-selected-detail {
+  scroll-margin-top: 100px;
+}
+@media (max-width: 600px) {
+  .year-week {
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+  .monthly-calendar > .hint {
+    font-size: 10px;
+    line-height: 1.4;
+    margin: 6px 0;
+  }
+}

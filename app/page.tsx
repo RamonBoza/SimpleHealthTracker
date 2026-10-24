@@ -1247,6 +1247,154 @@ function WeekStrip({
     </div>
   );
 }
+function FoodYear({
+  days,
+  date,
+  selected,
+  onSelect,
+}: {
+  days: Record<string, Day>;
+  date: string;
+  selected: string;
+  onSelect: (date: string) => void;
+}) {
+  const [year, setYear] = useState(Number(date.slice(0, 4)));
+  const first = new Date(Date.UTC(year, 0, 1, 12));
+  const offset = (first.getUTCDay() + 6) % 7;
+  const count = (Date.UTC(year + 1, 0, 1) - Date.UTC(year, 0, 1)) / 86400000;
+  const cells = Array.from(
+    { length: Math.ceil((offset + count) / 7) * 7 },
+    (_, index) => {
+      const dayIndex = index - offset;
+      return dayIndex < 0 || dayIndex >= count
+        ? null
+        : new Date(Date.UTC(year, 0, dayIndex + 1, 12))
+            .toISOString()
+            .slice(0, 10);
+    },
+  );
+  const totals = { green: 0, yellow: 0, red: 0, unrecorded: 0 };
+  cells.forEach((d) => {
+    if (d)
+      totals[days[d] ? (dailyColor(days[d]) ?? "unrecorded") : "unrecorded"]++;
+  });
+  return (
+    <section className="food-year" aria-label="Mapa anual de alimentación">
+      <div className="calendar-heading">
+        <div>
+          <h2>Tu año en colores</h2>
+          <p>Una casilla por día. De lunes a domingo, semana a semana.</p>
+        </div>
+        <div className="date-controls">
+          <button
+            type="button"
+            className="icon-button"
+            aria-label="Año anterior"
+            disabled={year <= 1900}
+            onClick={() => setYear(year - 1)}
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <label className="year-picker">
+            Año
+            <input
+              aria-label="Año del calendario"
+              type="number"
+              min={1900}
+              max={2200}
+              step={1}
+              value={year}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (Number.isInteger(value) && value >= 1900 && value <= 2200)
+                  setYear(value);
+              }}
+            />
+          </label>
+          <button
+            type="button"
+            className="icon-button"
+            aria-label="Año siguiente"
+            disabled={year >= 2200}
+            onClick={() => setYear(year + 1)}
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      </div>
+      <div className="year-totals" aria-label="Resumen de alimentación del año">
+        {(
+          [
+            ["green", "Sigue la dieta"],
+            ["yellow", "Parcial"],
+            ["red", "Fuera de dieta"],
+            ["unrecorded", "Sin comidas"],
+          ] as const
+        ).map(([key, name]) => (
+          <span key={key}>
+            <span className={"dot " + key} />
+            <strong>{totals[key]}</strong> {name}
+          </span>
+        ))}
+      </div>
+      <p className="hint">
+        El color depende de las comidas registradas. Los días futuros sin
+        comidas tienen borde discontinuo. Toca un día para consultar el detalle.
+      </p>
+      <div className="year-heatmap" aria-label={`Alimentación de ${year}`}>
+        <div className="year-week year-week-heading">
+          <span aria-hidden="true" />
+          {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((name) => (
+            <span key={name}>{name}</span>
+          ))}
+        </div>
+        {Array.from({ length: cells.length / 7 }, (_, row) => {
+          const week = cells.slice(row * 7, row * 7 + 7);
+          const monthStart = week.find((d) => d?.endsWith("-01"));
+          return (
+            <div className="year-week" key={row}>
+              <span className="year-month">
+                {monthStart
+                  ? new Date(monthStart + "T12:00:00Z").toLocaleDateString(
+                      "es-ES",
+                      { month: "short", timeZone: "UTC" },
+                    )
+                  : ""}
+              </span>
+              {week.map((d, index) => {
+                if (!d) return <span key={index} className="year-blank" />;
+                const color = days[d] ? dailyColor(days[d]) : null;
+                const future = d > localDate();
+                const label = `${dateLabel(d)}: ${color ? colorName[color] : future ? "Futuro, sin comidas registradas" : "Sin comidas registradas"}`;
+                return (
+                  <button
+                    type="button"
+                    key={d}
+                    className={`year-bit ${color ?? "unrecorded"}${future && !color ? " future" : ""}`}
+                    aria-label={label}
+                    title={label}
+                    aria-pressed={selected === d}
+                    onClick={() => onSelect(d)}
+                  >
+                    <span aria-hidden="true">
+                      {color === "green"
+                        ? "✓"
+                        : color === "yellow"
+                          ? "△"
+                          : color === "red"
+                            ? "×"
+                            : ""}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
 function Calendar({
   days,
   date,
@@ -1260,6 +1408,7 @@ function Calendar({
   const [selected, setSelected] = useState(date);
   const [calendarView, setCalendarView] = useState("general");
   const [dietFilter, setDietFilter] = useState("all");
+  const [calendarPeriod, setCalendarPeriod] = useState("month");
   const selectedDay = days[selected] || emptyDay();
   const selectedColor = dailyColor(selectedDay);
   const base = new Date(month + "-01T12:00:00");
@@ -1278,202 +1427,249 @@ function Calendar({
   };
   return (
     <section className="card calendar-card">
-      <div className="calendar-heading">
-        <div>
-          <h2>
-            {base.toLocaleDateString("es-ES", {
-              month: "long",
-              year: "numeric",
-            })}
-          </h2>
-          <p>Tu alimentación, de un vistazo.</p>
-        </div>
-        <div className="date-controls">
-          <button
-            className="icon-button"
-            aria-label="Mes anterior"
-            onClick={() => change(-1)}
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <input
-            type="month"
-            aria-label="Mes del calendario"
-            value={month}
-            onChange={(e) => {
-              if (e.target.value) {
-                setMonth(e.target.value);
-                setSelected(e.target.value + "-01");
-              }
-            }}
-          />
-          <button
-            className="icon-button"
-            aria-label="Mes siguiente"
-            onClick={() => change(1)}
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
-      </div>
       <div
-        className="preset-bar calendar-views"
+        className="preset-bar"
         role="group"
-        aria-label="Vista del calendario"
+        aria-label="Periodo del calendario"
       >
         {[
-          ["general", "Vista general"],
-          ["nutrition", "Solo nutrición"],
-          ["health", "Datos de salud"],
+          ["month", "Mes"],
+          ["year", "Año"],
         ].map(([value, label]) => (
           <button
-            key={value}
             type="button"
-            aria-pressed={calendarView === value}
-            onClick={() => setCalendarView(value)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-      <div
-        className="month-summary"
-        role="region"
-        aria-label="Resumen de alimentación del mes"
-      >
-        {(
-          [
-            ["green", "Sigue la dieta"],
-            ["yellow", "Parcial"],
-            ["red", "Fuera de la dieta"],
-            ["unrecorded", "Sin comidas registradas"],
-          ] as const
-        ).map(([key, label]) => (
-          <div key={key} className={key}>
-            <span className={"dot " + key} />
-            <strong>{summary[key]}</strong>
-            <span>{label}</span>
-            <small>
-              {summary[key] === 1 ? "1 día" : `${summary[key]} días`}
-            </small>
-            {key !== "unrecorded" && (
-              <small>
-                {summary.green + summary.yellow + summary.red
-                  ? Math.round(
-                      (100 * summary[key]) /
-                        (summary.green + summary.yellow + summary.red),
-                    ) + "%"
-                  : "—"}
-              </small>
-            )}
-          </div>
-        ))}
-      </div>
-      <div
-        className="preset-bar calendar-filters"
-        role="group"
-        aria-label="Filtrar días por alimentación"
-      >
-        {[
-          ["all", "Todo el mes"],
-          ["red", `Fuera de dieta (${summary.red})`],
-          ["yellow", `Parciales (${summary.yellow})`],
-        ].map(([value, label]) => (
-          <button
             key={value}
-            type="button"
-            aria-pressed={dietFilter === value}
+            aria-pressed={calendarPeriod === value}
             onClick={() => {
-              setDietFilter(value);
-              if (value !== "all") {
-                const match = Object.keys(days)
-                  .sort()
-                  .find(
-                    (d) => d.startsWith(month) && dailyColor(days[d]) === value,
-                  );
-                if (match) setSelected(match);
-              }
+              setCalendarPeriod(value);
+              setDietFilter("all");
             }}
           >
             {label}
           </button>
         ))}
       </div>
-      <p className="hint">
-        Mes completo, incluidos días futuros. Porcentajes sobre días con comidas.
-      </p>
-      <div className="calendar-grid">
-        {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((d) => (
-          <span className="weekday" key={d}>
-            {d}
-          </span>
-        ))}
-        {Array.from({ length: offset }, (_, i) => (
-          <div key={"blank" + i} />
-        ))}
-        {Array.from({ length: total }, (_, i) => {
-          const d = month + "-" + String(i + 1).padStart(2, "0");
-          const day = days[d];
-          const color = day ? dailyColor(day) : null;
-          return (
+      {calendarPeriod === "year" && (
+        <FoodYear
+          days={days}
+          date={month + "-01"}
+          selected={selected}
+          onSelect={(d) => {
+            setSelected(d);
+            setMonth(d.slice(0, 7));
+            setDietFilter("all");
+            requestAnimationFrame(() =>
+              document
+                .getElementById("calendar-selected-detail")
+                ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+            );
+          }}
+        />
+      )}
+      <div hidden={calendarPeriod !== "month"} className="monthly-calendar">
+        <div className="calendar-heading">
+          <div>
+            <h2>
+              {base.toLocaleDateString("es-ES", {
+                month: "long",
+                year: "numeric",
+              })}
+            </h2>
+            <p>Tu alimentación, de un vistazo.</p>
+          </div>
+          <div className="date-controls">
             <button
-              key={d}
-              className={
-                "calendar-day " +
-                (color || "unrecorded") +
-                (d === localDate() ? " today" : "")
-              }
-              aria-label={`${dateLabel(d)}: ${color ? colorName[color] : "Sin comidas registradas"}`}
-              aria-pressed={selected === d}
-              disabled={dietFilter !== "all" && color !== dietFilter}
-              onClick={() => setSelected(d)}
+              className="icon-button"
+              aria-label="Mes anterior"
+              onClick={() => change(-1)}
             >
-              <span>{i + 1}</span>
-              {color ? (
-                <span className={"calendar-symbol " + color} aria-hidden="true">
-                  {color === "green" ? "✓" : color === "yellow" ? "△" : "×"}
-                </span>
-              ) : (
-                <span className="no-data">—</span>
-              )}
-              {calendarView !== "health" && (
+              <ChevronLeft size={20} />
+            </button>
+            <input
+              type="month"
+              aria-label="Mes del calendario"
+              value={month}
+              onChange={(e) => {
+                if (e.target.value) {
+                  setMonth(e.target.value);
+                  setSelected(e.target.value + "-01");
+                }
+              }}
+            />
+            <button
+              className="icon-button"
+              aria-label="Mes siguiente"
+              onClick={() => change(1)}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </div>
+        <div
+          className="preset-bar calendar-views"
+          role="group"
+          aria-label="Vista del calendario"
+        >
+          {[
+            ["general", "Vista general"],
+            ["nutrition", "Solo nutrición"],
+            ["health", "Datos de salud"],
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={calendarView === value}
+              onClick={() => setCalendarView(value)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div
+          className="month-summary"
+          role="region"
+          aria-label="Resumen de alimentación del mes"
+        >
+          {(
+            [
+              ["green", "Sigue la dieta"],
+              ["yellow", "Parcial"],
+              ["red", "Fuera de la dieta"],
+              ["unrecorded", "Sin comidas registradas"],
+            ] as const
+          ).map(([key, label]) => (
+            <div key={key} className={key}>
+              <span className={"dot " + key} />
+              <strong>{summary[key]}</strong>
+              <span>{label}</span>
+              <small>
+                {summary[key] === 1 ? "1 día" : `${summary[key]} días`}
+              </small>
+              {key !== "unrecorded" && (
                 <small>
-                  {day?.meals.length
-                    ? `${day.meals.length} comida${day.meals.length > 1 ? "s" : ""}`
-                    : "Sin registro"}
+                  {summary.green + summary.yellow + summary.red
+                    ? Math.round(
+                        (100 * summary[key]) /
+                          (summary.green + summary.yellow + summary.red),
+                      ) + "%"
+                    : "—"}
                 </small>
               )}
-              {calendarView !== "nutrition" && (
-                <div className="day-data-icons" aria-hidden="true">
-                  {day?.sleep != null && <Moon size={11} />}
-                  {day?.steps != null && <Footprints size={11} />}
-                  {day?.strength || day?.activities.length ? (
-                    <Dumbbell size={11} />
-                  ) : null}
-                  {day?.weight != null && <Activity size={11} />}
-                </div>
-              )}
+            </div>
+          ))}
+        </div>
+        <div
+          className="preset-bar calendar-filters"
+          role="group"
+          aria-label="Filtrar días por alimentación"
+        >
+          {[
+            ["all", "Todo el mes"],
+            ["red", `Fuera de dieta (${summary.red})`],
+            ["yellow", `Parciales (${summary.yellow})`],
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={dietFilter === value}
+              onClick={() => {
+                setDietFilter(value);
+                if (value !== "all") {
+                  const match = Object.keys(days)
+                    .sort()
+                    .find(
+                      (d) =>
+                        d.startsWith(month) && dailyColor(days[d]) === value,
+                    );
+                  if (match) setSelected(match);
+                }
+              }}
+            >
+              {label}
             </button>
-          );
-        })}
-      </div>
-      <div className="calendar-legend">
-        {Object.entries(colorName).map(([c, name]) => (
-          <span key={c}>
-            <span className={"dot " + c} />
-            {name}
+          ))}
+        </div>
+        <p className="hint">
+          Mes completo, incluidos días futuros. Porcentajes sobre días con
+          comidas.
+        </p>
+        <div className="calendar-grid">
+          {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((d) => (
+            <span className="weekday" key={d}>
+              {d}
+            </span>
+          ))}
+          {Array.from({ length: offset }, (_, i) => (
+            <div key={"blank" + i} />
+          ))}
+          {Array.from({ length: total }, (_, i) => {
+            const d = month + "-" + String(i + 1).padStart(2, "0");
+            const day = days[d];
+            const color = day ? dailyColor(day) : null;
+            return (
+              <button
+                key={d}
+                className={
+                  "calendar-day " +
+                  (color || "unrecorded") +
+                  (d === localDate() ? " today" : "")
+                }
+                aria-label={`${dateLabel(d)}: ${color ? colorName[color] : "Sin comidas registradas"}`}
+                aria-pressed={selected === d}
+                disabled={dietFilter !== "all" && color !== dietFilter}
+                onClick={() => setSelected(d)}
+              >
+                <span>{i + 1}</span>
+                {color ? (
+                  <span
+                    className={"calendar-symbol " + color}
+                    aria-hidden="true"
+                  >
+                    {color === "green" ? "✓" : color === "yellow" ? "△" : "×"}
+                  </span>
+                ) : (
+                  <span className="no-data">—</span>
+                )}
+                {calendarView !== "health" && (
+                  <small>
+                    {day?.meals.length
+                      ? `${day.meals.length} comida${day.meals.length > 1 ? "s" : ""}`
+                      : "Sin registro"}
+                  </small>
+                )}
+                {calendarView !== "nutrition" && (
+                  <div className="day-data-icons" aria-hidden="true">
+                    {day?.sleep != null && <Moon size={11} />}
+                    {day?.steps != null && <Footprints size={11} />}
+                    {day?.strength || day?.activities.length ? (
+                      <Dumbbell size={11} />
+                    ) : null}
+                    {day?.weight != null && <Activity size={11} />}
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <div className="calendar-legend">
+          {Object.entries(colorName).map(([c, name]) => (
+            <span key={c}>
+              <span className={"dot " + c} />
+              {name}
+            </span>
+          ))}
+          <span>
+            <span className="dot unrecorded" />
+            Sin datos
           </span>
-        ))}
-        <span>
-          <span className="dot unrecorded" />
-          Sin datos
-        </span>
+        </div>
+        <p className="hint">
+          El color se calcula con las comidas registradas. Selecciona un día
+          para consultar sus comidas.
+        </p>
       </div>
-      <p className="hint">
-        El color se calcula con las comidas registradas. Selecciona un día para
-        consultar sus comidas.
-      </p>
       <section
+        id="calendar-selected-detail"
         className="calendar-detail"
         hidden={dietFilter !== "all" && selectedColor !== dietFilter}
         aria-label="Detalle del día seleccionado"

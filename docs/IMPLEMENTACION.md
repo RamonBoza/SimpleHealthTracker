@@ -26,6 +26,8 @@ Publicación, PostgreSQL real, SMTP real, dominio, información de privacidad y 
 
 ## Verificación realizada
 
+Actualización del 24 de octubre: compilación y prueba específica del mapa anual correctas (365/366 días, posición semanal del 29 de febrero, colores, detalle y cambio Mes/Año). La repetición del recorrido general mensual queda interrumpida por el aviso/overlay de seguridad de Next.js 16.4.0 y debe repetirse tras resolverlo. Next.js recomienda actualizar la versión instalada; esta entrega no modifica dependencias.
+
 - TypeScript sin errores y compilación de producción correcta.
 - Tres pruebas de reglas de negocio correctas: semáforo, validación y rangos/conteo mensual.
 - Recorrido integrado Playwright correcto: diario persistente, calendario, gráficas, móvil sin desbordamiento, aislamiento de cuentas, rechazo de origen ajeno, límites, moderación con auditoría, bloqueo/desbloqueo y borrado de cuenta con registros/sesiones/tokens.
