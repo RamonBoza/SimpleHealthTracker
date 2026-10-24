@@ -1247,17 +1247,7 @@ function WeekStrip({
     </div>
   );
 }
-function FoodYear({
-  days,
-  date,
-  selected,
-  onSelect,
-}: {
-  days: Record<string, Day>;
-  date: string;
-  selected: string;
-  onSelect: (date: string) => void;
-}) {
+function FoodYear({ days, date }: { days: Record<string, Day>; date: string }) {
   const [year, setYear] = useState(Number(date.slice(0, 4)));
   const first = new Date(Date.UTC(year, 0, 1, 12));
   const offset = (first.getUTCDay() + 6) % 7;
@@ -1339,7 +1329,8 @@ function FoodYear({
       </div>
       <p className="hint">
         El color depende de las comidas registradas. Los días futuros sin
-        comidas tienen borde discontinuo. Toca un día para consultar el detalle.
+        comidas tienen borde discontinuo. Una vista de tu alimentación a lo
+        largo del año.
       </p>
       <div className="year-heatmap" aria-label={`Alimentación de ${year}`}>
         <div className="year-week year-week-heading">
@@ -1367,14 +1358,12 @@ function FoodYear({
                 const future = d > localDate();
                 const label = `${dateLabel(d)}: ${color ? colorName[color] : future ? "Futuro, sin comidas registradas" : "Sin comidas registradas"}`;
                 return (
-                  <button
-                    type="button"
+                  <span
+                    role="img"
                     key={d}
                     className={`year-bit ${color ?? "unrecorded"}${future && !color ? " future" : ""}`}
                     aria-label={label}
                     title={label}
-                    aria-pressed={selected === d}
-                    onClick={() => onSelect(d)}
                   >
                     <span aria-hidden="true">
                       {color === "green"
@@ -1385,7 +1374,7 @@ function FoodYear({
                             ? "×"
                             : ""}
                     </span>
-                  </button>
+                  </span>
                 );
               })}
             </div>
@@ -1399,12 +1388,10 @@ function Calendar({
   days,
   date,
   onDate,
-  annual = false,
 }: {
   days: Record<string, Day>;
   date: string;
   onDate: (d: string) => void;
-  annual?: boolean;
 }) {
   const [month, setMonth] = useState(date.slice(0, 7));
   const [selected, setSelected] = useState(date);
@@ -1427,25 +1414,8 @@ function Calendar({
     setSelected(localDate(d).slice(0, 7) + "-01");
   };
   return (
-    <section className={"card calendar-card" + (annual ? " annual-card" : "")}>
-      {annual && (
-        <FoodYear
-          days={days}
-          date={month + "-01"}
-          selected={selected}
-          onSelect={(d) => {
-            setSelected(d);
-            setMonth(d.slice(0, 7));
-            setDietFilter("all");
-            requestAnimationFrame(() =>
-              document
-                .getElementById("calendar-selected-detail")
-                ?.scrollIntoView({ behavior: "smooth", block: "start" }),
-            );
-          }}
-        />
-      )}
-      <div hidden={annual} className="monthly-calendar">
+    <section className="card calendar-card">
+      <div className="monthly-calendar">
         <div className="calendar-heading">
           <div>
             <h2>
@@ -2903,13 +2873,9 @@ export default function Home() {
           />
         )}
         {view === "year" && (
-          <Calendar
-            key="year"
-            days={days}
-            date={date}
-            annual
-            onDate={(d) => navigate("diary", d)}
-          />
+          <section className="card calendar-card annual-card">
+            <FoodYear days={days} date={date} />
+          </section>
         )}
         {view === "evolution" && (
           <Evolution

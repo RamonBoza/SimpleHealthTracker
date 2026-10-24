@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { emptyDay } from "../../lib/model";
 import { randomUUID } from "node:crypto";
 
-test("mapa anual: semanas, año bisiesto, colores y consulta de días", async ({
+test("mapa anual de lectura: semanas, año bisiesto y colores", async ({
   page,
 }) => {
   const suffix = Date.now();
@@ -40,11 +40,15 @@ test("mapa anual: semanas, año bisiesto, colores y consulta de días", async ({
   await page.getByRole("button", { name: "Tu año", exact: true }).click();
   await page.getByLabel("Año del calendario").fill("2024");
   const map = page.getByLabel("Alimentación de 2024", { exact: true });
-  await expect(map.getByRole("button")).toHaveCount(366);
+  await expect(map.getByRole("img")).toHaveCount(366);
+  await expect(map.getByRole("button")).toHaveCount(0);
+  await expect(
+    page.getByRole("region", { name: "Detalle del día seleccionado" }),
+  ).toHaveCount(0);
   await expect(map.locator(".year-bit.green")).toHaveCount(1);
   await expect(map.locator(".year-bit.red")).toHaveCount(1);
   // The first Monday is 1 January; leap day falls in the Thursday column.
-  const leap = map.getByRole("button", { name: /29 de febrero de 2024/ });
+  const leap = map.getByRole("img", { name: /29 de febrero de 2024/ });
   expect(
     await leap.evaluate((el) =>
       Array.from(el.parentElement!.children).indexOf(el),
@@ -62,25 +66,15 @@ test("mapa anual: semanas, año bisiesto, colores y consulta de días", async ({
     path: "test-results/mobile-year-calendar.png",
     fullPage: true,
   });
-  await leap.click();
-  await expect(
-    page.getByRole("region", { name: "Detalle del día seleccionado" }),
-  ).toContainText("Comida del día bisiesto");
-  await page.getByRole("button", { name: "Calendario", exact: true }).click();
-  await expect(page.getByLabel("Mes del calendario")).toBeVisible();
-  await expect(page.getByLabel("Año del calendario")).toHaveCount(0);
-  await page.getByRole("button", { name: "Tu año", exact: true }).click();
   await page.getByLabel("Año del calendario").fill("2025");
   await expect(
-    page
-      .getByLabel("Alimentación de 2025", { exact: true })
-      .getByRole("button"),
+    page.getByLabel("Alimentación de 2025", { exact: true }).getByRole("img"),
   ).toHaveCount(365);
   await page.getByLabel("Año del calendario").fill("2028");
   await expect(
     page
       .getByLabel("Alimentación de 2028", { exact: true })
-      .getByRole("button")
+      .getByRole("img")
       .first(),
   ).toHaveAttribute("class", /future/);
 });

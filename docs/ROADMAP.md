@@ -41,6 +41,8 @@ Entregado el 24 de octubre: mapa anual vertical de alimentación, con selector M
 
 Revisión posterior: el acceso anual se separa en «Tu año» y se compacta; Calendario queda reservado a la vista mensual.
 
+Decisión posterior: «Tu año» es solo lectura, sin selección ni detalle de días; su finalidad es representar visualmente cada año y su evolución.
+
 Comidas predefinidas con descripción/color, reutilización avanzada, edición de varios días, pantalla inicial configurable, exportación y acceso vinculado con Google. Importación de histórico solo si aporta valor sin comprometer el modelo.
 
 ## 5. Hábitos y seguimiento ampliado — propuesta posterior

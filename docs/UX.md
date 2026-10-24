@@ -4,6 +4,8 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 
 ## Cambios incorporados
 
+- «Tu año» se confirma como representación exclusivamente visual y de lectura: casillas sin interacción y sin panel de detalle diario. Solo se elige el año; consulta y edición permanecen en Calendario/Diario. Base para futuras representaciones anuales de evolución.
+
 - Ajuste posterior del 24 de octubre: «Tu año» pasa a ser una sección independiente en la navegación. El mapa conserva siete columnas y semanas verticales, con casillas pequeñas ajustadas a la altura de pantalla para consultar el año de un vistazo; el calendario mensual queda separado.
 
 - Vista anual de alimentación (24 de octubre): selector Mes/Año, siete columnas de lunes a domingo y semanas continuas en vertical, etiquetas de meses, colores de dieta y detalle al seleccionar un día. Los futuros sin comidas tienen borde discontinuo; los registros existentes conservan su color. Incluye selector de año y años bisiestos. Solo alimentación en esta primera versión, sin objetivos nuevos.
