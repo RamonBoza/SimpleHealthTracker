@@ -62,6 +62,14 @@ test("mapa anual de lectura: semanas, año bisiesto y colores", async ({
   ).toBeTruthy();
   const bounds = await map.boundingBox();
   expect(bounds!.height).toBeLessThan(480);
+  await expect(
+    map.locator(".year-month").filter({ hasText: /^[EFMAJSOND]$/ }),
+  ).toHaveCount(12);
+  const info = await page
+    .getByRole("complementary", { name: "Información del mapa anual" })
+    .boundingBox();
+  expect(info!.x).toBeGreaterThanOrEqual(bounds!.x + bounds!.width);
+  expect(Math.abs(info!.y - bounds!.y)).toBeLessThan(25);
   await page.screenshot({
     path: "test-results/mobile-year-calendar.png",
     fullPage: true,

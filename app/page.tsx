@@ -1312,74 +1312,103 @@ function FoodYear({ days, date }: { days: Record<string, Day>; date: string }) {
           </button>
         </div>
       </div>
-      <div className="year-totals" aria-label="Resumen de alimentación del año">
-        {(
-          [
-            ["green", "Sigue la dieta"],
-            ["yellow", "Parcial"],
-            ["red", "Fuera de dieta"],
-            ["unrecorded", "Sin comidas"],
-          ] as const
-        ).map(([key, name]) => (
-          <span key={key}>
-            <span className={"dot " + key} />
-            <strong>{totals[key]}</strong> {name}
-          </span>
-        ))}
-      </div>
-      <p className="hint">
-        El color depende de las comidas registradas. Los días futuros sin
-        comidas tienen borde discontinuo. Una vista de tu alimentación a lo
-        largo del año.
-      </p>
-      <div className="year-heatmap" aria-label={`Alimentación de ${year}`}>
-        <div className="year-week year-week-heading">
-          <span aria-hidden="true" />
-          {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((name) => (
-            <span key={name}>{name}</span>
-          ))}
-        </div>
-        {Array.from({ length: cells.length / 7 }, (_, row) => {
-          const week = cells.slice(row * 7, row * 7 + 7);
-          const monthStart = week.find((d) => d?.endsWith("-01"));
-          return (
-            <div className="year-week" key={row}>
-              <span className="year-month">
-                {monthStart
-                  ? new Date(monthStart + "T12:00:00Z").toLocaleDateString(
-                      "es-ES",
-                      { month: "short", timeZone: "UTC" },
-                    )
-                  : ""}
+      <div className="year-layout">
+        <aside className="year-info" aria-label="Información del mapa anual">
+          <h3>Alimentación</h3>
+          <div
+            className="year-totals"
+            aria-label="Resumen de alimentación del año"
+          >
+            {(
+              [
+                ["green", "Sigue la dieta"],
+                ["yellow", "Parcial"],
+                ["red", "Fuera de dieta"],
+                ["unrecorded", "Sin comidas"],
+              ] as const
+            ).map(([key, name]) => (
+              <span key={key}>
+                <span className={"dot " + key} />
+                <span className="year-stat">
+                  <strong>{totals[key]}</strong>
+                  <span>{name}</span>
+                </span>
               </span>
-              {week.map((d, index) => {
-                if (!d) return <span key={index} className="year-blank" />;
-                const color = days[d] ? dailyColor(days[d]) : null;
-                const future = d > localDate();
-                const label = `${dateLabel(d)}: ${color ? colorName[color] : future ? "Futuro, sin comidas registradas" : "Sin comidas registradas"}`;
-                return (
-                  <span
-                    role="img"
-                    key={d}
-                    className={`year-bit ${color ?? "unrecorded"}${future && !color ? " future" : ""}`}
-                    aria-label={label}
-                    title={label}
-                  >
-                    <span aria-hidden="true">
-                      {color === "green"
-                        ? "✓"
-                        : color === "yellow"
-                          ? "△"
-                          : color === "red"
-                            ? "×"
-                            : ""}
+            ))}
+          </div>
+          <p className="hint">
+            Una casilla por día. Las semanas se leen de lunes a domingo y el año
+            de arriba abajo.
+          </p>
+          <p className="hint year-future-key">
+            <span aria-hidden="true" /> Días futuros sin registro
+          </p>
+        </aside>
+        <div className="year-heatmap" aria-label={`Alimentación de ${year}`}>
+          <div className="year-week year-week-heading">
+            <span aria-hidden="true" />
+            {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((name) => (
+              <span key={name}>{name}</span>
+            ))}
+          </div>
+          {Array.from({ length: cells.length / 7 }, (_, row) => {
+            const week = cells.slice(row * 7, row * 7 + 7);
+            const monthStart = week.find((d) => d?.endsWith("-01"));
+            return (
+              <div
+                className={"year-week" + (monthStart ? " month-start" : "")}
+                key={row}
+              >
+                <span
+                  className="year-month"
+                  title={
+                    monthStart
+                      ? new Date(monthStart + "T12:00:00Z").toLocaleDateString(
+                          "es-ES",
+                          { month: "long", timeZone: "UTC" },
+                        )
+                      : undefined
+                  }
+                >
+                  {monthStart
+                    ? new Date(monthStart + "T12:00:00Z")
+                        .toLocaleDateString("es-ES", {
+                          month: "long",
+                          timeZone: "UTC",
+                        })
+                        .slice(0, 1)
+                        .toUpperCase()
+                    : ""}
+                </span>
+                {week.map((d, index) => {
+                  if (!d) return <span key={index} className="year-blank" />;
+                  const color = days[d] ? dailyColor(days[d]) : null;
+                  const future = d > localDate();
+                  const label = `${dateLabel(d)}: ${color ? colorName[color] : future ? "Futuro, sin comidas registradas" : "Sin comidas registradas"}`;
+                  return (
+                    <span
+                      role="img"
+                      key={d}
+                      className={`year-bit ${color ?? "unrecorded"}${future && !color ? " future" : ""}`}
+                      aria-label={label}
+                      title={label}
+                    >
+                      <span aria-hidden="true">
+                        {color === "green"
+                          ? "✓"
+                          : color === "yellow"
+                            ? "△"
+                            : color === "red"
+                              ? "×"
+                              : ""}
+                      </span>
                     </span>
-                  </span>
-                );
-              })}
-            </div>
-          );
-        })}
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
