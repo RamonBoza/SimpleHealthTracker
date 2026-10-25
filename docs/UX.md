@@ -4,6 +4,8 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 
 ## Cambios incorporados
 
+- Ajuste posterior: se retiran las líneas entre meses y el selector de año ocupa el ancho disponible en móvil. Se conservan las iniciales y la información lateral.
+
 - Revisión móvil del 25 de octubre de «Tu año»: mapa a la izquierda con inicial de cada mes, nombre completo accesible y líneas en los cambios de mes; leyenda, recuentos e instrucciones a la derecha. Se elimina el bloque de texto superior y se conserva el carácter de solo lectura y el mapa completo en una vista.
 
 - «Tu año» se confirma como representación exclusivamente visual y de lectura: casillas sin interacción y sin panel de detalle diario. Solo se elige el año; consulta y edición permanecen en Calendario/Diario. Base para futuras representaciones anuales de evolución.

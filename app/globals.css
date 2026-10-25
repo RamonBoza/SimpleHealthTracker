@@ -3124,17 +3124,20 @@ progress::-webkit-progress-value {
 .year-layout .month-start {
   position: relative;
 }
-.year-layout .month-start::before {
-  content: "";
-  position: absolute;
-  left: 22px;
-  right: 0;
-  top: -2px;
-  border-top: 1px solid #9dafbf;
-  pointer-events: none;
-}
 .annual-card .food-year .calendar-heading {
   justify-content: flex-start;
+}
+@media (max-width: 600px) {
+  .annual-card .food-year .calendar-heading .date-controls {
+    width: 100%;
+  }
+  .annual-card .year-picker {
+    flex: 1;
+    min-width: 0;
+  }
+  .annual-card .date-controls .year-picker input {
+    width: 100%;
+  }
 }
 @media (max-width: 360px) {
   .year-layout {
