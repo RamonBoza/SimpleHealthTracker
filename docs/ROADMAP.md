@@ -43,6 +43,8 @@ Revisión posterior: el acceso anual se separa en «Tu año» y se compacta; Cal
 
 Decisión posterior: «Tu año» es solo lectura, sin selección ni detalle de días; su finalidad es representar visualmente cada año y su evolución.
 
+Ampliación: mapas de alimentación y pasos, con resúmenes superiores y objetivo diario de pasos configurable. Otros mapas anuales siguen pendientes.
+
 Comidas predefinidas con descripción/color, reutilización avanzada, edición de varios días, pantalla inicial configurable, exportación y acceso vinculado con Google. Importación de histórico solo si aporta valor sin comprometer el modelo.
 
 ## 5. Hábitos y seguimiento ampliado — propuesta posterior

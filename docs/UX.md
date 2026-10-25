@@ -4,6 +4,8 @@ Referencia: ZIP `stitch_simplehealthtracker_mvp_ux.zip`, conservado extraído en
 
 ## Cambios incorporados
 
+- «Tu año» muestra dos mapas de lectura en paralelo: alimentación y pasos, con información encima y un selector de año compartido. Opciones permite fijar un objetivo diario de pasos por cuenta; empieza sin objetivo para cuentas nuevas y existentes. Verde significa estrictamente más pasos que el objetivo; amarillo incluye cantidades inferiores o iguales, y sin registro queda neutro (cero sí es un registro). Sin objetivo no se evalúan los días. Cambiarlo reevalúa el historial, sin guardar objetivos históricos por fecha.
+
 - Ajuste posterior: se retiran las líneas entre meses y el selector de año ocupa el ancho disponible en móvil. Se conservan las iniciales y la información lateral.
 
 - Revisión móvil del 25 de octubre de «Tu año»: mapa a la izquierda con inicial de cada mes, nombre completo accesible y líneas en los cambios de mes; leyenda, recuentos e instrucciones a la derecha. Se elimina el bloque de texto superior y se conserva el carácter de solo lectura y el mapa completo en una vista.

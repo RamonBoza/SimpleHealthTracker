@@ -9,6 +9,7 @@ import {
   defaultSettings,
   settingsSchema,
   officeCount,
+  stepsGoalColor,
 } from "../lib/model";
 test("semáforo diario: vacío, una verde, varias amarillas y una roja", () => {
   const day = emptyDay();
@@ -36,6 +37,23 @@ test("semáforo diario: vacío, una verde, varias amarillas y una roja", () => {
   assert.equal(dailyColor(day), "yellow");
   day.meals[0].color = "red";
   assert.equal(dailyColor(day), "red");
+});
+test("objetivo de pasos: ausencia, cero, igualdad y superación", () => {
+  assert.equal(stepsGoalColor(null, 8000), null);
+  assert.equal(stepsGoalColor(9000, null), null);
+  assert.equal(stepsGoalColor(0, 8000), "yellow");
+  assert.equal(stepsGoalColor(8000, 8000), "yellow");
+  assert.equal(stepsGoalColor(8001, 8000), "green");
+  const { stepsGoal, ...old } = defaultSettings();
+  assert.equal(settingsSchema.parse(old).stepsGoal, null);
+  assert.equal(
+    settingsSchema.safeParse({ ...old, stepsGoal: -1 }).success,
+    false,
+  );
+  assert.equal(
+    settingsSchema.safeParse({ ...old, stepsGoal: 8000.5 }).success,
+    false,
+  );
 });
 test("valores opcionales, límites y fechas reales", () => {
   assert.ok(daySchema.safeParse(emptyDay()).success);

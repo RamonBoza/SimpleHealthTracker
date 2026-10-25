@@ -109,6 +109,7 @@ const rangeSchema = z
 export const settingsSchema = z
   .object({
     officeGoal: z.number().int().min(0).max(31),
+    stepsGoal: z.number().int().min(1).max(200000).nullable().default(null),
     chartVisibility: z
       .object({
         steps: z.boolean().default(true),
@@ -135,6 +136,7 @@ export const settingsSchema = z
 export type Settings = z.infer<typeof settingsSchema>;
 export const defaultSettings = (boza = false): Settings => ({
   officeGoal: boza ? 8 : 0,
+  stepsGoal: null,
   chartVisibility: { steps: true, sleep: true, quality: true },
   ranges: Object.fromEntries(
     indicators.map((i) => [i.key, { min: i.min, max: i.max, visible: true }]),
@@ -147,4 +149,11 @@ export function officeCount(days: Record<string, Day>, month: string) {
   return Object.entries(days).filter(
     ([date, day]) => date.startsWith(month) && day.office === "yes",
   ).length;
+}
+export function stepsGoalColor(
+  steps: number | null | undefined,
+  goal: number | null,
+) {
+  if (steps == null || goal === null) return null;
+  return steps > goal ? "green" : "yellow";
 }

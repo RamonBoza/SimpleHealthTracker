@@ -48,6 +48,7 @@ import {
   IndicatorKey,
   emptyDay,
   dailyColor,
+  stepsGoalColor,
   localDate,
   officeCount,
   indicators,
@@ -1247,8 +1248,39 @@ function WeekStrip({
     </div>
   );
 }
-function FoodYear({ days, date }: { days: Record<string, Day>; date: string }) {
-  const [year, setYear] = useState(Number(date.slice(0, 4)));
+function FoodYear({
+  days,
+  year,
+  metric,
+  stepsGoal,
+}: {
+  days: Record<string, Day>;
+  year: number;
+  metric: "food" | "steps";
+  stepsGoal: number | null;
+}) {
+  const isFood = metric === "food";
+  const mapName = isFood ? "Alimentación" : "Pasos";
+  const colorFor = (date: string) =>
+    isFood
+      ? days[date]
+        ? dailyColor(days[date])
+        : null
+      : stepsGoalColor(days[date]?.steps, stepsGoal);
+  const labels = isFood
+    ? {
+        green: "Sigue la dieta",
+        yellow: "Parcial",
+        red: "Fuera de dieta",
+        unrecorded: "Sin comidas",
+      }
+    : {
+        green: "Objetivo superado",
+        yellow: "No superado",
+        red: "",
+        unrecorded:
+          stepsGoal === null ? "Sin evaluar" : "Sin pasos registrados",
+      };
   const first = new Date(Date.UTC(year, 0, 1, 12));
   const offset = (first.getUTCDay() + 6) % 7;
   const count = (Date.UTC(year + 1, 0, 1) - Date.UTC(year, 0, 1)) / 86400000;
@@ -1265,59 +1297,29 @@ function FoodYear({ days, date }: { days: Record<string, Day>; date: string }) {
   );
   const totals = { green: 0, yellow: 0, red: 0, unrecorded: 0 };
   cells.forEach((d) => {
-    if (d)
-      totals[days[d] ? (dailyColor(days[d]) ?? "unrecorded") : "unrecorded"]++;
+    if (d) totals[colorFor(d) ?? "unrecorded"]++;
   });
   return (
-    <section className="food-year" aria-label="Mapa anual de alimentación">
-      <div className="calendar-heading">
-        <div>
-          <h2>Tu año en colores</h2>
-          <p>Una casilla por día. De lunes a domingo, semana a semana.</p>
-        </div>
-        <div className="date-controls">
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="Año anterior"
-            disabled={year <= 1900}
-            onClick={() => setYear(year - 1)}
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <label className="year-picker">
-            Año
-            <input
-              aria-label="Año del calendario"
-              type="number"
-              min={1900}
-              max={2200}
-              step={1}
-              value={year}
-              onChange={(e) => {
-                const value = Number(e.target.value);
-                if (Number.isInteger(value) && value >= 1900 && value <= 2200)
-                  setYear(value);
-              }}
-            />
-          </label>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="Año siguiente"
-            disabled={year >= 2200}
-            onClick={() => setYear(year + 1)}
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
-      </div>
+    <section
+      className="food-year"
+      aria-label={isFood ? "Mapa anual de alimentación" : "Mapa anual de pasos"}
+    >
       <div className="year-layout">
-        <aside className="year-info" aria-label="Información del mapa anual">
-          <h3>Alimentación</h3>
+        <aside
+          className="year-info"
+          aria-label={`Información del mapa anual de ${isFood ? "alimentación" : "pasos"}`}
+        >
+          <h3>{mapName}</h3>
+          {!isFood && (
+            <p className="hint">
+              {stepsGoal === null
+                ? "Configura tu objetivo diario en Opciones para colorear este mapa."
+                : `Más de ${stepsGoal.toLocaleString("es-ES")} pasos al día.`}
+            </p>
+          )}
           <div
             className="year-totals"
-            aria-label="Resumen de alimentación del año"
+            aria-label={`Resumen de ${isFood ? "alimentación" : "pasos"} del año`}
           >
             {(
               [
@@ -1326,25 +1328,20 @@ function FoodYear({ days, date }: { days: Record<string, Day>; date: string }) {
                 ["red", "Fuera de dieta"],
                 ["unrecorded", "Sin comidas"],
               ] as const
-            ).map(([key, name]) => (
-              <span key={key}>
-                <span className={"dot " + key} />
-                <span className="year-stat">
-                  <strong>{totals[key]}</strong>
-                  <span>{name}</span>
+            )
+              .filter(([key]) => isFood || key !== "red")
+              .map(([key]) => (
+                <span key={key}>
+                  <span className={"dot " + key} />
+                  <span className="year-stat">
+                    <strong>{totals[key]}</strong>
+                    <span>{labels[key]}</span>
+                  </span>
                 </span>
-              </span>
-            ))}
+              ))}
           </div>
-          <p className="hint">
-            Una casilla por día. Las semanas se leen de lunes a domingo y el año
-            de arriba abajo.
-          </p>
-          <p className="hint year-future-key">
-            <span aria-hidden="true" /> Días futuros sin registro
-          </p>
         </aside>
-        <div className="year-heatmap" aria-label={`Alimentación de ${year}`}>
+        <div className="year-heatmap" aria-label={`${mapName} de ${year}`}>
           <div className="year-week year-week-heading">
             <span aria-hidden="true" />
             {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((name) => (
@@ -1382,9 +1379,9 @@ function FoodYear({ days, date }: { days: Record<string, Day>; date: string }) {
                 </span>
                 {week.map((d, index) => {
                   if (!d) return <span key={index} className="year-blank" />;
-                  const color = days[d] ? dailyColor(days[d]) : null;
+                  const color = colorFor(d);
                   const future = d > localDate();
-                  const label = `${dateLabel(d)}: ${color ? colorName[color] : future ? "Futuro, sin comidas registradas" : "Sin comidas registradas"}`;
+                  const label = `${dateLabel(d)}: ${color ? labels[color] : future ? "Futuro, sin registro" : labels.unrecorded}${!isFood && days[d]?.steps != null ? ` · ${days[d].steps} pasos` : ""}`;
                   return (
                     <span
                       role="img"
@@ -1409,6 +1406,69 @@ function FoodYear({ days, date }: { days: Record<string, Day>; date: string }) {
             );
           })}
         </div>
+      </div>
+    </section>
+  );
+}
+function YearOverview({
+  days,
+  date,
+  stepsGoal,
+}: {
+  days: Record<string, Day>;
+  date: string;
+  stepsGoal: number | null;
+}) {
+  const [year, setYear] = useState(Number(date.slice(0, 4)));
+  return (
+    <section className="card calendar-card annual-card dual-year">
+      <div className="date-controls">
+        <button
+          type="button"
+          className="icon-button"
+          aria-label="Año anterior"
+          disabled={year <= 1900}
+          onClick={() => setYear(year - 1)}
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <label className="year-picker">
+          Año
+          <input
+            type="number"
+            aria-label="Año del calendario"
+            min={1900}
+            max={2200}
+            value={year}
+            onChange={(e) => {
+              const value = Number(e.target.value);
+              if (Number.isInteger(value) && value >= 1900 && value <= 2200)
+                setYear(value);
+            }}
+          />
+        </label>
+        <button
+          type="button"
+          className="icon-button"
+          aria-label="Año siguiente"
+          disabled={year >= 2200}
+          onClick={() => setYear(year + 1)}
+        >
+          <ChevronRight size={20} />
+        </button>
+      </div>
+      <p className="hint">
+        Una casilla por día, de lunes a domingo. Los días futuros sin registro
+        tienen borde discontinuo.
+      </p>
+      <div className="year-panels">
+        <FoodYear days={days} year={year} metric="food" stepsGoal={stepsGoal} />
+        <FoodYear
+          days={days}
+          year={year}
+          metric="steps"
+          stepsGoal={stepsGoal}
+        />
       </div>
     </section>
   );
@@ -2087,6 +2147,28 @@ function Options({
             }
             required
           />
+        </label>
+        <label>
+          Objetivo diario de pasos
+          <input
+            type="number"
+            min={1}
+            max={200000}
+            step={1}
+            value={settings.stepsGoal ?? ""}
+            placeholder="Sin objetivo"
+            onChange={(e) =>
+              setSettings({
+                ...settings,
+                stepsGoal:
+                  e.target.value === "" ? null : Number(e.target.value),
+              })
+            }
+          />
+          <small>
+            El mapa marca los días con más pasos que este objetivo. Cambiarlo
+            reevalúa todo el historial; vacío desactiva la comparación.
+          </small>
         </label>
         {indicators.map((i) => (
           <fieldset key={i.key}>
@@ -2773,7 +2855,7 @@ export default function Home() {
               {view === "diary"
                 ? `Hola, ${user.username}. Registra lo que importa hoy.`
                 : view === "year"
-                  ? "Tu alimentación de todo el año, de un vistazo."
+                  ? "Tu alimentación y tus pasos de todo el año, de un vistazo."
                   : view === "calendar"
                     ? "Revisa tus comidas y vuelve a cualquier día."
                     : view === "evolution"
@@ -2902,9 +2984,11 @@ export default function Home() {
           />
         )}
         {view === "year" && (
-          <section className="card calendar-card annual-card">
-            <FoodYear days={days} date={date} />
-          </section>
+          <YearOverview
+            days={days}
+            date={date}
+            stepsGoal={user.settings.stepsGoal}
+          />
         )}
         {view === "evolution" && (
           <Evolution
